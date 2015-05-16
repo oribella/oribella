@@ -1,0 +1,76 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
+
+function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var _engine = require("./engine");
+
+var _gestureRegistry = require("./gesture-registry");
+
+var _utils = require("./utils");
+
+var _flowsMouse = require("./flows/mouse");
+
+var _flowsTouch = require("./flows/touch");
+
+var _flowsMsPointer = require("./flows/ms-pointer");
+
+var _flowsPointer = require("./flows/pointer");
+
+_defaults(exports, _interopRequireWildcard(_utils));
+
+var Oribella = (function () {
+  function Oribella(element, engine) {
+    _classCallCheck(this, Oribella);
+
+    this.element = element || window.document;
+    this.engine = engine || new _engine.Engine(this.element, new _gestureRegistry.GestureRegistry());
+  }
+
+  _createClass(Oribella, [{
+    key: "activate",
+    value: function activate() {
+      return this.engine.activate();
+    }
+  }, {
+    key: "withDefaultFlowStrategy",
+    value: function withDefaultFlowStrategy() {
+      if (_utils.msPointerEnabled) {
+        this.engine.addFlow(new _flowsMsPointer.MSPointerFlow(this.element));
+      }
+      if (_utils.pointerEnabled) {
+        this.engine.addFlow(new _flowsPointer.PointerFlow(this.element));
+      }
+      if (_utils.touchEnabled) {
+        this.engine.addFlow(new _flowsTouch.TouchFlow(this.element));
+      }
+
+      this.engine.addFlow(new _flowsMouse.MouseFlow(this.element));
+      return this;
+    }
+  }, {
+    key: "withGesture",
+    value: function withGesture(type, Gesture) {
+      this.engine.registerGesture(type, Gesture);
+      return this;
+    }
+  }, {
+    key: "getGestures",
+    value: function getGestures(element) {
+      return this.engine.getGestures(element);
+    }
+  }]);
+
+  return Oribella;
+})();
+
+exports.Oribella = Oribella;
