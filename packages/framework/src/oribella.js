@@ -30,7 +30,7 @@ export class Oribella {
     this.engine.addFlow(new MouseFlow(this.element));
     return this;
   }
-  withGesture(type, Gesture) {
+  registerGesture(type, Gesture) {
     this.engine.registerGesture(type, Gesture);
     return this;
   }
