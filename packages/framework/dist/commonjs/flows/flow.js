@@ -1,15 +1,15 @@
-/*eslint no-cond-assign: 0*/
 "use strict";
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/*eslint no-cond-assign: 0*/
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var _point = require("../point");
+var _Point = require("../point");
 
 function removeListener(element, event, fn) {
   element.removeEventListener(event, fn, false);
@@ -58,7 +58,7 @@ var Flow = (function () {
     key: "normalizePoints",
     value: function normalizePoints(event) {
       this.data.pagePoints.length = 0;
-      this.data.pagePoints.push(new _point.Point(event.pageX, event.pageY));
+      this.data.pagePoints.push(new _Point.Point(event.pageX, event.pageY));
     }
   }, {
     key: "onStart",

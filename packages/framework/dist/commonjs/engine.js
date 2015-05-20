@@ -1,21 +1,21 @@
-/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 "use strict";
+
+var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _Handler = require("./handler");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _Validator = require("./validator");
 
-var _handler = require("./handler");
+var _MouseFlow = require("./flows/mouse");
 
-var _validator = require("./validator");
-
-var _flowsMouse = require("./flows/mouse");
-
-var _utils = require("./utils");
+var _GESTURE_STARTED$RETURN_FLAG$matchesSelector = require("./utils");
 
 var ACTION_START = "start",
     ACTION_UPDATE = "update",
@@ -28,7 +28,7 @@ var Engine = (function () {
 
     this.element = element;
     this.gestureRegistry = gestureRegistry;
-    this.validator = validator || new _validator.Validator();
+    this.validator = validator || new _Validator.Validator();
     this.flows = [];
     this.activeFlow = undefined;
     this.handlers = [];
@@ -79,7 +79,7 @@ var Engine = (function () {
   }, {
     key: "addHandler",
     value: function addHandler(element, type, subscriber) {
-      var handler = _handler.Handler.create(element, type, subscriber),
+      var handler = _Handler.Handler.create(element, type, subscriber),
           handlers = this.handlers;
 
       handlers.push(handler);
@@ -104,7 +104,7 @@ var Engine = (function () {
   }, {
     key: "canActivateFlow",
     value: function canActivateFlow(flow) {
-      if (this.activeFlow instanceof _flowsMouse.MouseFlow && flow instanceof _flowsMouse.MouseFlow) {
+      if (this.activeFlow instanceof _MouseFlow.MouseFlow && flow instanceof _MouseFlow.MouseFlow) {
         return true; //Solves the scrollbar mousedown issue for IE
       }
       return this.activeFlow === undefined || this.activeFlow === flow;
@@ -215,12 +215,12 @@ var Engine = (function () {
             break;
           case ACTION_END:
             valid = this.validator[ACTION_END](e, data, gesture.subscriber.options);
-            valid = valid && gesture[_utils.GESTURE_STARTED];
+            valid = valid && gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED];
             break;
         }
         if (valid === false) {
           //Remove
-          if (gesture[_utils.GESTURE_STARTED]) {
+          if (gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
             gesture[ACTION_CANCEL]();
           }
           this.removeIn(gesture, gestures, this.gestures);
@@ -230,33 +230,33 @@ var Engine = (function () {
         }
         //Call
         result = gesture[action](e, data);
-        if (result & _utils.RETURN_FLAG.STARTED) {
-          gesture[_utils.GESTURE_STARTED] = true;
+        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.STARTED) {
+          gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED] = true;
         }
-        if (result & _utils.RETURN_FLAG.REMOVE) {
-          if (gesture[_utils.GESTURE_STARTED]) {
+        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.REMOVE) {
+          if (gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
             gesture[ACTION_CANCEL]();
           }
           this.removeIn(gesture, gestures, this.gestures);
         }
-        if (result & _utils.RETURN_FLAG.REMOVE_OTHER_TYPES) {
+        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.REMOVE_OTHER_TYPES) {
           otherGestures = this.gestures.slice();
           while (otherGesture = otherGestures.shift()) {
             if (otherGesture.__type !== gesture.__type) {
-              if (otherGesture[_utils.GESTURE_STARTED]) {
+              if (otherGesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
                 otherGesture[ACTION_CANCEL]();
               }
               this.removeIn(otherGesture, gestures, this.gestures);
             }
           }
         }
-        if (result & _utils.RETURN_FLAG.REMOVE_OTHERS) {
+        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.REMOVE_OTHERS) {
           otherGestures = this.gestures.slice();
           while (otherGesture = otherGestures.shift()) {
             if (gesture === otherGesture) {
               continue;
             }
-            if (otherGesture[_utils.GESTURE_STARTED]) {
+            if (otherGesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
               otherGesture[ACTION_CANCEL]();
             }
             this.removeIn(otherGesture, gestures, this.gestures);
@@ -295,7 +295,7 @@ var Engine = (function () {
           if (!selector && element === handler.element) {
             handler.active = true;
           } else if (selector) {
-            if ((0, _utils.matchesSelector)(element, selector)) {
+            if (_GESTURE_STARTED$RETURN_FLAG$matchesSelector.matchesSelector(element, selector)) {
               handler.active = true;
             }
           }
