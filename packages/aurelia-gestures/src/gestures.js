@@ -7,7 +7,7 @@ class Gesture {
     this.type = type;
   }
   bind() {
-    this.remove = this.oribella(this.element)[this.type]({
+    this.remove = this.oribella.on(this.element, this.type, {
       selector: this.selector,
       options: this.options,
       start: this.start,
