@@ -11,7 +11,8 @@ export * from "./utils";
 export class Oribella {
   constructor(element, engine) {
     this.element = element || window.document;
-    this.engine = engine || (new Engine(this.element, new GestureRegistry()));
+    this.registry = new GestureRegistry();
+    this.engine = engine || (new Engine(this.element, this.registry));
   }
   activate() {
     return this.engine.activate();
@@ -34,7 +35,7 @@ export class Oribella {
     this.engine.registerGesture(type, Gesture);
     return this;
   }
-  getGestures(element) {
-    return this.engine.getGestures(element);
+  on(element, type, subscriber) {
+    return this.engine.addHandle(element, type, subscriber);
   }
 }

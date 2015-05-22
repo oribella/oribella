@@ -1,9 +1,9 @@
-System.register(["./handler", "./validator", "./flows/mouse", "./utils"], function (_export) {
-  var Handler, Validator, MouseFlow, GESTURE_STARTED, RETURN_FLAG, matchesSelector, _classCallCheck, _createClass, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
+System.register(["./handle", "./validator", "./flows/mouse", "./utils"], function (_export) {
+  var Handle, Validator, MouseFlow, GESTURE_STARTED, RETURN_FLAG, matchesSelector, _classCallCheck, _createClass, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
 
   return {
-    setters: [function (_handler) {
-      Handler = _handler.Handler;
+    setters: [function (_handle) {
+      Handle = _handle.Handle;
     }, function (_validator) {
       Validator = _validator.Validator;
     }, function (_flowsMouse) {
@@ -34,7 +34,7 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
           this.validator = validator || new Validator();
           this.flows = [];
           this.activeFlow = undefined;
-          this.handlers = [];
+          this.handles = [];
           this.gestures = [];
           this.composedGestures = [];
         }
@@ -43,28 +43,6 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
           key: "registerGesture",
           value: function registerGesture(type, Gesture) {
             this.gestureRegistry.register(type, Gesture);
-          }
-        }, {
-          key: "getGestures",
-          value: function getGestures(element) {
-            var engine = this;
-
-            if (!(element instanceof Element)) {
-              throw new Error("Invalid parameter");
-            }
-
-            var exposeGesture = function exposeGesture(e, t, s) {
-              return engine.addHandler(e, t, s);
-            };
-
-            var gestures = {},
-                types = Object.keys(engine.gestureRegistry.gestures);
-
-            types.forEach(function (type) {
-              gestures[type] = exposeGesture.bind(null, element, type);
-            });
-
-            return gestures;
           }
         }, {
           key: "activate",
@@ -80,22 +58,22 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
             };
           }
         }, {
-          key: "addHandler",
-          value: function addHandler(element, type, subscriber) {
-            var handler = Handler.create(element, type, subscriber),
-                handlers = this.handlers;
+          key: "addHandle",
+          value: function addHandle(element, type, subscriber) {
+            var handle = new Handle(element, type, subscriber),
+                handles = this.handles;
 
-            handlers.push(handler);
+            handles.push(handle);
 
-            function removeHandler() {
-              var ix = handlers.indexOf(handler);
+            function removeHandle() {
+              var ix = handles.indexOf(handle);
               if (ix !== -1) {
                 //TODO: Remove gestures and tear down
-                handlers.splice(ix, 1);
+                handles.splice(ix, 1);
               }
             }
 
-            return removeHandler;
+            return removeHandle;
           }
         }, {
           key: "addFlow",
@@ -153,7 +131,7 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
             var gestures = this.gestures.slice(),
                 gesture,
                 result,
-                handlers = this.handlers.slice(),
+                handles = this.handles.slice(),
                 handler;
 
             while (gesture = gestures.shift()) {
@@ -163,7 +141,7 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
               }
             }
 
-            while (handler = handlers.shift()) {
+            while (handler = handles.shift()) {
               handler.active = false;
             }
             this.gestures.length = 0;
@@ -270,7 +248,7 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
         }, {
           key: "createGesture",
           value: function createGesture(handler, element) {
-            var gesture = this.gestureRegistry.get(handler.type, handler.subscriber, element);
+            var gesture = this.gestureRegistry.create(handler.type, handler.subscriber, element);
             gesture.bind(this.getGestures.bind(this), handler.element, this.removeGesture.bind(this, gesture));
             return gesture;
           }
@@ -278,38 +256,38 @@ System.register(["./handler", "./validator", "./flows/mouse", "./utils"], functi
           key: "match",
           value: function match(startElement) {
             var i,
-                handler,
+                handle,
                 element,
                 selector,
                 gesture,
                 gestures = [];
 
             for (element = startElement; element !== this.element; element = element.parentNode) {
-              for (i = 0; i < this.handlers.length; ++i) {
+              for (i = 0; i < this.handles.length; ++i) {
                 //Always evaluate length since gestures could bind gestures
-                handler = this.handlers[i];
-                if (handler.active) {
+                handle = this.handles[i];
+                if (handle.active) {
                   continue;
                 }
-                if (!handler.element.contains(element)) {
+                if (!handle.element.contains(element)) {
                   continue;
                 }
-                selector = handler.subscriber.selector;
-                if (!selector && element === handler.element) {
-                  handler.active = true;
+                selector = handle.subscriber.selector;
+                if (!selector && element === handle.element) {
+                  handle.active = true;
                 } else if (selector) {
                   if (matchesSelector(element, selector)) {
-                    handler.active = true;
+                    handle.active = true;
                   }
                 }
-                if (handler.active) {
+                if (handle.active) {
                   while (gesture = this.composedGestures.shift()) {
-                    if (gesture.subscriber === handler.subscriber) {
+                    if (gesture.subscriber === handle.subscriber) {
                       break;
                     }
                   }
                   if (!gesture) {
-                    gesture = this.createGesture(handler, element);
+                    gesture = this.createGesture(handle, element);
                   }
                   gestures.push(gesture);
                 }

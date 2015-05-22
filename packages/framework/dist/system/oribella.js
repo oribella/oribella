@@ -35,7 +35,8 @@ System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "
           _classCallCheck(this, Oribella);
 
           this.element = element || window.document;
-          this.engine = engine || new Engine(this.element, new GestureRegistry());
+          this.registry = new GestureRegistry();
+          this.engine = engine || new Engine(this.element, this.registry);
         }
 
         _createClass(Oribella, [{
@@ -66,9 +67,9 @@ System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "
             return this;
           }
         }, {
-          key: "getGestures",
-          value: function getGestures(element) {
-            return this.engine.getGestures(element);
+          key: "on",
+          value: function on(element, type, subscriber) {
+            return this.engine.addHandle(element, type, subscriber);
           }
         }]);
 

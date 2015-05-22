@@ -56,8 +56,13 @@ System.register([], function (_export) {
             this.gestures[type] = Gesture;
           }
         }, {
-          key: "get",
-          value: function get(type, subscriber, element) {
+          key: "getTypes",
+          value: function getTypes() {
+            return Object.keys(this.gestures);
+          }
+        }, {
+          key: "create",
+          value: function create(type, subscriber, element) {
             var defaultOptions;
             this.ensureSubscriberProto(subscriber);
             if (typeof this.gestures[type].defaultOptions === "function") {

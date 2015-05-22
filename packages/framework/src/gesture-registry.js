@@ -37,7 +37,10 @@ export class GestureRegistry {
     }
     this.gestures[type] = Gesture;
   }
-  get(type, subscriber, element) {
+  getTypes() {
+    return Object.keys(this.gestures);
+  }
+  create(type, subscriber, element) {
     var defaultOptions;
     this.ensureSubscriberProto(subscriber);
     if (typeof this.gestures[type].defaultOptions === "function") {

@@ -33,7 +33,8 @@ var Oribella = (function () {
     _classCallCheck(this, Oribella);
 
     this.element = element || window.document;
-    this.engine = engine || new _Engine.Engine(this.element, new _GestureRegistry.GestureRegistry());
+    this.registry = new _GestureRegistry.GestureRegistry();
+    this.engine = engine || new _Engine.Engine(this.element, this.registry);
   }
 
   _createClass(Oribella, [{
@@ -64,9 +65,9 @@ var Oribella = (function () {
       return this;
     }
   }, {
-    key: "getGestures",
-    value: function getGestures(element) {
-      return this.engine.getGestures(element);
+    key: "on",
+    value: function on(element, type, subscriber) {
+      return this.engine.addHandle(element, type, subscriber);
     }
   }]);
 
