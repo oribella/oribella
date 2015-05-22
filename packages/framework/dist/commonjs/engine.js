@@ -246,7 +246,7 @@ var Engine = (function () {
     key: "createGesture",
     value: function createGesture(handler, element) {
       var gesture = this.gestureRegistry.create(handler.type, handler.subscriber, element);
-      gesture.bind(this.getGestures.bind(this), handler.element, this.removeGesture.bind(this, gesture));
+      gesture.bind(this.addHandle.bind(this), handler.element, this.removeGesture.bind(this, gesture));
       return gesture;
     }
   }, {
