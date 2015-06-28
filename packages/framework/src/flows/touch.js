@@ -4,7 +4,7 @@ import {Point} from "../point";
 
 export class TouchFlow extends Flow {
   constructor(element) {
-    super(element, [{
+    super(element, Point, [{
       start: ["touchstart"]
   }, {
       update: ["touchmove"]
@@ -14,17 +14,33 @@ export class TouchFlow extends Flow {
       cancel: ["touchcancel", "dragstart"]
   }], true);
   }
-  normalizePoints(event) {
-    this.data.pagePoints.length = 0;
-    var touches = Array.prototype.slice.call(event.touches),
-      touch;
+  normalizePoints(event, data, Point) {
+    var touches, touch;
 
-    if (event.type === "touchend") {
-      touches = touches.concat(Array.prototype.slice.call(event.changedTouches));
+    switch(event.type) {
+      default: {
+        touches = Array.prototype.slice.call(event.touches)
+        while (touch = touches.shift()) {
+          var ix = data.pointerIds.indexOf(touch.identifier);
+          if (ix < 0) {
+            ix = data.pointerIds.push(touch.identifier) - 1;
+          }
+          data.pagePoints[ix] = new Point(touch.pageX, touch.pageY);
+        }
+        break;
+      }
+      case "mouseup": {
+        super.normalizePoints(event, data, Point);
+      }
     }
-
+  }
+  removePoints(event, data) {
+    var touches = Array.prototype.slice.call(event.changedTouches);
+    var touch;
     while (touch = touches.shift()) {
-      this.data.pagePoints.push(new Point(touch.pageX, touch.pageY));
+      var ix = data.pointerIds.indexOf(touch.identifier);
+      data.pointerIds.splice(ix, 1);
+      data.pagePoints.splice(ix, 1);
     }
   }
 }

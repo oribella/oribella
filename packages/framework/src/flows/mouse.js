@@ -1,8 +1,8 @@
 import {Flow} from "./flow";
 
 export class MouseFlow extends Flow {
-  constructor(element) {
-    super(element, [{
+  constructor(element, Point) {
+    super(element, Point, [{
       start: ["mousedown"]
     }, {
       update: ["mousemove"]

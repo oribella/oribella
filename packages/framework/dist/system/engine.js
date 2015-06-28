@@ -1,5 +1,12 @@
 System.register(["./handle", "./validator", "./flows/mouse", "./utils"], function (_export) {
-  var Handle, Validator, MouseFlow, GESTURE_STARTED, RETURN_FLAG, matchesSelector, _classCallCheck, _createClass, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
+  /*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
+  "use strict";
+
+  var Handle, Validator, MouseFlow, GESTURE_STARTED, RETURN_FLAG, matchesSelector, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   return {
     setters: [function (_handle) {
@@ -14,12 +21,6 @@ System.register(["./handle", "./validator", "./flows/mouse", "./utils"], functio
       matchesSelector = _utils.matchesSelector;
     }],
     execute: function () {
-      "use strict";
-
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-      _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
       ACTION_START = "start";
       ACTION_UPDATE = "update";
       ACTION_END = "end";
@@ -307,4 +308,3 @@ System.register(["./handle", "./validator", "./flows/mouse", "./utils"], functio
     }
   };
 });
-/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/

@@ -1,9 +1,8 @@
 import {Flow} from "./flow";
-import {Point} from "../point";
 
 export class MSPointerFlow extends Flow {
-  constructor(element) {
-    super(element, [{
+  constructor(element, Point) {
+    super(element, Point, [{
       start: ["MSPointerDown"]
   }, {
       update: ["MSPointerMove"]
@@ -13,15 +12,18 @@ export class MSPointerFlow extends Flow {
       cancel: ["MSPointerCancel", "dragstart"]
   }]);
   }
-  normalizePoints(event) {
-    var ix = this.data.pointerIds.indexOf(event.pointerId);
+  normalizePoints(event, data, Point) {
+    var ix = data.pointerIds.indexOf(event.pointerId);
     if (ix < 0) {
-      ix = this.data.pointerIds.push(event.pointerId) - 1;
+      ix = data.pointerIds.push(event.pointerId) - 1;
     }
-    this.data.pagePoints[ix] = new Point(event.pageX, event.pageY);
+    data.pagePoints[ix] = new Point(event.pageX, event.pageY);
   }
-  stop() {
-    super.stop();
-    this.data.pointerIds.length = 0;
+  removePoints(event, data) {
+    var ix = data.pointerIds.indexOf(event.pointerId);
+    if(ix !== -1) {
+      data.pointerIds.splice(ix, 1);
+      data.pagePoints.splice(ix, 1);
+    }
   }
 }

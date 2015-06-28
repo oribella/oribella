@@ -1,4 +1,6 @@
 System.register([], function (_export) {
+  "use strict";
+
   var touchEnabled, msPointerEnabled, pointerEnabled, GESTURE_STARTED, RETURN_FLAG;
 
   _export("isMouse", isMouse);
@@ -27,8 +29,6 @@ System.register([], function (_export) {
   return {
     setters: [],
     execute: function () {
-      "use strict";
-
       touchEnabled = !!("ontouchstart" in window);
 
       _export("touchEnabled", touchEnabled);

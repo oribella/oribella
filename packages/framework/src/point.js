@@ -10,7 +10,7 @@ export class Point {
 
     return dist;
   }
-  getDeltaAngle(p) {
+  deltaAngleTo(p) {
     var x = p.x - this.x,
       y = p.y - this.y,
       theta = Math.atan2(y, x),

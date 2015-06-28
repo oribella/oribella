@@ -1,5 +1,4 @@
 /*eslint no-cond-assign: 0*/
-import {Point} from "../point";
 
 function removeListener(element, event, fn) {
   element.removeEventListener(event, fn, false);
@@ -11,13 +10,15 @@ function addListener(element, event, fn) {
 }
 
 export class Flow {
-  constructor(element, events, stopEmulatedMouseEvents) {
+  constructor(element, Point, events, stopEmulatedMouseEvents) {
     this.element = element;
+    this.Point = Point;
     this.events = events;
     this.stopEmulatedMouseEvents = stopEmulatedMouseEvents;
     this.addListeners = [];
     this.removeListeners = [];
     this.data = {
+      pointerIds: [],
       pagePoints: []
     };
     this.init();
@@ -43,9 +44,12 @@ export class Flow {
       }
     }
   }
-  normalizePoints(event) {
-    this.data.pagePoints.length = 0;
-    this.data.pagePoints.push(new Point(event.pageX, event.pageY));
+  normalizePoints(event, data, Point) {
+    data.pagePoints.length = 0;
+    data.pagePoints.push(new Point(event.pageX, event.pageY));
+  }
+  removePoints(event, data) {
+    data.pagePoints.length = 0;
   }
   onStart(startCallback) {
     this.startCallback = startCallback;
@@ -70,12 +74,12 @@ export class Flow {
     return this.startListener();
   }
   start(e) {
-    this.normalizePoints(e);
+    this.normalizePoints(e, this.data, this.Point);
     if (this.startCallback(this, e, this.data)) {
       this.continue();
     }
   }
-  continue () {
+  continue() {
     var i,
       cnt = this.addListeners.length;
 
@@ -84,16 +88,19 @@ export class Flow {
     }
   }
   update(e) {
-    this.normalizePoints(e);
+    this.normalizePoints(e, this.data, this.Point);
     this.updateCallback(this, e, this.data);
   }
   end(e) {
-    this.normalizePoints(e);
+    this.normalizePoints(e, this.data, this.Point);
     this.endCallback(this, e, this.data);
-    this.stop();
+    this.removePoints(e, this.data, this.Point);
+    if(!this.data.pagePoints.length) {
+      this.stop();
+    }
   }
   cancel(e) {
-    this.normalizePoints(e);
+    this.normalizePoints(e, this.data, this.Point);
     this.cancelCallback(this, e, this.data);
     this.stop();
   }
@@ -105,11 +112,6 @@ export class Flow {
       this.removeListeners[i]();
     }
     this.removeListeners.length = 0;
-    if (this.stopEmulatedMouseEvents) {
-      this.captureAndStopMouseEvents(this.stopCallback.bind(null, this));
-    } else {
-      this.stopCallback(this);
-    }
-    this.data.pagePoints.length = 0;
+    this.stopCallback(this);
   }
 }

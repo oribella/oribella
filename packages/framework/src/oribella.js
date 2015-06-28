@@ -5,6 +5,7 @@ import {MouseFlow} from "./flows/mouse";
 import {TouchFlow} from "./flows/touch";
 import {MSPointerFlow} from "./flows/ms-pointer";
 import {PointerFlow} from "./flows/pointer";
+import {Point} from "./point";
 
 export * from "./utils";
 
@@ -19,16 +20,16 @@ export class Oribella {
   }
   withDefaultFlowStrategy() {
     if (msPointerEnabled) {
-      this.engine.addFlow(new MSPointerFlow(this.element));
+      this.engine.addFlow(new MSPointerFlow(this.element, Point));
     }
     if (pointerEnabled) {
-      this.engine.addFlow(new PointerFlow(this.element));
+      this.engine.addFlow(new PointerFlow(this.element, Point));
     }
     if (touchEnabled) {
-      this.engine.addFlow(new TouchFlow(this.element));
+      this.engine.addFlow(new TouchFlow(this.element, Point));
     }
 
-    this.engine.addFlow(new MouseFlow(this.element));
+    this.engine.addFlow(new MouseFlow(this.element, Point));
     return this;
   }
   registerGesture(type, Gesture) {

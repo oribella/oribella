@@ -15,8 +15,8 @@
     "build:watch:commonjs": "babel src --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/commonjs -w",
     "build:system": "babel src --modules system --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/system",
     "build:watch:system": "babel src --modules system --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/system -w",
-    "test": "mocha test --require ./test/global.js --compilers js:babel/register",
-    "test:watch": "mocha test --require ./test/global.js --compilers js:babel/register -w",
+    "test": "mocha ./test --require ./test/global.js --compilers js:babel/register",
+    "test:watch": "mocha ./test --require ./test/global.js --compilers js:babel/register -w",
     "lint": "eslint src"
   },
   "jspm": {
@@ -27,11 +27,11 @@
     }
   },
   "devDependencies": {
-    "babel": "^5.3.2",
-    "chai": "^2.3.0",
-    "eslint": "^0.21.0",
-    "mocha": "^2.2.4",
-    "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0"
+    "babel": "^5.6.7",
+    "chai": "^3.0.0",
+    "eslint": "^0.23.0",
+    "mocha": "^2.2.5",
+    "sinon": "^1.15.3",
+    "sinon-chai": "^2.8.0"
   }
 }

@@ -96,7 +96,7 @@ export class GestureRegistry {
     if (typeof defaultOptions.which === "undefined") {
       defaultOptions.which = 1;
     }
-    if (typeof defaultOptions.which === "undefined") {
+    if (typeof defaultOptions.prio === "undefined") {
       defaultOptions.prio = 100;
     }
     Object.keys(defaultOptions).forEach(key => {

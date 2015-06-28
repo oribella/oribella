@@ -1,5 +1,11 @@
-System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer"], function (_export) {
-  var Engine, GestureRegistry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, _classCallCheck, _createClass, Oribella;
+System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
+  "use strict";
+
+  var Engine, GestureRegistry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   return {
     setters: [function (_engine) {
@@ -22,14 +28,10 @@ System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "
       MSPointerFlow = _flowsMsPointer.MSPointerFlow;
     }, function (_flowsPointer) {
       PointerFlow = _flowsPointer.PointerFlow;
+    }, function (_point) {
+      Point = _point.Point;
     }],
     execute: function () {
-      "use strict";
-
-      _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-      _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
       Oribella = (function () {
         function Oribella(element, engine) {
           _classCallCheck(this, Oribella);
@@ -48,16 +50,16 @@ System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "
           key: "withDefaultFlowStrategy",
           value: function withDefaultFlowStrategy() {
             if (msPointerEnabled) {
-              this.engine.addFlow(new MSPointerFlow(this.element));
+              this.engine.addFlow(new MSPointerFlow(this.element, Point));
             }
             if (pointerEnabled) {
-              this.engine.addFlow(new PointerFlow(this.element));
+              this.engine.addFlow(new PointerFlow(this.element, Point));
             }
             if (touchEnabled) {
-              this.engine.addFlow(new TouchFlow(this.element));
+              this.engine.addFlow(new TouchFlow(this.element, Point));
             }
 
-            this.engine.addFlow(new MouseFlow(this.element));
+            this.engine.addFlow(new MouseFlow(this.element, Point));
             return this;
           }
         }, {
