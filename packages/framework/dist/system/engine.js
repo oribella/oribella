@@ -69,7 +69,6 @@ System.register(["./handle", "./validator", "./flows/mouse", "./utils"], functio
             function removeHandle() {
               var ix = handles.indexOf(handle);
               if (ix !== -1) {
-                //TODO: Remove gestures and tear down
                 handles.splice(ix, 1);
               }
             }
@@ -108,23 +107,24 @@ System.register(["./handle", "./validator", "./flows/mouse", "./utils"], functio
               this.activeFlow = flow;
             }
 
-            this.triggerGestures(flow, e, data, ACTION_START);
+            this.processEvent(flow, e, data, ACTION_START);
+
             return true;
           }
         }, {
           key: "updateFlow",
           value: function updateFlow(flow, e, data) {
-            this.triggerGestures(flow, e, data, ACTION_UPDATE);
+            this.processEvent(flow, e, data, ACTION_UPDATE);
           }
         }, {
           key: "cancelFlow",
           value: function cancelFlow(flow, e, data) {
-            this.triggerGestures(flow, e, data, ACTION_CANCEL);
+            this.processEvent(flow, e, data, ACTION_CANCEL);
           }
         }, {
           key: "endFlow",
           value: function endFlow(flow, e, data) {
-            this.triggerGestures(flow, e, data, ACTION_END);
+            this.processEvent(flow, e, data, ACTION_END);
           }
         }, {
           key: "stopFlow",
@@ -173,8 +173,8 @@ System.register(["./handle", "./validator", "./flows/mouse", "./utils"], functio
             this.removeIn(gesture, this.gestures, this.composedGestures);
           }
         }, {
-          key: "triggerGestures",
-          value: function triggerGestures(flow, e, data, action) {
+          key: "processEvent",
+          value: function processEvent(flow, e, data, action) {
             if (this.activeFlow !== flow) {
               return;
             }
@@ -215,23 +215,16 @@ System.register(["./handle", "./validator", "./flows/mouse", "./utils"], functio
               if (result & RETURN_FLAG.STARTED) {
                 gesture[GESTURE_STARTED] = true;
               }
+
+              //Remove gesture
               if (result & RETURN_FLAG.REMOVE) {
                 if (gesture[GESTURE_STARTED]) {
                   gesture[ACTION_CANCEL]();
                 }
                 this.removeIn(gesture, gestures, this.gestures);
               }
-              if (result & RETURN_FLAG.REMOVE_OTHER_TYPES) {
-                otherGestures = this.gestures.slice();
-                while (otherGesture = otherGestures.shift()) {
-                  if (otherGesture.__type !== gesture.__type) {
-                    if (otherGesture[GESTURE_STARTED]) {
-                      otherGesture[ACTION_CANCEL]();
-                    }
-                    this.removeIn(otherGesture, gestures, this.gestures);
-                  }
-                }
-              }
+
+              //Remove all other gestures
               if (result & RETURN_FLAG.REMOVE_OTHERS) {
                 otherGestures = this.gestures.slice();
                 while (otherGesture = otherGestures.shift()) {

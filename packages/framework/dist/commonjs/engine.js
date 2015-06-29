@@ -1,21 +1,21 @@
+/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 "use strict";
-
-var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } };
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 
-var _Handle = require("./handle");
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-var _Validator = require("./validator");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _MouseFlow = require("./flows/mouse");
+var _handle = require("./handle");
 
-var _GESTURE_STARTED$RETURN_FLAG$matchesSelector = require("./utils");
+var _validator = require("./validator");
+
+var _flowsMouse = require("./flows/mouse");
+
+var _utils = require("./utils");
 
 var ACTION_START = "start",
     ACTION_UPDATE = "update",
@@ -28,7 +28,7 @@ var Engine = (function () {
 
     this.element = element;
     this.gestureRegistry = gestureRegistry;
-    this.validator = validator || new _Validator.Validator();
+    this.validator = validator || new _validator.Validator();
     this.flows = [];
     this.activeFlow = undefined;
     this.handles = [];
@@ -57,7 +57,7 @@ var Engine = (function () {
   }, {
     key: "addHandle",
     value: function addHandle(element, type, subscriber) {
-      var handle = new _Handle.Handle(element, type, subscriber),
+      var handle = new _handle.Handle(element, type, subscriber),
           handles = this.handles;
 
       handles.push(handle);
@@ -82,7 +82,7 @@ var Engine = (function () {
   }, {
     key: "canActivateFlow",
     value: function canActivateFlow(flow) {
-      if (this.activeFlow instanceof _MouseFlow.MouseFlow && flow instanceof _MouseFlow.MouseFlow) {
+      if (this.activeFlow instanceof _flowsMouse.MouseFlow && flow instanceof _flowsMouse.MouseFlow) {
         return true; //Solves the scrollbar mousedown issue for IE
       }
       return this.activeFlow === undefined || this.activeFlow === flow;
@@ -104,23 +104,24 @@ var Engine = (function () {
         this.activeFlow = flow;
       }
 
-      this.triggerGestures(flow, e, data, ACTION_START);
+      this.processEvent(flow, e, data, ACTION_START);
+
       return true;
     }
   }, {
     key: "updateFlow",
     value: function updateFlow(flow, e, data) {
-      this.triggerGestures(flow, e, data, ACTION_UPDATE);
+      this.processEvent(flow, e, data, ACTION_UPDATE);
     }
   }, {
     key: "cancelFlow",
     value: function cancelFlow(flow, e, data) {
-      this.triggerGestures(flow, e, data, ACTION_CANCEL);
+      this.processEvent(flow, e, data, ACTION_CANCEL);
     }
   }, {
     key: "endFlow",
     value: function endFlow(flow, e, data) {
-      this.triggerGestures(flow, e, data, ACTION_END);
+      this.processEvent(flow, e, data, ACTION_END);
     }
   }, {
     key: "stopFlow",
@@ -169,8 +170,8 @@ var Engine = (function () {
       this.removeIn(gesture, this.gestures, this.composedGestures);
     }
   }, {
-    key: "triggerGestures",
-    value: function triggerGestures(flow, e, data, action) {
+    key: "processEvent",
+    value: function processEvent(flow, e, data, action) {
       if (this.activeFlow !== flow) {
         return;
       }
@@ -193,12 +194,12 @@ var Engine = (function () {
             break;
           case ACTION_END:
             valid = this.validator[ACTION_END](e, data, gesture.subscriber.options);
-            valid = valid && gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED];
+            valid = valid && gesture[_utils.GESTURE_STARTED];
             break;
         }
         if (valid === false) {
           //Remove
-          if (gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
+          if (gesture[_utils.GESTURE_STARTED]) {
             gesture[ACTION_CANCEL]();
           }
           this.removeIn(gesture, gestures, this.gestures);
@@ -208,33 +209,26 @@ var Engine = (function () {
         }
         //Call
         result = gesture[action](e, data);
-        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.STARTED) {
-          gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED] = true;
+        if (result & _utils.RETURN_FLAG.STARTED) {
+          gesture[_utils.GESTURE_STARTED] = true;
         }
-        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.REMOVE) {
-          if (gesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
+
+        //Remove gesture
+        if (result & _utils.RETURN_FLAG.REMOVE) {
+          if (gesture[_utils.GESTURE_STARTED]) {
             gesture[ACTION_CANCEL]();
           }
           this.removeIn(gesture, gestures, this.gestures);
         }
-        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.REMOVE_OTHER_TYPES) {
-          otherGestures = this.gestures.slice();
-          while (otherGesture = otherGestures.shift()) {
-            if (otherGesture.__type !== gesture.__type) {
-              if (otherGesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
-                otherGesture[ACTION_CANCEL]();
-              }
-              this.removeIn(otherGesture, gestures, this.gestures);
-            }
-          }
-        }
-        if (result & _GESTURE_STARTED$RETURN_FLAG$matchesSelector.RETURN_FLAG.REMOVE_OTHERS) {
+
+        //Remove all other gestures
+        if (result & _utils.RETURN_FLAG.REMOVE_OTHERS) {
           otherGestures = this.gestures.slice();
           while (otherGesture = otherGestures.shift()) {
             if (gesture === otherGesture) {
               continue;
             }
-            if (otherGesture[_GESTURE_STARTED$RETURN_FLAG$matchesSelector.GESTURE_STARTED]) {
+            if (otherGesture[_utils.GESTURE_STARTED]) {
               otherGesture[ACTION_CANCEL]();
             }
             this.removeIn(otherGesture, gestures, this.gestures);
@@ -273,7 +267,7 @@ var Engine = (function () {
           if (!selector && element === handle.element) {
             handle.active = true;
           } else if (selector) {
-            if (_GESTURE_STARTED$RETURN_FLAG$matchesSelector.matchesSelector(element, selector)) {
+            if ((0, _utils.matchesSelector)(element, selector)) {
               handle.active = true;
             }
           }
