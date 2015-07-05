@@ -1,9 +1,8 @@
 /*eslint no-cond-assign: 0*/
 import {Flow} from "./flow";
-import {Point} from "../point";
 
 export class TouchFlow extends Flow {
-  constructor(element) {
+  constructor(element, Point) {
     super(element, Point, [{
       start: ["touchstart"]
   }, {
@@ -19,7 +18,7 @@ export class TouchFlow extends Flow {
 
     switch(event.type) {
       default: {
-        touches = Array.prototype.slice.call(event.touches)
+        touches = Array.prototype.slice.call(event.touches);
         while (touch = touches.shift()) {
           var ix = data.pointerIds.indexOf(touch.identifier);
           if (ix < 0) {

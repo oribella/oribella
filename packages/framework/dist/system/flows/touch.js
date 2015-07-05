@@ -1,8 +1,8 @@
-System.register(["./flow", "../point"], function (_export) {
+System.register(["./flow"], function (_export) {
   /*eslint no-cond-assign: 0*/
   "use strict";
 
-  var Flow, Point, TouchFlow;
+  var Flow, TouchFlow;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -15,12 +15,10 @@ System.register(["./flow", "../point"], function (_export) {
   return {
     setters: [function (_flow) {
       Flow = _flow.Flow;
-    }, function (_point) {
-      Point = _point.Point;
     }],
     execute: function () {
       TouchFlow = (function (_Flow) {
-        function TouchFlow(element) {
+        function TouchFlow(element, Point) {
           _classCallCheck(this, TouchFlow);
 
           _get(Object.getPrototypeOf(TouchFlow.prototype), "constructor", this).call(this, element, Point, [{

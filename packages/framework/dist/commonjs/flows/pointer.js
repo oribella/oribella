@@ -15,10 +15,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _flow = require("./flow");
 
 var PointerFlow = (function (_Flow) {
-  function PointerFlow(element) {
+  function PointerFlow(element, Point) {
     _classCallCheck(this, PointerFlow);
 
-    _get(Object.getPrototypeOf(PointerFlow.prototype), "constructor", this).call(this, element, [{
+    _get(Object.getPrototypeOf(PointerFlow.prototype), "constructor", this).call(this, element, Point, [{
       start: ["pointerdown"]
     }, {
       update: ["pointermove"]

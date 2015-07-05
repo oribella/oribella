@@ -15,13 +15,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var _flow = require("./flow");
 
-var _point = require("../point");
-
 var TouchFlow = (function (_Flow) {
-  function TouchFlow(element) {
+  function TouchFlow(element, Point) {
     _classCallCheck(this, TouchFlow);
 
-    _get(Object.getPrototypeOf(TouchFlow.prototype), "constructor", this).call(this, element, _point.Point, [{
+    _get(Object.getPrototypeOf(TouchFlow.prototype), "constructor", this).call(this, element, Point, [{
       start: ["touchstart"]
     }, {
       update: ["touchmove"]

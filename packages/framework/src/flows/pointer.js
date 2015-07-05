@@ -1,8 +1,8 @@
 import {Flow} from "./flow";
 
 export class PointerFlow extends Flow {
-  constructor(element) {
-    super(element, [{
+  constructor(element, Point) {
+    super(element, Point, [{
       start: ["pointerdown"]
   }, {
       update: ["pointermove"]
@@ -23,7 +23,7 @@ export class PointerFlow extends Flow {
     var ix = data.pointerIds.indexOf(event.pointerId);
     if(ix !== -1) {
       data.pointerIds.splice(ix, 1);
-      data.pagePoints.splice(ix, 1);  
+      data.pagePoints.splice(ix, 1);
     }
   }
 }

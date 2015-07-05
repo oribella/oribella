@@ -17,10 +17,10 @@ System.register(["./flow"], function (_export) {
     }],
     execute: function () {
       PointerFlow = (function (_Flow) {
-        function PointerFlow(element) {
+        function PointerFlow(element, Point) {
           _classCallCheck(this, PointerFlow);
 
-          _get(Object.getPrototypeOf(PointerFlow.prototype), "constructor", this).call(this, element, [{
+          _get(Object.getPrototypeOf(PointerFlow.prototype), "constructor", this).call(this, element, Point, [{
             start: ["pointerdown"]
           }, {
             update: ["pointermove"]
