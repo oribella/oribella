@@ -13,7 +13,7 @@ export class PointerFlow extends Flow {
   }]);
   }
   normalizePoints(event, data, Point) {
-
+    var ix = data.pointerIds.indexOf(event.pointerId);
     if (ix < 0) {
       ix = data.pointerIds.push(event.pointerId) - 1;
     }

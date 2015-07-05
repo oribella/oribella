@@ -5,7 +5,7 @@ export var DefaultSubscriber = {
   update() {},
   end() {},
   cancel() {}
-}
+};
 export var DefaultGesture = {
   start() {},
   update() {},
@@ -13,7 +13,7 @@ export var DefaultGesture = {
   cancel() {},
   bind() {},
   unbind() {}
-}
+};
 
 export class Registry {
   constructor() {

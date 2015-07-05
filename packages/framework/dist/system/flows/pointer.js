@@ -36,7 +36,7 @@ System.register(["./flow"], function (_export) {
         _createClass(PointerFlow, [{
           key: "normalizePoints",
           value: function normalizePoints(event, data, Point) {
-
+            var ix = data.pointerIds.indexOf(event.pointerId);
             if (ix < 0) {
               ix = data.pointerIds.push(event.pointerId) - 1;
             }
