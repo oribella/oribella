@@ -65,7 +65,6 @@ var Engine = (function () {
       function removeHandle() {
         var ix = handles.indexOf(handle);
         if (ix !== -1) {
-          //TODO: Remove gestures and tear down
           handles.splice(ix, 1);
         }
       }

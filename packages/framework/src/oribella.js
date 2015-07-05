@@ -1,5 +1,5 @@
 import {Engine} from "./engine";
-import {GestureRegistry} from "./gesture-registry";
+import {Registry} from "./registry";
 import {touchEnabled, msPointerEnabled, pointerEnabled} from "./utils";
 import {MouseFlow} from "./flows/mouse";
 import {TouchFlow} from "./flows/touch";
@@ -12,7 +12,7 @@ export * from "./utils";
 export class Oribella {
   constructor(element, engine) {
     this.element = element || window.document;
-    this.registry = new GestureRegistry();
+    this.registry = new Registry();
     this.engine = engine || (new Engine(this.element, this.registry));
   }
   activate() {

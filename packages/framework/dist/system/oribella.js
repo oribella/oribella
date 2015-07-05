@@ -1,7 +1,7 @@
-System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
+System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
   "use strict";
 
-  var Engine, GestureRegistry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
+  var Engine, Registry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -10,8 +10,8 @@ System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "
   return {
     setters: [function (_engine) {
       Engine = _engine.Engine;
-    }, function (_gestureRegistry) {
-      GestureRegistry = _gestureRegistry.GestureRegistry;
+    }, function (_registry) {
+      Registry = _registry.Registry;
     }, function (_utils) {
       touchEnabled = _utils.touchEnabled;
       msPointerEnabled = _utils.msPointerEnabled;
@@ -37,7 +37,7 @@ System.register(["./engine", "./gesture-registry", "./utils", "./flows/mouse", "
           _classCallCheck(this, Oribella);
 
           this.element = element || window.document;
-          this.registry = new GestureRegistry();
+          this.registry = new Registry();
           this.engine = engine || new Engine(this.element, this.registry);
         }
 
