@@ -1,6 +1,6 @@
 import {customAttribute, bindable, inject} from "aurelia-framework";
 
-export class Gesture {
+class Gesture {
   constructor(element, oribella, type) {
     this.element = element;
     this.oribella = oribella;

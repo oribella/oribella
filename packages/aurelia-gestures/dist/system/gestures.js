@@ -54,8 +54,6 @@ System.register(["aurelia-framework"], function (_export) {
         return Gesture;
       })();
 
-      _export("Gesture", Gesture);
-
       Tap = (function (_Gesture) {
         var _instanceInitializers = {};
 

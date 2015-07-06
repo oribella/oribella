@@ -50,8 +50,6 @@ var Gesture = (function () {
   return Gesture;
 })();
 
-exports.Gesture = Gesture;
-
 var Tap = (function (_Gesture) {
   var _instanceInitializers = {};
 
