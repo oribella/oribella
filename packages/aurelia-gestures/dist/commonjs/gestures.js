@@ -1,5 +1,9 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _createDecoratedClass = (function () { function defineProperties(target, descriptors, initializers) { for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === "function") { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError("The decorator for method " + descriptor.key + " is of the invalid type " + typeof decorator); } } if (descriptor.initializer !== undefined) { initializers[key] = descriptor; continue; } } Object.defineProperty(target, key, descriptor); } } return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) { if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers); if (staticProps) defineProperties(Constructor, staticProps, staticInitializers); return Constructor; }; })();
 
 var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
@@ -45,6 +49,8 @@ var Gesture = (function () {
 
   return Gesture;
 })();
+
+exports.Gesture = Gesture;
 
 var Tap = (function (_Gesture) {
   var _instanceInitializers = {};
@@ -120,6 +126,8 @@ var Tap = (function (_Gesture) {
   return Tap;
 })(Gesture);
 
+exports.Tap = Tap;
+
 var Doubletap = (function (_Gesture2) {
   var _instanceInitializers2 = {};
 
@@ -193,6 +201,8 @@ var Doubletap = (function (_Gesture2) {
   Doubletap = (0, _aureliaFramework.customAttribute)("doubletap")(Doubletap) || Doubletap;
   return Doubletap;
 })(Gesture);
+
+exports.Doubletap = Doubletap;
 
 var Longtap = (function (_Gesture3) {
   var _instanceInitializers3 = {};
@@ -277,6 +287,8 @@ var Longtap = (function (_Gesture3) {
   return Longtap;
 })(Gesture);
 
+exports.Longtap = Longtap;
+
 var Swipe = (function (_Gesture4) {
   var _instanceInitializers4 = {};
 
@@ -350,6 +362,8 @@ var Swipe = (function (_Gesture4) {
   Swipe = (0, _aureliaFramework.customAttribute)("swipe")(Swipe) || Swipe;
   return Swipe;
 })(Gesture);
+
+exports.Swipe = Swipe;
 
 var LongtapSwipe = (function (_Gesture5) {
   var _instanceInitializers5 = {};
@@ -425,6 +439,8 @@ var LongtapSwipe = (function (_Gesture5) {
   return LongtapSwipe;
 })(Gesture);
 
+exports.LongtapSwipe = LongtapSwipe;
+
 var Pinch = (function (_Gesture6) {
   var _instanceInitializers6 = {};
 
@@ -499,6 +515,8 @@ var Pinch = (function (_Gesture6) {
   return Pinch;
 })(Gesture);
 
+exports.Pinch = Pinch;
+
 var Rotate = (function (_Gesture7) {
   var _instanceInitializers7 = {};
 
@@ -572,3 +590,5 @@ var Rotate = (function (_Gesture7) {
   Rotate = (0, _aureliaFramework.customAttribute)("rotate")(Rotate) || Rotate;
   return Rotate;
 })(Gesture);
+
+exports.Rotate = Rotate;

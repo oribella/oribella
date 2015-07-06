@@ -1,6 +1,6 @@
 import {customAttribute, bindable, inject} from "aurelia-framework";
 
-class Gesture {
+export class Gesture {
   constructor(element, oribella, type) {
     this.element = element;
     this.oribella = oribella;
@@ -24,7 +24,7 @@ class Gesture {
 
 @customAttribute("tap")
 @inject(Element, "oribella")
-class Tap extends Gesture {
+export class Tap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};
@@ -38,7 +38,7 @@ class Tap extends Gesture {
 
 @customAttribute("doubletap")
 @inject(Element, "oribella")
-class Doubletap extends Gesture {
+export class Doubletap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};
@@ -52,7 +52,7 @@ class Doubletap extends Gesture {
 
 @customAttribute("longtap")
 @inject(Element, "oribella")
-class Longtap extends Gesture {
+export class Longtap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};
@@ -67,7 +67,7 @@ class Longtap extends Gesture {
 
 @customAttribute("swipe")
 @inject(Element, "oribella")
-class Swipe extends Gesture {
+export class Swipe extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};
@@ -81,7 +81,7 @@ class Swipe extends Gesture {
 
 @customAttribute("longtap-swipe")
 @inject(Element, "oribella")
-class LongtapSwipe extends Gesture {
+export class LongtapSwipe extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};
@@ -95,7 +95,7 @@ class LongtapSwipe extends Gesture {
 
 @customAttribute("pinch")
 @inject(Element, "oribella")
-class Pinch extends Gesture {
+export class Pinch extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};
@@ -109,7 +109,7 @@ class Pinch extends Gesture {
 
 @customAttribute("rotate")
 @inject(Element, "oribella")
-class Rotate extends Gesture {
+export class Rotate extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
   @bindable start = function() {};

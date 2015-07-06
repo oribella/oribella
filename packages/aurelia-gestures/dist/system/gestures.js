@@ -54,6 +54,8 @@ System.register(["aurelia-framework"], function (_export) {
         return Gesture;
       })();
 
+      _export("Gesture", Gesture);
+
       Tap = (function (_Gesture) {
         var _instanceInitializers = {};
 
@@ -128,6 +130,8 @@ System.register(["aurelia-framework"], function (_export) {
         return Tap;
       })(Gesture);
 
+      _export("Tap", Tap);
+
       Doubletap = (function (_Gesture2) {
         var _instanceInitializers2 = {};
 
@@ -201,6 +205,8 @@ System.register(["aurelia-framework"], function (_export) {
         Doubletap = customAttribute("doubletap")(Doubletap) || Doubletap;
         return Doubletap;
       })(Gesture);
+
+      _export("Doubletap", Doubletap);
 
       Longtap = (function (_Gesture3) {
         var _instanceInitializers3 = {};
@@ -285,6 +291,8 @@ System.register(["aurelia-framework"], function (_export) {
         return Longtap;
       })(Gesture);
 
+      _export("Longtap", Longtap);
+
       Swipe = (function (_Gesture4) {
         var _instanceInitializers4 = {};
 
@@ -358,6 +366,8 @@ System.register(["aurelia-framework"], function (_export) {
         Swipe = customAttribute("swipe")(Swipe) || Swipe;
         return Swipe;
       })(Gesture);
+
+      _export("Swipe", Swipe);
 
       LongtapSwipe = (function (_Gesture5) {
         var _instanceInitializers5 = {};
@@ -433,6 +443,8 @@ System.register(["aurelia-framework"], function (_export) {
         return LongtapSwipe;
       })(Gesture);
 
+      _export("LongtapSwipe", LongtapSwipe);
+
       Pinch = (function (_Gesture6) {
         var _instanceInitializers6 = {};
 
@@ -507,6 +519,8 @@ System.register(["aurelia-framework"], function (_export) {
         return Pinch;
       })(Gesture);
 
+      _export("Pinch", Pinch);
+
       Rotate = (function (_Gesture7) {
         var _instanceInitializers7 = {};
 
@@ -580,6 +594,8 @@ System.register(["aurelia-framework"], function (_export) {
         Rotate = customAttribute("rotate")(Rotate) || Rotate;
         return Rotate;
       })(Gesture);
+
+      _export("Rotate", Rotate);
     }
   };
 });

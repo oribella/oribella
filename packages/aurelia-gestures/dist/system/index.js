@@ -1,9 +1,9 @@
 System.register([], function (_export) {
   "use strict";
 
-  _export("install", install);
+  _export("configure", configure);
 
-  function install(aurelia) {
+  function configure(aurelia) {
     aurelia.globalizeResources("./gestures");
   }
 
