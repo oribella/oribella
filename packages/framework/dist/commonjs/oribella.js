@@ -30,16 +30,16 @@ var _point = require("./point");
 
 _defaults(exports, _interopRequireWildcard(_utils));
 
-var Oribella = (function () {
-  function Oribella(element, engine) {
-    _classCallCheck(this, Oribella);
+var oribella = (function () {
+  function oribella(element, engine) {
+    _classCallCheck(this, oribella);
 
     this.element = element || window.document;
     this.registry = new _registry.Registry();
     this.engine = engine || new _engine.Engine(this.element, this.registry);
   }
 
-  _createClass(Oribella, [{
+  _createClass(oribella, [{
     key: "activate",
     value: function activate() {
       return this.engine.activate();
@@ -73,7 +73,7 @@ var Oribella = (function () {
     }
   }]);
 
-  return Oribella;
+  return oribella;
 })();
 
-exports.Oribella = Oribella;
+exports.oribella = oribella;

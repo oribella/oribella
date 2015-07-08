@@ -1,7 +1,7 @@
 System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
   "use strict";
 
-  var Engine, Registry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
+  var Engine, Registry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, oribella;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -32,16 +32,16 @@ System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/
       Point = _point.Point;
     }],
     execute: function () {
-      Oribella = (function () {
-        function Oribella(element, engine) {
-          _classCallCheck(this, Oribella);
+      oribella = (function () {
+        function oribella(element, engine) {
+          _classCallCheck(this, oribella);
 
           this.element = element || window.document;
           this.registry = new Registry();
           this.engine = engine || new Engine(this.element, this.registry);
         }
 
-        _createClass(Oribella, [{
+        _createClass(oribella, [{
           key: "activate",
           value: function activate() {
             return this.engine.activate();
@@ -75,10 +75,10 @@ System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/
           }
         }]);
 
-        return Oribella;
+        return oribella;
       })();
 
-      _export("Oribella", Oribella);
+      _export("oribella", oribella);
     }
   };
 });

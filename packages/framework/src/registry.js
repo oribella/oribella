@@ -1,5 +1,6 @@
 /*eslint no-underscore-dangle: 0*/
 export var DefaultSubscriber = {
+  options: {},
   down() {},
   start() {},
   update() {},
@@ -49,7 +50,6 @@ export class Registry {
       throw new Error("Invalid parameter. Should be an object");
     }
     this.ensure(subscriber, DefaultSubscriber);
-    subscriber.options = subscriber.options || {};
   }
   ensureSubscriberOptions(defaultOptions, options) {
     if (typeof defaultOptions === "undefined") {
