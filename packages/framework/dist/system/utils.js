@@ -1,26 +1,9 @@
 System.register([], function (_export) {
   "use strict";
 
-  var touchEnabled, msPointerEnabled, pointerEnabled, GESTURE_STARTED, RETURN_FLAG;
-
-  _export("isMouse", isMouse);
+  var GESTURE_STARTED, RETURN_FLAG;
 
   _export("matchesSelector", matchesSelector);
-
-  function isMouse(e) {
-    if (msPointerEnabled && e.pointerType === e.MSPOINTER_TYPE_MOUSE) {
-      //IE10
-      return true;
-    }
-    if (pointerEnabled && e.pointerType === "mouse") {
-      //IE11
-      return true;
-    }
-    if (e.type.indexOf("mouse") !== -1) {
-      return true;
-    }
-    return false;
-  }
 
   function matchesSelector(element, selector) {
     return (element.matchesSelector || element.webkitMatchesSelector || element.mozMatchesSelector || element.msMatchesSelector || element.oMatchesSelector).call(element, selector);
@@ -29,18 +12,6 @@ System.register([], function (_export) {
   return {
     setters: [],
     execute: function () {
-      touchEnabled = !!("ontouchstart" in window);
-
-      _export("touchEnabled", touchEnabled);
-
-      msPointerEnabled = !!window.MSPointerEvent;
-
-      _export("msPointerEnabled", msPointerEnabled);
-
-      pointerEnabled = !!window.PointerEvent;
-
-      _export("pointerEnabled", pointerEnabled);
-
       GESTURE_STARTED = "__started__";
 
       _export("GESTURE_STARTED", GESTURE_STARTED);

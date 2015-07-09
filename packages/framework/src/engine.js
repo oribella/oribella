@@ -1,6 +1,5 @@
 /*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 import {Handle} from "./handle";
-import {Validator} from "./validator";
 import {MouseFlow} from "./flows/mouse";
 import {GESTURE_STARTED, RETURN_FLAG, matchesSelector} from "./utils";
 
@@ -13,7 +12,7 @@ export class Engine {
   constructor(element, gestureRegistry, validator) {
     this.element = element;
     this.gestureRegistry = gestureRegistry;
-    this.validator = validator || new Validator();
+    this.validator = validator;
     this.flows = [];
     this.activeFlow = undefined;
     this.handles = [];

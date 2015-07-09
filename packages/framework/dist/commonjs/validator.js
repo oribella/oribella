@@ -8,11 +8,11 @@ var _createClass = (function () { function defineProperties(target, props) { for
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _utils = require("./utils");
-
 var Validator = (function () {
-  function Validator() {
+  function Validator(isMouse) {
     _classCallCheck(this, Validator);
+
+    this.isMouse = isMouse;
   }
 
   _createClass(Validator, [{
@@ -40,7 +40,7 @@ var Validator = (function () {
   }, {
     key: "start",
     value: function start(e, data, options) {
-      if ((0, _utils.isMouse)(e) && !this.isValidMouseButton(e, options.which)) {
+      if (this.isMouse(e) && !this.isValidMouseButton(e, options.which)) {
         return false;
       }
       if (this.hasMoreTouches(data.pagePoints, options.touches)) {

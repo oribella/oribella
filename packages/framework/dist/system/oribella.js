@@ -1,7 +1,7 @@
-System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
+System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point", "./utils"], function (_export) {
   "use strict";
 
-  var Engine, Registry, touchEnabled, msPointerEnabled, pointerEnabled, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, oribella;
+  var Engine, Validator, Registry, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -10,16 +10,10 @@ System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/
   return {
     setters: [function (_engine) {
       Engine = _engine.Engine;
+    }, function (_validator) {
+      Validator = _validator.Validator;
     }, function (_registry) {
       Registry = _registry.Registry;
-    }, function (_utils) {
-      touchEnabled = _utils.touchEnabled;
-      msPointerEnabled = _utils.msPointerEnabled;
-      pointerEnabled = _utils.pointerEnabled;
-
-      for (var _key in _utils) {
-        _export(_key, _utils[_key]);
-      }
     }, function (_flowsMouse) {
       MouseFlow = _flowsMouse.MouseFlow;
     }, function (_flowsTouch) {
@@ -30,18 +24,27 @@ System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/
       PointerFlow = _flowsPointer.PointerFlow;
     }, function (_point) {
       Point = _point.Point;
+    }, function (_utils) {
+      for (var _key in _utils) {
+        _export(_key, _utils[_key]);
+      }
     }],
     execute: function () {
-      oribella = (function () {
-        function oribella(element, engine) {
-          _classCallCheck(this, oribella);
+      Oribella = (function () {
+        function Oribella(element, engine, config) {
+          _classCallCheck(this, Oribella);
 
           this.element = element || window.document;
           this.registry = new Registry();
-          this.engine = engine || new Engine(this.element, this.registry);
+          this.engine = engine || new Engine(this.element, this.registry, new Validator(this.isMouse.bind(this)));
+          this.config = config || {
+            touchEnabled: !!("ontouchstart" in window),
+            msPointerEnabled: !!window.MSPointerEvent,
+            pointerEnabled: !!window.PointerEvent
+          };
         }
 
-        _createClass(oribella, [{
+        _createClass(Oribella, [{
           key: "activate",
           value: function activate() {
             return this.engine.activate();
@@ -49,13 +52,13 @@ System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/
         }, {
           key: "withDefaultFlowStrategy",
           value: function withDefaultFlowStrategy() {
-            if (msPointerEnabled) {
+            if (this.config.msPointerEnabled) {
               this.engine.addFlow(new MSPointerFlow(this.element, Point));
             }
-            if (pointerEnabled) {
+            if (this.config.pointerEnabled) {
               this.engine.addFlow(new PointerFlow(this.element, Point));
             }
-            if (touchEnabled) {
+            if (this.config.touchEnabled) {
               this.engine.addFlow(new TouchFlow(this.element, Point));
             }
 
@@ -73,12 +76,28 @@ System.register(["./engine", "./registry", "./utils", "./flows/mouse", "./flows/
           value: function on(element, type, subscriber) {
             return this.engine.addHandle(element, type, subscriber);
           }
+        }, {
+          key: "isMouse",
+          value: function isMouse(e) {
+            if (this.config.msPointerEnabled && e.pointerType === e.MSPOINTER_TYPE_MOUSE) {
+              //IE10
+              return true;
+            }
+            if (this.config.pointerEnabled && e.pointerType === "mouse") {
+              //IE11
+              return true;
+            }
+            if (e.type.indexOf("mouse") !== -1) {
+              return true;
+            }
+            return false;
+          }
         }]);
 
-        return oribella;
+        return Oribella;
       })();
 
-      _export("oribella", oribella);
+      _export("Oribella", Oribella);
     }
   };
 });

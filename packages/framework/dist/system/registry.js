@@ -12,6 +12,7 @@ System.register([], function (_export) {
     setters: [],
     execute: function () {
       DefaultSubscriber = {
+        options: {},
         down: function down() {},
         start: function start() {},
         update: function update() {},
@@ -79,7 +80,6 @@ System.register([], function (_export) {
               throw new Error("Invalid parameter. Should be an object");
             }
             this.ensure(subscriber, DefaultSubscriber);
-            subscriber.options = subscriber.options || {};
           }
         }, {
           key: "ensureSubscriberOptions",

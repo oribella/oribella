@@ -1,6 +1,6 @@
 import {Engine} from "./engine";
+import {Validator} from "./validator";
 import {Registry} from "./registry";
-import {touchEnabled, msPointerEnabled, pointerEnabled} from "./utils";
 import {MouseFlow} from "./flows/mouse";
 import {TouchFlow} from "./flows/touch";
 import {MSPointerFlow} from "./flows/ms-pointer";
@@ -10,22 +10,27 @@ import {Point} from "./point";
 export * from "./utils";
 
 export class Oribella {
-  constructor(element, engine) {
+  constructor(element, engine, config) {
     this.element = element || window.document;
     this.registry = new Registry();
-    this.engine = engine || (new Engine(this.element, this.registry));
+    this.engine = engine || (new Engine(this.element, this.registry, new Validator(this.isMouse.bind(this))));
+    this.config = config || {
+      touchEnabled: !!("ontouchstart" in window),
+      msPointerEnabled: !!(window.MSPointerEvent),
+      pointerEnabled: !!(window.PointerEvent)
+    };
   }
   activate() {
     return this.engine.activate();
   }
   withDefaultFlowStrategy() {
-    if (msPointerEnabled) {
+    if (this.config.msPointerEnabled) {
       this.engine.addFlow(new MSPointerFlow(this.element, Point));
     }
-    if (pointerEnabled) {
+    if (this.config.pointerEnabled) {
       this.engine.addFlow(new PointerFlow(this.element, Point));
     }
-    if (touchEnabled) {
+    if (this.config.touchEnabled) {
       this.engine.addFlow(new TouchFlow(this.element, Point));
     }
 
@@ -38,5 +43,17 @@ export class Oribella {
   }
   on(element, type, subscriber) {
     return this.engine.addHandle(element, type, subscriber);
+  }
+  isMouse(e) {
+    if (this.config.msPointerEnabled && e.pointerType === e.MSPOINTER_TYPE_MOUSE) { //IE10
+      return true;
+    }
+    if (this.config.pointerEnabled && e.pointerType === "mouse") { //IE11
+      return true;
+    }
+    if (e.type.indexOf("mouse") !== -1) {
+      return true;
+    }
+    return false;
   }
 }

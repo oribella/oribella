@@ -10,6 +10,7 @@ var _createClass = (function () { function defineProperties(target, props) { for
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var DefaultSubscriber = {
+  options: {},
   down: function down() {},
   start: function start() {},
   update: function update() {},
@@ -75,7 +76,6 @@ var Registry = (function () {
         throw new Error("Invalid parameter. Should be an object");
       }
       this.ensure(subscriber, DefaultSubscriber);
-      subscriber.options = subscriber.options || {};
     }
   }, {
     key: "ensureSubscriberOptions",

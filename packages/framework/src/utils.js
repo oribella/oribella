@@ -1,20 +1,3 @@
-export var touchEnabled = !!("ontouchstart" in window);
-export var msPointerEnabled = !!(window.MSPointerEvent);
-export var pointerEnabled = !!(window.PointerEvent);
-
-export function isMouse(e) {
-  if (msPointerEnabled && e.pointerType === e.MSPOINTER_TYPE_MOUSE) { //IE10
-    return true;
-  }
-  if (pointerEnabled && e.pointerType === "mouse") { //IE11
-    return true;
-  }
-  if (e.type.indexOf("mouse") !== -1) {
-    return true;
-  }
-  return false;
-}
-
 export var GESTURE_STARTED = "__started__";
 
 export var RETURN_FLAG = {

@@ -11,8 +11,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _handle = require("./handle");
 
-var _validator = require("./validator");
-
 var _flowsMouse = require("./flows/mouse");
 
 var _utils = require("./utils");
@@ -28,7 +26,7 @@ var Engine = (function () {
 
     this.element = element;
     this.gestureRegistry = gestureRegistry;
-    this.validator = validator || new _validator.Validator();
+    this.validator = validator;
     this.flows = [];
     this.activeFlow = undefined;
     this.handles = [];

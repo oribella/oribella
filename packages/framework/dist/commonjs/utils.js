@@ -3,31 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.isMouse = isMouse;
 exports.matchesSelector = matchesSelector;
-var touchEnabled = !!("ontouchstart" in window);
-exports.touchEnabled = touchEnabled;
-var msPointerEnabled = !!window.MSPointerEvent;
-exports.msPointerEnabled = msPointerEnabled;
-var pointerEnabled = !!window.PointerEvent;
-
-exports.pointerEnabled = pointerEnabled;
-
-function isMouse(e) {
-  if (msPointerEnabled && e.pointerType === e.MSPOINTER_TYPE_MOUSE) {
-    //IE10
-    return true;
-  }
-  if (pointerEnabled && e.pointerType === "mouse") {
-    //IE11
-    return true;
-  }
-  if (e.type.indexOf("mouse") !== -1) {
-    return true;
-  }
-  return false;
-}
-
 var GESTURE_STARTED = "__started__";
 
 exports.GESTURE_STARTED = GESTURE_STARTED;
