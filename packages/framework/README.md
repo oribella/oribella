@@ -14,7 +14,7 @@ This ensures a solid flow where you always make sure to be in a good state. So f
 ##### update - mousemove
 ##### end - mouseup
 ##### cancel - dragstart
-What? Why dragstart? Since the browser stops sending mouse events as soon as it 
+What? Why dragstart? Since the browser stops sending mouse events as soon as it
 becomes a drag we can't ensure a consistent flow hence we cancel the mouse flow.
 
 ### Touch
@@ -40,4 +40,4 @@ So now we have covered the event flow which is the foundation for understanding 
 
 *Oribella* has already a set of gestures which is **Tap**, **DoubleTap**, **Longtap**, **Swipe**, **LongtapSwipe**, **Pinch** and **Rotate**.
 
-These are well known and well defined gestures that should make sense to you. They are implemented as "there can only be one winning" gesture. That means if you have all defined and you make a gesture you should only get the `end` event for one of them. The rest are cancelled.
+These are well known and well defined gestures that should make sense to you.
