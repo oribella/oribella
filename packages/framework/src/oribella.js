@@ -10,15 +10,14 @@ import {Point} from "./point";
 export * from "./utils";
 
 export class Oribella {
-  constructor(element, engine, config) {
-    this.element = element || window.document;
+  constructor(element, config) {
+    this.element = element;
+    this.config = config;
     this.registry = new Registry();
-    this.engine = engine || (new Engine(this.element, this.registry, new Validator(this.isMouse.bind(this))));
-    this.config = config || {
-      touchEnabled: !!("ontouchstart" in window),
-      msPointerEnabled: !!(window.MSPointerEvent),
-      pointerEnabled: !!(window.PointerEvent)
-    };
+    this.engine = new Engine(this.element,
+      this.registry,
+      new Validator(this.isMouse.bind(this))
+    );
   }
   activate() {
     return this.engine.activate();

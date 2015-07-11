@@ -31,17 +31,13 @@ System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./fl
     }],
     execute: function () {
       Oribella = (function () {
-        function Oribella(element, engine, config) {
+        function Oribella(element, config) {
           _classCallCheck(this, Oribella);
 
-          this.element = element || window.document;
+          this.element = element;
+          this.config = config;
           this.registry = new Registry();
-          this.engine = engine || new Engine(this.element, this.registry, new Validator(this.isMouse.bind(this)));
-          this.config = config || {
-            touchEnabled: !!("ontouchstart" in window),
-            msPointerEnabled: !!window.MSPointerEvent,
-            pointerEnabled: !!window.PointerEvent
-          };
+          this.engine = new Engine(this.element, this.registry, new Validator(this.isMouse.bind(this)));
         }
 
         _createClass(Oribella, [{
