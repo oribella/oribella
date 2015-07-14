@@ -10,13 +10,15 @@
     "url": "http://github.com/oribella/framework"
   },
   "scripts": {
-    "build": "npm run build:commonjs && npm run build:system",
+    "build": "npm run build:commonjs && npm run build:system && npm run build:amd",
     "build:commonjs": "babel src --out-dir dist/commonjs",
     "build:watch:commonjs": "babel src --out-dir dist/commonjs -w",
     "build:system": "babel src --modules system --out-dir dist/system",
     "build:watch:system": "babel src --modules system --out-dir dist/system -w",
-    "test": "mocha ./test --require ./test/global.js --compilers js:babel/register",
-    "test:watch": "mocha ./test --require ./test/global.js --compilers js:babel/register -w",
+    "build:amd": "babel src --modules amd --out-dir dist/amd",
+    "build:amd:watch": "babel src --modules amd --out-dir dist/amd -w",
+    "test": "mocha test --require ./test/global.js --compilers js:babel/register",
+    "test:watch": "mocha test --require ./test/global.js --compilers js:babel/register -w",
     "lint": "eslint src"
   },
   "jspm": {
