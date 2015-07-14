@@ -10,11 +10,13 @@
     "url": "http://github.com/oribella/aurelia-gestures"
   },
   "scripts": {
-    "build": "npm run build:commonjs && npm run build:system",
-    "build:commonjs": "babel src --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/commonjs",
-    "build:watch:commonjs": "babel src --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/commonjs -w",
-    "build:system": "babel src --modules system --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/system",
-    "build:watch:system": "babel src --modules system --stage 2 --optional es7.decorators,es7.classProperties  --out-dir dist/system -w",
+    "build": "npm run build:commonjs && npm run build:system && npm run build:amd",
+    "build:commonjs": "babel src --out-dir dist/commonjs",
+    "build:watch:commonjs": "babel src --out-dir dist/commonjs -w",
+    "build:system": "babel src --modules system --out-dir dist/system",
+    "build:watch:system": "babel src --modules system --out-dir dist/system -w",
+    "build:amd": "babel src --modules amd --out-dir dist/amd",
+    "build:amd:watch": "babel src --modules amd --out-dir dist/amd -w",
     "test": "mocha test --require ./test/global.js --compilers js:babel/register",
     "test:watch": "mocha test --require ./test/global.js --compilers js:babel/register -w",
     "lint": "eslint src"
