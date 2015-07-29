@@ -21,14 +21,14 @@ var ACTION_START = "start",
     ACTION_CANCEL = "cancel";
 
 var Engine = (function () {
-  function Engine(element, gestureRegistry, validator) {
+  function Engine(element, registry, validator) {
     _classCallCheck(this, Engine);
 
     this.element = element;
-    this.gestureRegistry = gestureRegistry;
+    this.registry = registry;
     this.validator = validator;
     this.flows = [];
-    this.activeFlow = undefined;
+    this.activeFlow = null;
     this.handles = [];
     this.gestures = [];
     this.composedGestures = [];
@@ -37,7 +37,7 @@ var Engine = (function () {
   _createClass(Engine, [{
     key: "registerGesture",
     value: function registerGesture(type, Gesture) {
-      this.gestureRegistry.register(type, Gesture);
+      this.registry.register(type, Gesture);
     }
   }, {
     key: "activate",
@@ -55,19 +55,18 @@ var Engine = (function () {
   }, {
     key: "addHandle",
     value: function addHandle(element, type, subscriber) {
-      var handle = new _handle.Handle(element, type, subscriber),
-          handles = this.handles;
+      var _this = this;
 
-      handles.push(handle);
+      var handle = new _handle.Handle(element, type, subscriber);
 
-      function removeHandle() {
-        var ix = handles.indexOf(handle);
+      this.handles.push(handle);
+
+      return function () {
+        var ix = _this.handles.indexOf(handle);
         if (ix !== -1) {
-          handles.splice(ix, 1);
+          _this.handles.splice(ix, 1);
         }
-      }
-
-      return removeHandle;
+      };
     }
   }, {
     key: "addFlow",
@@ -82,7 +81,7 @@ var Engine = (function () {
       if (this.activeFlow instanceof _flowsMouse.MouseFlow && flow instanceof _flowsMouse.MouseFlow) {
         return true; //Solves the scrollbar mousedown issue for IE
       }
-      return this.activeFlow === undefined || this.activeFlow === flow;
+      return this.activeFlow === null || this.activeFlow === flow;
     }
   }, {
     key: "startFlow",
@@ -91,14 +90,14 @@ var Engine = (function () {
         return false;
       }
 
-      //Try match
-      if (!this.activeFlow) {
-        //Only match for first start
-        this.gestures = this.match(e.target);
-        if (!this.gestures.length) {
-          return false; //No match don't continue
-        }
-        this.activeFlow = flow;
+      this.activeFlow = flow;
+
+      this.gestures = this.gestures.concat(this.match(e.target)).sort(function (g1, g2) {
+        return g1.subscriber.options.prio - g2.subscriber.options.prio;
+      });
+
+      if (!this.gestures.length) {
+        return false; //No match don't continue
       }
 
       this.processEvent(flow, e, data, ACTION_START);
@@ -140,7 +139,7 @@ var Engine = (function () {
         handler.active = false;
       }
       this.gestures.length = 0;
-      this.activeFlow = undefined;
+      this.activeFlow = null;
     }
   }, {
     key: "removeIn",
@@ -236,7 +235,7 @@ var Engine = (function () {
   }, {
     key: "createGesture",
     value: function createGesture(handler, element) {
-      var gesture = this.gestureRegistry.create(handler.type, handler.subscriber, element);
+      var gesture = this.registry.create(handler.type, handler.subscriber, element);
       gesture.bind(this.addHandle.bind(this), handler.element, this.removeGesture.bind(this, gesture));
       return gesture;
     }
@@ -282,9 +281,7 @@ var Engine = (function () {
         }
       }
 
-      return gestures.sort(function (g1, g2) {
-        return g1.subscriber.options.prio - g2.subscriber.options.prio;
-      });
+      return gestures;
     }
   }]);
 

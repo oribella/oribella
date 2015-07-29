@@ -16,7 +16,7 @@
     "build:system": "babel src --modules system --out-dir dist/system",
     "build:watch:system": "babel src --modules system --out-dir dist/system -w",
     "build:amd": "babel src --modules amd --out-dir dist/amd",
-    "build:amd:watch": "babel src --modules amd --out-dir dist/amd -w",
+    "build:watch:amd": "babel src --modules amd --out-dir dist/amd -w",
     "test": "mocha test --require ./test/global.js --compilers js:babel/register",
     "test:watch": "mocha test --require ./test/global.js --compilers js:babel/register -w",
     "lint": "eslint src"

@@ -9,18 +9,18 @@ var ACTION_START = "start",
   ACTION_CANCEL = "cancel";
 
 export class Engine {
-  constructor(element, gestureRegistry, validator) {
+  constructor(element, registry, validator) {
     this.element = element;
-    this.gestureRegistry = gestureRegistry;
+    this.registry = registry;
     this.validator = validator;
     this.flows = [];
-    this.activeFlow = undefined;
+    this.activeFlow = null;
     this.handles = [];
     this.gestures = [];
     this.composedGestures = [];
   }
   registerGesture(type, Gesture) {
-    this.gestureRegistry.register(type, Gesture);
+    this.registry.register(type, Gesture);
   }
   activate() {
     var stopListeners = [];
@@ -32,19 +32,16 @@ export class Engine {
     };
   }
   addHandle(element, type, subscriber) {
-    var handle = new Handle(element, type, subscriber),
-      handles = this.handles;
+    var handle = new Handle(element, type, subscriber);
 
-    handles.push(handle);
+    this.handles.push(handle);
 
-    function removeHandle() {
-      var ix = handles.indexOf(handle);
+    return () => {
+      var ix = this.handles.indexOf(handle);
       if (ix !== -1) {
-        handles.splice(ix, 1);
+        this.handles.splice(ix, 1);
       }
-    }
-
-    return removeHandle;
+    };
   }
   addFlow(flow) {
     this.flows.push(flow);
@@ -59,20 +56,24 @@ export class Engine {
     if ((this.activeFlow instanceof MouseFlow) && (flow instanceof MouseFlow)) {
       return true; //Solves the scrollbar mousedown issue for IE
     }
-    return (this.activeFlow === undefined || this.activeFlow === flow);
+    return (this.activeFlow === null || this.activeFlow === flow);
   }
   startFlow(flow, e, data) {
     if (!this.canActivateFlow(flow)) {
       return false;
     }
 
-    //Try match
-    if (!this.activeFlow) { //Only match for first start
-      this.gestures = this.match(e.target);
-      if (!this.gestures.length) {
-        return false; //No match don't continue
-      }
-      this.activeFlow = flow;
+    this.activeFlow = flow;
+
+    this.gestures = this.gestures
+                      .concat(this.match(e.target))
+                      .sort( (g1, g2) => {
+                        return g1.subscriber.options.prio -
+                          g2.subscriber.options.prio;
+                      });
+
+    if (!this.gestures.length) {
+      return false; //No match don't continue
     }
 
     this.processEvent(flow, e, data, ACTION_START);
@@ -106,7 +107,7 @@ export class Engine {
       handler.active = false;
     }
     this.gestures.length = 0;
-    this.activeFlow = undefined;
+    this.activeFlow = null;
   }
   removeIn(...args) {
     var g = args.shift(),
@@ -189,7 +190,7 @@ export class Engine {
     }
   }
   createGesture(handler, element) {
-    var gesture = this.gestureRegistry.create(handler.type, handler.subscriber, element);
+    var gesture = this.registry.create(handler.type, handler.subscriber, element);
     gesture.bind(this.addHandle.bind(this), handler.element, this.removeGesture.bind(this, gesture));
     return gesture;
   }
@@ -232,8 +233,6 @@ export class Engine {
       }
     }
 
-    return gestures.sort(function (g1, g2) {
-      return g1.subscriber.options.prio - g2.subscriber.options.prio;
-    });
+    return gestures;
   };
 }
