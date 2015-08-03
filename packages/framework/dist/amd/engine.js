@@ -15,6 +15,11 @@ define(["exports", "./handle", "./flows/mouse", "./utils"], function (exports, _
       ACTION_END = "end",
       ACTION_CANCEL = "cancel";
 
+  exports.ACTION_START = ACTION_START;
+  exports.ACTION_UPDATE = ACTION_UPDATE;
+  exports.ACTION_END = ACTION_END;
+  exports.ACTION_CANCEL = ACTION_CANCEL;
+
   var Engine = (function () {
     function Engine(element, registry, validator) {
       _classCallCheck(this, Engine);
@@ -164,7 +169,7 @@ define(["exports", "./handle", "./flows/mouse", "./utils"], function (exports, _
       key: "processEvent",
       value: function processEvent(flow, e, data, action) {
         if (this.activeFlow !== flow) {
-          return;
+          return false;
         }
         var gestures = this.gestures.slice(),
             gesture,
@@ -226,6 +231,7 @@ define(["exports", "./handle", "./flows/mouse", "./utils"], function (exports, _
             }
           }
         }
+        return true;
       }
     }, {
       key: "createGesture",

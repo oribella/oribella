@@ -20,6 +20,11 @@ var ACTION_START = "start",
     ACTION_END = "end",
     ACTION_CANCEL = "cancel";
 
+exports.ACTION_START = ACTION_START;
+exports.ACTION_UPDATE = ACTION_UPDATE;
+exports.ACTION_END = ACTION_END;
+exports.ACTION_CANCEL = ACTION_CANCEL;
+
 var Engine = (function () {
   function Engine(element, registry, validator) {
     _classCallCheck(this, Engine);
@@ -169,7 +174,7 @@ var Engine = (function () {
     key: "processEvent",
     value: function processEvent(flow, e, data, action) {
       if (this.activeFlow !== flow) {
-        return;
+        return false;
       }
       var gestures = this.gestures.slice(),
           gesture,
@@ -231,6 +236,7 @@ var Engine = (function () {
           }
         }
       }
+      return true;
     }
   }, {
     key: "createGesture",

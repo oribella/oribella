@@ -3,7 +3,7 @@ import {Handle} from "./handle";
 import {MouseFlow} from "./flows/mouse";
 import {GESTURE_STARTED, RETURN_FLAG, matchesSelector} from "./utils";
 
-var ACTION_START = "start",
+export var ACTION_START = "start",
   ACTION_UPDATE = "update",
   ACTION_END = "end",
   ACTION_CANCEL = "cancel";
@@ -127,7 +127,7 @@ export class Engine {
   }
   processEvent(flow, e, data, action) {
     if (this.activeFlow !== flow) {
-      return;
+      return false;
     }
     var gestures = this.gestures.slice(),
       gesture,
@@ -188,6 +188,7 @@ export class Engine {
         }
       }
     }
+    return true;
   }
   createGesture(handler, element) {
     var gesture = this.registry.create(handler.type, handler.subscriber, element);

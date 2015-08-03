@@ -24,6 +24,14 @@ System.register(["./handle", "./flows/mouse", "./utils"], function (_export) {
       ACTION_END = "end";
       ACTION_CANCEL = "cancel";
 
+      _export("ACTION_START", ACTION_START);
+
+      _export("ACTION_UPDATE", ACTION_UPDATE);
+
+      _export("ACTION_END", ACTION_END);
+
+      _export("ACTION_CANCEL", ACTION_CANCEL);
+
       Engine = (function () {
         function Engine(element, registry, validator) {
           _classCallCheck(this, Engine);
@@ -173,7 +181,7 @@ System.register(["./handle", "./flows/mouse", "./utils"], function (_export) {
           key: "processEvent",
           value: function processEvent(flow, e, data, action) {
             if (this.activeFlow !== flow) {
-              return;
+              return false;
             }
             var gestures = this.gestures.slice(),
                 gesture,
@@ -235,6 +243,7 @@ System.register(["./handle", "./flows/mouse", "./utils"], function (_export) {
                 }
               }
             }
+            return true;
           }
         }, {
           key: "createGesture",

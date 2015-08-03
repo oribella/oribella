@@ -38,8 +38,7 @@ System.register([], function (_export) {
         },
         STARTED: 1,
         REMOVE: 2,
-        REMOVE_OTHER_TYPES: 4,
-        REMOVE_OTHERS: 8
+        REMOVE_OTHERS: 4
       };
 
       _export("RETURN_FLAG", RETURN_FLAG);

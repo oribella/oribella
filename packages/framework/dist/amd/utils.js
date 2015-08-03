@@ -30,8 +30,7 @@ define(["exports"], function (exports) {
     },
     STARTED: 1,
     REMOVE: 2,
-    REMOVE_OTHER_TYPES: 4,
-    REMOVE_OTHERS: 8
+    REMOVE_OTHERS: 4
   };
 
   exports.RETURN_FLAG = RETURN_FLAG;

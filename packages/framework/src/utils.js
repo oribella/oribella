@@ -22,8 +22,7 @@ export var RETURN_FLAG = {
   },
   STARTED: 1,
   REMOVE: 2,
-  REMOVE_OTHER_TYPES: 4,
-  REMOVE_OTHERS: 8
+  REMOVE_OTHERS: 4
 };
 
 export function matchesSelector(element, selector) {
