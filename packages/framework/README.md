@@ -5,7 +5,7 @@ Well, this is the core library of ***Oribella*** cross browser, cross device, cr
 
 ***Oribella*** has a set of normalised gestures [Tap](https://github.com/oribella/tap), [Doubletap](https://github.com/oribella/doubletap), [Longtap](https://github.com/oribella/longtap), [Swipe](https://github.com/oribella/swipe), [LongtapSwipe](https://github.com/oribella/longtap-swipe), [Pinch](https://github.com/oribella/pinch) and [Rotate](https://github.com/oribella/rotate).
 
-Just because the gesture is named *Tap* it doesn't mean that it only works on *touch*. They are normalised and works cross input meaning it could be for example  *mouse, *touch*, *pen*.
+Just because the gesture is named *Tap* it doesn't mean that it only works on *touch*. They are normalised and works cross input meaning it could be for example  *mouse*, *touch*, *pen*.
 
 It's soul purpose is to normalize the event hell into an easy to understand flow. It currently understands mouse, touch, MSPointer and pointer event flows. However this is pluggable so if there comes another one it should "just" be able to plug it in. As long as it follows the following conventions.
 
