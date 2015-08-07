@@ -65,7 +65,7 @@ System.register([], function (_export) {
           }
         }, {
           key: "removePoints",
-          value: function removePoints(event, data) {
+          value: function removePoints(e, data) {
             data.pagePoints.length = 0;
           }
         }, {
@@ -131,7 +131,7 @@ System.register([], function (_export) {
           value: function end(e) {
             this.normalizePoints(e, this.data, this.Point);
             this.endCallback(this, e, this.data);
-            this.removePoints(e, this.data, this.Point);
+            this.removePoints(e, this.data);
             if (!this.data.pagePoints.length) {
               this.stop();
             }

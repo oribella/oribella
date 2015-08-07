@@ -1,6 +1,5 @@
 /*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 import {Handle} from "./handle";
-import {MouseFlow} from "./flows/mouse";
 import {GESTURE_STARTED, RETURN_FLAG, matchesSelector} from "./utils";
 
 export var ACTION_START = "start",
@@ -53,9 +52,6 @@ export class Engine {
     return flow;
   }
   canActivateFlow(flow) {
-    if ((this.activeFlow instanceof MouseFlow) && (flow instanceof MouseFlow)) {
-      return true; //Solves the scrollbar mousedown issue for IE
-    }
     return (this.activeFlow === null || this.activeFlow === flow);
   }
   startFlow(flow, e, data) {

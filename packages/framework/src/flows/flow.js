@@ -48,7 +48,7 @@ export class Flow {
     data.pagePoints.length = 0;
     data.pagePoints.push(new Point(event.pageX, event.pageY));
   }
-  removePoints(event, data) {
+  removePoints(e, data) {
     data.pagePoints.length = 0;
   }
   onStart(startCallback) {
@@ -94,7 +94,7 @@ export class Flow {
   end(e) {
     this.normalizePoints(e, this.data, this.Point);
     this.endCallback(this, e, this.data);
-    this.removePoints(e, this.data, this.Point);
+    this.removePoints(e, this.data);
     if(!this.data.pagePoints.length) {
       this.stop();
     }

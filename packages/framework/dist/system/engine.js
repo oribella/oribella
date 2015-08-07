@@ -1,8 +1,8 @@
-System.register(["./handle", "./flows/mouse", "./utils"], function (_export) {
+System.register(["./handle", "./utils"], function (_export) {
   /*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
   "use strict";
 
-  var Handle, MouseFlow, GESTURE_STARTED, RETURN_FLAG, matchesSelector, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
+  var Handle, GESTURE_STARTED, RETURN_FLAG, matchesSelector, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -11,8 +11,6 @@ System.register(["./handle", "./flows/mouse", "./utils"], function (_export) {
   return {
     setters: [function (_handle) {
       Handle = _handle.Handle;
-    }, function (_flowsMouse) {
-      MouseFlow = _flowsMouse.MouseFlow;
     }, function (_utils) {
       GESTURE_STARTED = _utils.GESTURE_STARTED;
       RETURN_FLAG = _utils.RETURN_FLAG;
@@ -90,9 +88,6 @@ System.register(["./handle", "./flows/mouse", "./utils"], function (_export) {
         }, {
           key: "canActivateFlow",
           value: function canActivateFlow(flow) {
-            if (this.activeFlow instanceof MouseFlow && flow instanceof MouseFlow) {
-              return true; //Solves the scrollbar mousedown issue for IE
-            }
             return this.activeFlow === null || this.activeFlow === flow;
           }
         }, {

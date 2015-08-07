@@ -26,7 +26,7 @@ System.register(["./flow"], function (_export) {
           }, {
             update: ["touchmove"]
           }, {
-            end: ["touchend", "mouseup"]
+            end: ["touchend", "mouseup", "click"]
           }, {
             cancel: ["touchcancel", "dragstart"]
           }], true);
@@ -36,13 +36,17 @@ System.register(["./flow"], function (_export) {
 
         _createClass(TouchFlow, [{
           key: "normalizePoints",
-          value: function normalizePoints(event, data, Point) {
+          value: function normalizePoints(e, data, Point) {
             var touches, touch;
 
-            switch (event.type) {
+            switch (e.type) {
               default:
                 {
-                  touches = Array.prototype.slice.call(event.touches);
+                  touches = Array.prototype.slice.call(e.touches);
+                  if (e.type === "touchstart" && touches.length === 1) {
+                    data.pointerIds.length = 0;
+                    data.pagePoints.length = 0;
+                  }
                   while (touch = touches.shift()) {
                     var ix = data.pointerIds.indexOf(touch.identifier);
                     if (ix < 0) {
@@ -52,21 +56,32 @@ System.register(["./flow"], function (_export) {
                   }
                   break;
                 }
+              case "click":
               case "mouseup":
                 {
-                  _get(Object.getPrototypeOf(TouchFlow.prototype), "normalizePoints", this).call(this, event, data, Point);
+                  _get(Object.getPrototypeOf(TouchFlow.prototype), "normalizePoints", this).call(this, e, data, Point);
                 }
             }
           }
         }, {
           key: "removePoints",
-          value: function removePoints(event, data) {
-            var touches = Array.prototype.slice.call(event.changedTouches);
-            var touch;
-            while (touch = touches.shift()) {
-              var ix = data.pointerIds.indexOf(touch.identifier);
-              data.pointerIds.splice(ix, 1);
-              data.pagePoints.splice(ix, 1);
+          value: function removePoints(e, data) {
+            switch (e.type) {
+              default:
+                {
+                  var touches = Array.prototype.slice.call(e.changedTouches);
+                  var touch;
+                  while (touch = touches.shift()) {
+                    var ix = data.pointerIds.indexOf(touch.identifier);
+                    data.pointerIds.splice(ix, 1);
+                    data.pagePoints.splice(ix, 1);
+                  }
+                }
+              case "click":
+              case "mouseup":
+                {
+                  _get(Object.getPrototypeOf(TouchFlow.prototype), "removePoints", this).call(this, e, data);
+                }
             }
           }
         }]);

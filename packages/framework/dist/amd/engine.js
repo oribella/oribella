@@ -1,4 +1,4 @@
-define(["exports", "./handle", "./flows/mouse", "./utils"], function (exports, _handle, _flowsMouse, _utils) {
+define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
   /*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
   "use strict";
 
@@ -78,9 +78,6 @@ define(["exports", "./handle", "./flows/mouse", "./utils"], function (exports, _
     }, {
       key: "canActivateFlow",
       value: function canActivateFlow(flow) {
-        if (this.activeFlow instanceof _flowsMouse.MouseFlow && flow instanceof _flowsMouse.MouseFlow) {
-          return true; //Solves the scrollbar mousedown issue for IE
-        }
         return this.activeFlow === null || this.activeFlow === flow;
       }
     }, {

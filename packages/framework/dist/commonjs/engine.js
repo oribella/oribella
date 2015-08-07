@@ -11,8 +11,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _handle = require("./handle");
 
-var _flowsMouse = require("./flows/mouse");
-
 var _utils = require("./utils");
 
 var ACTION_START = "start",
@@ -83,9 +81,6 @@ var Engine = (function () {
   }, {
     key: "canActivateFlow",
     value: function canActivateFlow(flow) {
-      if (this.activeFlow instanceof _flowsMouse.MouseFlow && flow instanceof _flowsMouse.MouseFlow) {
-        return true; //Solves the scrollbar mousedown issue for IE
-      }
       return this.activeFlow === null || this.activeFlow === flow;
     }
   }, {
