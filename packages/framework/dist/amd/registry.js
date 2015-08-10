@@ -55,6 +55,9 @@ define(["exports"], function (exports) {
         if (typeof this.gestures[type].defaultOptions === "function") {
           defaultOptions = this.gestures[type].defaultOptions();
         }
+        if (typeof subscriber.options === "undefined") {
+          subscriber.options = {};
+        }
         this.ensureSubscriberOptions(defaultOptions, subscriber.options);
         var gesture = new this.gestures[type](subscriber, element);
         //gesture.__type__ = type;
@@ -92,9 +95,7 @@ define(["exports"], function (exports) {
         if (typeof defaultOptions.prio !== "number") {
           defaultOptions.prio = 100;
         }
-        if (typeof options === "undefined") {
-          options = {};
-        }
+
         Object.keys(defaultOptions).forEach(function (key) {
           var type = typeof options[key];
           if (type === "undefined" || type !== typeof defaultOptions[key]) {
