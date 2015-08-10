@@ -13,6 +13,8 @@ define(["exports", "./engine", "./validator", "./registry", "./flows/mouse", "./
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+  _defaults(exports, _interopRequireWildcard(_point));
+
   _defaults(exports, _interopRequireWildcard(_utils));
 
   var Oribella = (function () {

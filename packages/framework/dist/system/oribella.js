@@ -24,9 +24,13 @@ System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./fl
       PointerFlow = _flowsPointer.PointerFlow;
     }, function (_point) {
       Point = _point.Point;
+
+      for (var _key in _point) {
+        _export(_key, _point[_key]);
+      }
     }, function (_utils) {
-      for (var _key in _utils) {
-        _export(_key, _utils[_key]);
+      for (var _key2 in _utils) {
+        _export(_key2, _utils[_key2]);
       }
     }],
     execute: function () {

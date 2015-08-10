@@ -28,6 +28,8 @@ var _flowsPointer = require("./flows/pointer");
 
 var _point = require("./point");
 
+_defaults(exports, _interopRequireWildcard(_point));
+
 var _utils = require("./utils");
 
 _defaults(exports, _interopRequireWildcard(_utils));

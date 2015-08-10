@@ -7,6 +7,7 @@ import {MSPointerFlow} from "./flows/ms-pointer";
 import {PointerFlow} from "./flows/pointer";
 import {Point} from "./point";
 
+export * from "./point";
 export * from "./utils";
 
 export class Oribella {
