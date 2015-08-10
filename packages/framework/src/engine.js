@@ -186,9 +186,9 @@ export class Engine {
     }
     return true;
   }
-  createGesture(handler, element) {
-    var gesture = this.registry.create(handler.type, handler.subscriber, element);
-    gesture.bind(this.addHandle.bind(this), handler.element, this.removeGesture.bind(this, gesture));
+  createGesture(handle, element) {
+    var gesture = this.registry.create(handle.type, handle.subscriber, element);
+    gesture.bind(this.addHandle.bind(this), handle.element, this.removeGesture.bind(this, gesture));
     return gesture;
   }
   match(startElement) {

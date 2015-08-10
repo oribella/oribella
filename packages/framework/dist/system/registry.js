@@ -12,7 +12,6 @@ System.register([], function (_export) {
     setters: [],
     execute: function () {
       DefaultSubscriber = {
-        options: {},
         down: function down() {},
         start: function start() {},
         update: function update() {},
@@ -95,6 +94,9 @@ System.register([], function (_export) {
             }
             if (typeof defaultOptions.prio !== "number") {
               defaultOptions.prio = 100;
+            }
+            if (typeof options === "undefined") {
+              options = {};
             }
             Object.keys(defaultOptions).forEach(function (key) {
               var type = typeof options[key];

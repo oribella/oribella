@@ -242,9 +242,9 @@ System.register(["./handle", "./utils"], function (_export) {
           }
         }, {
           key: "createGesture",
-          value: function createGesture(handler, element) {
-            var gesture = this.registry.create(handler.type, handler.subscriber, element);
-            gesture.bind(this.addHandle.bind(this), handler.element, this.removeGesture.bind(this, gesture));
+          value: function createGesture(handle, element) {
+            var gesture = this.registry.create(handle.type, handle.subscriber, element);
+            gesture.bind(this.addHandle.bind(this), handle.element, this.removeGesture.bind(this, gesture));
             return gesture;
           }
         }, {

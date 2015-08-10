@@ -1,6 +1,5 @@
 /*eslint no-underscore-dangle: 0*/
 export var DefaultSubscriber = {
-  options: {},
   down() {},
   start() {},
   update() {},
@@ -52,17 +51,20 @@ export class Registry {
     this.ensure(subscriber, DefaultSubscriber);
   }
   ensureSubscriberOptions(defaultOptions, options) {
-    if (typeof defaultOptions === "undefined") {
+    if(typeof defaultOptions === "undefined") {
       defaultOptions = {};
     }
-    if (typeof defaultOptions.touches !== "number") {
+    if(typeof defaultOptions.touches !== "number") {
       defaultOptions.touches = 1;
     }
-    if (typeof defaultOptions.which !== "number") {
+    if(typeof defaultOptions.which !== "number") {
       defaultOptions.which = 1;
     }
-    if (typeof defaultOptions.prio !== "number") {
+    if(typeof defaultOptions.prio !== "number") {
       defaultOptions.prio = 100;
+    }
+    if(typeof options === "undefined") {
+      options = {};
     }
     Object.keys(defaultOptions).forEach(key => {
       var type = typeof options[key];
