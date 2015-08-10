@@ -92,14 +92,14 @@ System.register(["./handle", "./utils"], function (_export) {
           }
         }, {
           key: "startFlow",
-          value: function startFlow(flow, e, data) {
+          value: function startFlow(flow, event, data) {
             if (!this.canActivateFlow(flow)) {
               return false;
             }
 
             this.activeFlow = flow;
 
-            this.gestures = this.gestures.concat(this.match(e.target)).sort(function (g1, g2) {
+            this.gestures = this.gestures.concat(this.match(event.target)).sort(function (g1, g2) {
               return g1.subscriber.options.prio - g2.subscriber.options.prio;
             });
 
@@ -107,24 +107,24 @@ System.register(["./handle", "./utils"], function (_export) {
               return false; //No match don't continue
             }
 
-            this.processEvent(flow, e, data, ACTION_START);
+            this.processEvent(flow, event, data, ACTION_START);
 
             return true;
           }
         }, {
           key: "updateFlow",
-          value: function updateFlow(flow, e, data) {
-            this.processEvent(flow, e, data, ACTION_UPDATE);
+          value: function updateFlow(flow, event, data) {
+            this.processEvent(flow, event, data, ACTION_UPDATE);
           }
         }, {
           key: "cancelFlow",
-          value: function cancelFlow(flow, e, data) {
-            this.processEvent(flow, e, data, ACTION_CANCEL);
+          value: function cancelFlow(flow, event, data) {
+            this.processEvent(flow, event, data, ACTION_CANCEL);
           }
         }, {
           key: "endFlow",
-          value: function endFlow(flow, e, data) {
-            this.processEvent(flow, e, data, ACTION_END);
+          value: function endFlow(flow, event, data) {
+            this.processEvent(flow, event, data, ACTION_END);
           }
         }, {
           key: "stopFlow",
@@ -174,7 +174,7 @@ System.register(["./handle", "./utils"], function (_export) {
           }
         }, {
           key: "processEvent",
-          value: function processEvent(flow, e, data, action) {
+          value: function processEvent(flow, event, data, action) {
             if (this.activeFlow !== flow) {
               return false;
             }
@@ -190,13 +190,13 @@ System.register(["./handle", "./utils"], function (_export) {
               valid = true;
               switch (action) {
                 case ACTION_START:
-                  valid = this.validator[ACTION_START](e, data, gesture.subscriber.options);
+                  valid = this.validator[ACTION_START](event, data, gesture.subscriber.options);
                   break;
                 case ACTION_UPDATE:
-                  valid = this.validator[ACTION_UPDATE](e, data, gesture.subscriber.options);
+                  valid = this.validator[ACTION_UPDATE](event, data, gesture.subscriber.options);
                   break;
                 case ACTION_END:
-                  valid = this.validator[ACTION_END](e, data, gesture.subscriber.options);
+                  valid = this.validator[ACTION_END](event, data, gesture.subscriber.options);
                   valid = valid && gesture[GESTURE_STARTED];
                   break;
               }
@@ -211,7 +211,7 @@ System.register(["./handle", "./utils"], function (_export) {
                 continue;
               }
               //Call
-              result = gesture[action](e, data);
+              result = gesture[action](event, data);
               if (result & RETURN_FLAG.STARTED) {
                 gesture[GESTURE_STARTED] = true;
               }

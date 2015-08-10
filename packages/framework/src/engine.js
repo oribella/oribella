@@ -54,7 +54,7 @@ export class Engine {
   canActivateFlow(flow) {
     return (this.activeFlow === null || this.activeFlow === flow);
   }
-  startFlow(flow, e, data) {
+  startFlow(flow, event, data) {
     if (!this.canActivateFlow(flow)) {
       return false;
     }
@@ -62,7 +62,7 @@ export class Engine {
     this.activeFlow = flow;
 
     this.gestures = this.gestures
-                      .concat(this.match(e.target))
+                      .concat(this.match(event.target))
                       .sort( (g1, g2) => {
                         return g1.subscriber.options.prio -
                           g2.subscriber.options.prio;
@@ -72,18 +72,18 @@ export class Engine {
       return false; //No match don't continue
     }
 
-    this.processEvent(flow, e, data, ACTION_START);
+    this.processEvent(flow, event, data, ACTION_START);
 
     return true;
   }
-  updateFlow(flow, e, data) {
-    this.processEvent(flow, e, data, ACTION_UPDATE);
+  updateFlow(flow, event, data) {
+    this.processEvent(flow, event, data, ACTION_UPDATE);
   }
-  cancelFlow(flow, e, data) {
-    this.processEvent(flow, e, data, ACTION_CANCEL);
+  cancelFlow(flow, event, data) {
+    this.processEvent(flow, event, data, ACTION_CANCEL);
   }
-  endFlow(flow, e, data) {
-    this.processEvent(flow, e, data, ACTION_END);
+  endFlow(flow, event, data) {
+    this.processEvent(flow, event, data, ACTION_END);
   }
   stopFlow() {
     var gestures = this.gestures.slice(),
@@ -121,7 +121,7 @@ export class Engine {
   removeGesture(gesture) {
     this.removeIn(gesture, this.gestures, this.composedGestures);
   }
-  processEvent(flow, e, data, action) {
+  processEvent(flow, event, data, action) {
     if (this.activeFlow !== flow) {
       return false;
     }
@@ -137,13 +137,13 @@ export class Engine {
       valid = true;
       switch (action) {
       case ACTION_START:
-        valid = this.validator[ACTION_START](e, data, gesture.subscriber.options);
+        valid = this.validator[ACTION_START](event, data, gesture.subscriber.options);
         break;
       case ACTION_UPDATE:
-        valid = this.validator[ACTION_UPDATE](e, data, gesture.subscriber.options);
+        valid = this.validator[ACTION_UPDATE](event, data, gesture.subscriber.options);
         break;
       case ACTION_END:
-        valid = this.validator[ACTION_END](e, data, gesture.subscriber.options);
+        valid = this.validator[ACTION_END](event, data, gesture.subscriber.options);
         valid = valid && gesture[GESTURE_STARTED];
         break;
       }
@@ -157,7 +157,7 @@ export class Engine {
         continue;
       }
       //Call
-      result = gesture[action](e, data);
+      result = gesture[action](event, data);
       if (result & RETURN_FLAG.STARTED) {
         gesture[GESTURE_STARTED] = true;
       }

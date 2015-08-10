@@ -40,8 +40,8 @@ define(["exports"], function (exports) {
       }
     }, {
       key: "start",
-      value: function start(e, data, options) {
-        if (this.isMouse(e) && !this.isValidMouseButton(e, options.which)) {
+      value: function start(event, data, options) {
+        if (this.isMouse(event) && !this.isValidMouseButton(event, options.which)) {
           return false;
         }
         if (this.hasMoreTouches(data.pagePoints, options.touches)) {
@@ -51,7 +51,7 @@ define(["exports"], function (exports) {
       }
     }, {
       key: "update",
-      value: function update(e, data, options) {
+      value: function update(event, data, options) {
         if (this.hasMoreTouches(data.pagePoints, options.touches)) {
           return false;
         }
@@ -62,7 +62,7 @@ define(["exports"], function (exports) {
       }
     }, {
       key: "end",
-      value: function end(e, data, options) {
+      value: function end(event, data, options) {
         return this.hasEqualTouches(data.pagePoints, options.touches);
       }
     }]);
