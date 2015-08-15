@@ -10,7 +10,8 @@
     "url": "http://github.com/oribella/framework"
   },
   "scripts": {
-    "version": "conventional-changelog -i CHANGELOG.md --overwrite && git add CHANGELOG.md",
+    "version": "npm run changelog && git add CHANGELOG.md",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
     "build": "npm run build:commonjs && npm run build:system && npm run build:amd",
     "build:commonjs": "babel src --out-dir dist/commonjs",
     "build:watch:commonjs": "babel src --out-dir dist/commonjs -w",
