@@ -49,7 +49,6 @@ describe("Registry", () => {
     var subscriber = {};
     reg.ensureSubscriberProto(subscriber);
     expect(subscriber).to.deep.equal(DefaultSubscriber);
-    expect(subscriber.options).to.be.an("object");
   });
 
   it("should throw if typeof subscriber is not an object", () =>{
