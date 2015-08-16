@@ -1,3 +1,3 @@
-export function configure(aurelia){
-  aurelia.globalizeResources("./gestures");
+export function configure(config){
+  config.globalResources("./gestures");
 }
