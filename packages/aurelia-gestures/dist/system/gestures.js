@@ -1,7 +1,7 @@
-System.register(["aurelia-framework"], function (_export) {
+System.register(["aurelia-framework", "oribella-default-gestures"], function (_export) {
   "use strict";
 
-  var customAttribute, bindable, inject, Gesture, Tap, Doubletap, Longtap, Swipe, LongtapSwipe, Pinch, Rotate;
+  var customAttribute, bindable, inject, oribella, Gesture, Tap, Doubletap, Longtap, Swipe, LongtapSwipe, Pinch, Rotate;
 
   var _createDecoratedClass = (function () { function defineProperties(target, descriptors, initializers) { for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === "function") { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError("The decorator for method " + descriptor.key + " is of the invalid type " + typeof decorator); } } if (descriptor.initializer !== undefined) { initializers[key] = descriptor; continue; } } Object.defineProperty(target, key, descriptor); } } return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) { if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers); if (staticProps) defineProperties(Constructor, staticProps, staticInitializers); return Constructor; }; })();
 
@@ -20,21 +20,22 @@ System.register(["aurelia-framework"], function (_export) {
       customAttribute = _aureliaFramework.customAttribute;
       bindable = _aureliaFramework.bindable;
       inject = _aureliaFramework.inject;
+    }, function (_oribellaDefaultGestures) {
+      oribella = _oribellaDefaultGestures.oribella;
     }],
     execute: function () {
       Gesture = (function () {
-        function Gesture(element, oribella, type) {
+        function Gesture(element, type) {
           _classCallCheck(this, Gesture);
 
           this.element = element;
-          this.oribella = oribella;
           this.type = type;
         }
 
         _createClass(Gesture, [{
           key: "bind",
           value: function bind() {
-            this.remove = this.oribella.on(this.element, this.type, {
+            this.remove = oribella.on(this.element, this.type, {
               selector: this.selector,
               options: this.options,
               start: this.start,
@@ -57,10 +58,10 @@ System.register(["aurelia-framework"], function (_export) {
       Tap = (function (_Gesture) {
         var _instanceInitializers = {};
 
-        function Tap(element, oribella) {
+        function Tap(element) {
           _classCallCheck(this, _Tap);
 
-          _get(Object.getPrototypeOf(_Tap.prototype), "constructor", this).call(this, element, oribella, "tap");
+          _get(Object.getPrototypeOf(_Tap.prototype), "constructor", this).call(this, element, "tap");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers);
 
@@ -123,7 +124,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers);
 
-        Tap = inject(Element, "oribella")(Tap) || Tap;
+        Tap = inject(Element)(Tap) || Tap;
         Tap = customAttribute("tap")(Tap) || Tap;
         return Tap;
       })(Gesture);
@@ -133,10 +134,10 @@ System.register(["aurelia-framework"], function (_export) {
       Doubletap = (function (_Gesture2) {
         var _instanceInitializers2 = {};
 
-        function Doubletap(element, oribella) {
+        function Doubletap(element) {
           _classCallCheck(this, _Doubletap);
 
-          _get(Object.getPrototypeOf(_Doubletap.prototype), "constructor", this).call(this, element, oribella, "doubletap");
+          _get(Object.getPrototypeOf(_Doubletap.prototype), "constructor", this).call(this, element, "doubletap");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers2);
 
@@ -199,7 +200,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers2);
 
-        Doubletap = inject(Element, "oribella")(Doubletap) || Doubletap;
+        Doubletap = inject(Element)(Doubletap) || Doubletap;
         Doubletap = customAttribute("doubletap")(Doubletap) || Doubletap;
         return Doubletap;
       })(Gesture);
@@ -209,10 +210,10 @@ System.register(["aurelia-framework"], function (_export) {
       Longtap = (function (_Gesture3) {
         var _instanceInitializers3 = {};
 
-        function Longtap(element, oribella) {
+        function Longtap(element) {
           _classCallCheck(this, _Longtap);
 
-          _get(Object.getPrototypeOf(_Longtap.prototype), "constructor", this).call(this, element, oribella, "longtap");
+          _get(Object.getPrototypeOf(_Longtap.prototype), "constructor", this).call(this, element, "longtap");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers3);
 
@@ -284,7 +285,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers3);
 
-        Longtap = inject(Element, "oribella")(Longtap) || Longtap;
+        Longtap = inject(Element)(Longtap) || Longtap;
         Longtap = customAttribute("longtap")(Longtap) || Longtap;
         return Longtap;
       })(Gesture);
@@ -294,10 +295,10 @@ System.register(["aurelia-framework"], function (_export) {
       Swipe = (function (_Gesture4) {
         var _instanceInitializers4 = {};
 
-        function Swipe(element, oribella) {
+        function Swipe(element) {
           _classCallCheck(this, _Swipe);
 
-          _get(Object.getPrototypeOf(_Swipe.prototype), "constructor", this).call(this, element, oribella, "swipe");
+          _get(Object.getPrototypeOf(_Swipe.prototype), "constructor", this).call(this, element, "swipe");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers4);
 
@@ -360,7 +361,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers4);
 
-        Swipe = inject(Element, "oribella")(Swipe) || Swipe;
+        Swipe = inject(Element)(Swipe) || Swipe;
         Swipe = customAttribute("swipe")(Swipe) || Swipe;
         return Swipe;
       })(Gesture);
@@ -370,10 +371,10 @@ System.register(["aurelia-framework"], function (_export) {
       LongtapSwipe = (function (_Gesture5) {
         var _instanceInitializers5 = {};
 
-        function LongtapSwipe(element, oribella) {
+        function LongtapSwipe(element) {
           _classCallCheck(this, _LongtapSwipe);
 
-          _get(Object.getPrototypeOf(_LongtapSwipe.prototype), "constructor", this).call(this, element, oribella, "longtapswipe");
+          _get(Object.getPrototypeOf(_LongtapSwipe.prototype), "constructor", this).call(this, element, "longtapswipe");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers5);
 
@@ -436,7 +437,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers5);
 
-        LongtapSwipe = inject(Element, "oribella")(LongtapSwipe) || LongtapSwipe;
+        LongtapSwipe = inject(Element)(LongtapSwipe) || LongtapSwipe;
         LongtapSwipe = customAttribute("longtap-swipe")(LongtapSwipe) || LongtapSwipe;
         return LongtapSwipe;
       })(Gesture);
@@ -446,10 +447,10 @@ System.register(["aurelia-framework"], function (_export) {
       Pinch = (function (_Gesture6) {
         var _instanceInitializers6 = {};
 
-        function Pinch(element, oribella) {
+        function Pinch(element) {
           _classCallCheck(this, _Pinch);
 
-          _get(Object.getPrototypeOf(_Pinch.prototype), "constructor", this).call(this, element, oribella, "pinch");
+          _get(Object.getPrototypeOf(_Pinch.prototype), "constructor", this).call(this, element, "pinch");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers6);
 
@@ -512,7 +513,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers6);
 
-        Pinch = inject(Element, "oribella")(Pinch) || Pinch;
+        Pinch = inject(Element)(Pinch) || Pinch;
         Pinch = customAttribute("pinch")(Pinch) || Pinch;
         return Pinch;
       })(Gesture);
@@ -522,10 +523,10 @@ System.register(["aurelia-framework"], function (_export) {
       Rotate = (function (_Gesture7) {
         var _instanceInitializers7 = {};
 
-        function Rotate(element, oribella) {
+        function Rotate(element) {
           _classCallCheck(this, _Rotate);
 
-          _get(Object.getPrototypeOf(_Rotate.prototype), "constructor", this).call(this, element, oribella, "rotate");
+          _get(Object.getPrototypeOf(_Rotate.prototype), "constructor", this).call(this, element, "rotate");
 
           _defineDecoratedPropertyDescriptor(this, "selector", _instanceInitializers7);
 
@@ -588,7 +589,7 @@ System.register(["aurelia-framework"], function (_export) {
           enumerable: true
         }], null, _instanceInitializers7);
 
-        Rotate = inject(Element, "oribella")(Rotate) || Rotate;
+        Rotate = inject(Element)(Rotate) || Rotate;
         Rotate = customAttribute("rotate")(Rotate) || Rotate;
         return Rotate;
       })(Gesture);

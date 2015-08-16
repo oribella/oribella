@@ -5,6 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.configure = configure;
 
-function configure(aurelia) {
-  aurelia.globalizeResources("./gestures");
+function configure(config) {
+  config.globalResources("./gestures");
 }

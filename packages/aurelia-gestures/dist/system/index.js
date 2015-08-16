@@ -3,8 +3,8 @@ System.register([], function (_export) {
 
   _export("configure", configure);
 
-  function configure(aurelia) {
-    aurelia.globalizeResources("./gestures");
+  function configure(config) {
+    config.globalResources("./gestures");
   }
 
   return {
