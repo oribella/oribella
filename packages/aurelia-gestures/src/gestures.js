@@ -1,13 +1,13 @@
 import {customAttribute, bindable, inject} from "aurelia-framework";
+import {oribella} from "oribella-default-gestures";
 
 class Gesture {
-  constructor(element, oribella, type) {
+  constructor(element, type) {
     this.element = element;
-    this.oribella = oribella;
     this.type = type;
   }
   bind() {
-    this.remove = this.oribella.on(this.element, this.type, {
+    this.remove = oribella.on(this.element, this.type, {
       selector: this.selector,
       options: this.options,
       start: this.start,
@@ -23,7 +23,7 @@ class Gesture {
 }
 
 @customAttribute("tap")
-@inject(Element, "oribella")
+@inject(Element)
 export class Tap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -31,13 +31,13 @@ export class Tap extends Gesture {
   @bindable update = function() {};
   @bindable end = function() {};
   @bindable cancel = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "tap");
+  constructor(element) {
+    super(element, "tap");
   }
 }
 
 @customAttribute("doubletap")
-@inject(Element, "oribella")
+@inject(Element)
 export class Doubletap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -45,13 +45,13 @@ export class Doubletap extends Gesture {
   @bindable update = function() {};
   @bindable end = function() {};
   @bindable cancel = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "doubletap");
+  constructor(element) {
+    super(element, "doubletap");
   }
 }
 
 @customAttribute("longtap")
-@inject(Element, "oribella")
+@inject(Element)
 export class Longtap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -60,13 +60,13 @@ export class Longtap extends Gesture {
   @bindable end = function() {};
   @bindable cancel = function() {};
   @bindable timeEnd = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "longtap");
+  constructor(element) {
+    super(element, "longtap");
   }
 }
 
 @customAttribute("swipe")
-@inject(Element, "oribella")
+@inject(Element)
 export class Swipe extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -74,13 +74,13 @@ export class Swipe extends Gesture {
   @bindable update = function() {};
   @bindable end = function() {};
   @bindable cancel = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "swipe");
+  constructor(element) {
+    super(element, "swipe");
   }
 }
 
 @customAttribute("longtap-swipe")
-@inject(Element, "oribella")
+@inject(Element)
 export class LongtapSwipe extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -88,13 +88,13 @@ export class LongtapSwipe extends Gesture {
   @bindable update = function() {};
   @bindable end = function() {};
   @bindable cancel = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "longtapswipe");
+  constructor(element) {
+    super(element, "longtapswipe");
   }
 }
 
 @customAttribute("pinch")
-@inject(Element, "oribella")
+@inject(Element)
 export class Pinch extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -102,13 +102,13 @@ export class Pinch extends Gesture {
   @bindable update = function() {};
   @bindable end = function() {};
   @bindable cancel = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "pinch");
+  constructor(element) {
+    super(element, "pinch");
   }
 }
 
 @customAttribute("rotate")
-@inject(Element, "oribella")
+@inject(Element)
 export class Rotate extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -116,7 +116,7 @@ export class Rotate extends Gesture {
   @bindable update = function() {};
   @bindable end = function() {};
   @bindable cancel = function() {};
-  constructor(element, oribella) {
-    super(element, oribella, "rotate");
+  constructor(element) {
+    super(element, "rotate");
   }
 }
