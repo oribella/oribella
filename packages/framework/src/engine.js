@@ -54,7 +54,7 @@ export class Engine {
   canActivateFlow(flow) {
     return (this.activeFlow === null || this.activeFlow === flow);
   }
-  startFlow(flow, event, data) {
+  startFlow(flow, event, pagePoints) {
     if (!this.canActivateFlow(flow)) {
       return false;
     }
@@ -72,18 +72,18 @@ export class Engine {
       return false; //No match don't continue
     }
 
-    this.processEvent(flow, event, data, ACTION_START);
+    this.processEvent(flow, event, pagePoints, ACTION_START);
 
     return true;
   }
-  updateFlow(flow, event, data) {
-    this.processEvent(flow, event, data, ACTION_UPDATE);
+  updateFlow(flow, event, pagePoints) {
+    this.processEvent(flow, event, pagePoints, ACTION_UPDATE);
   }
-  cancelFlow(flow, event, data) {
-    this.processEvent(flow, event, data, ACTION_CANCEL);
+  cancelFlow(flow, event, pagePoints) {
+    this.processEvent(flow, event, pagePoints, ACTION_CANCEL);
   }
-  endFlow(flow, event, data) {
-    this.processEvent(flow, event, data, ACTION_END);
+  endFlow(flow, event, pagePoints) {
+    this.processEvent(flow, event, pagePoints, ACTION_END);
   }
   stopFlow() {
     var gestures = this.gestures.slice(),
@@ -121,7 +121,7 @@ export class Engine {
   removeGesture(gesture) {
     this.removeIn(gesture, this.gestures, this.composedGestures);
   }
-  processEvent(flow, event, data, action) {
+  processEvent(flow, event, pagePoints, action) {
     if (this.activeFlow !== flow) {
       return false;
     }
@@ -132,32 +132,28 @@ export class Engine {
       otherGestures,
       otherGesture;
 
+    pagePoints = pagePoints.map(p => p.clone());
+
     while (gesture = gestures.shift()) {
       //Validate
       valid = true;
       switch (action) {
       case ACTION_START:
-        valid = this.validator[ACTION_START](event, data, gesture.subscriber.options);
+        valid = this.validator[ACTION_START](event, pagePoints, gesture.subscriber.options);
         break;
       case ACTION_UPDATE:
-        valid = this.validator[ACTION_UPDATE](event, data, gesture.subscriber.options);
+        valid = this.validator[ACTION_UPDATE](event, pagePoints, gesture.subscriber.options);
         break;
       case ACTION_END:
-        valid = this.validator[ACTION_END](event, data, gesture.subscriber.options);
+        valid = this.validator[ACTION_END](event, pagePoints, gesture.subscriber.options);
         valid = valid && gesture[GESTURE_STARTED];
         break;
-      }
-      if (valid === false) { //Remove
-        if (gesture[GESTURE_STARTED]) {
-          gesture[ACTION_CANCEL]();
-        }
-        this.removeIn(gesture, gestures, this.gestures);
       }
       if (!valid) {
         continue;
       }
       //Call
-      result = gesture[action](event, data);
+      result = gesture[action](event, pagePoints);
       if (result & RETURN_FLAG.STARTED) {
         gesture[GESTURE_STARTED] = true;
       }
@@ -231,5 +227,5 @@ export class Engine {
     }
 
     return gestures;
-  };
+  }
 }

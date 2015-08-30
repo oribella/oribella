@@ -20,25 +20,25 @@ export class Validator {
   hasEqualTouches(pagePoints, touches) {
     return pagePoints.length === touches;
   }
-  start(event, data, options) {
+  start(event, pagePoints, options) {
     if (this.isMouse(event) && !this.isValidMouseButton(event, options.which)) {
       return false;
     }
-    if (this.hasMoreTouches(data.pagePoints, options.touches)) {
+    if (this.hasMoreTouches(pagePoints, options.touches)) {
       return false;
     }
     return true;
   }
-  update(event, data, options) {
-    if (this.hasMoreTouches(data.pagePoints, options.touches)) {
+  update(event, pagePoints, options) {
+    if (this.hasMoreTouches(pagePoints, options.touches)) {
       return false;
     }
-    if (this.hasEqualTouches(data.pagePoints, options.touches)) {
+    if (this.hasEqualTouches(pagePoints, options.touches)) {
       return true;
     }
     return undefined;
   }
-  end(event, data, options) {
-    return this.hasEqualTouches(data.pagePoints, options.touches);
+  end(event, pagePoints, options) {
+    return this.hasEqualTouches(pagePoints, options.touches);
   }
 }

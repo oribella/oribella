@@ -75,7 +75,7 @@ export class Flow {
   }
   start(e) {
     this.normalizePoints(e, this.data, this.Point);
-    if (this.startCallback(this, e, this.data)) {
+    if (this.startCallback(this, e, this.data.pagePoints)) {
       this.continue();
     }
   }
@@ -89,11 +89,11 @@ export class Flow {
   }
   update(e) {
     this.normalizePoints(e, this.data, this.Point);
-    this.updateCallback(this, e, this.data);
+    this.updateCallback(this, e, this.data.pagePoints);
   }
   end(e) {
     this.normalizePoints(e, this.data, this.Point);
-    this.endCallback(this, e, this.data);
+    this.endCallback(this, e, this.data.pagePoints);
     this.removePoints(e, this.data);
     if(!this.data.pagePoints.length) {
       this.stop();
@@ -101,7 +101,7 @@ export class Flow {
   }
   cancel(e) {
     this.normalizePoints(e, this.data, this.Point);
-    this.cancelCallback(this, e, this.data);
+    this.cancelCallback(this, e, this.data.pagePoints);
     this.stop();
   }
   stop() {

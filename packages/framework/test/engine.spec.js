@@ -193,13 +193,13 @@ describe("Engine", () => {
     it("should return true for flows matching the active flow", () => {
       var flow = {};
       engine.activeFlow = flow;
-      expect(engine.processEvent(flow)).to.equal(true);
+      expect(engine.processEvent(flow, {}, [], "")).to.equal(true);
     });
 
     it("should validate actions", () => {
       var gesture = { subscriber: { options: {} } };
       var e = {};
-      var data = {};
+      var data = [];
       var flow = {};
       engine.activeFlow = flow;
       engine.gestures = [gesture];
@@ -213,36 +213,15 @@ describe("Engine", () => {
       expect(validateEndStub).to.have.have.been.calledWith(e, data, gesture.subscriber.options);
     });
 
-    it("should remove an invalid gesture", () => {
-      validateStartStub.returns(false);
-      var flow = {};
-      engine.activeFlow = flow;
-      engine.gestures = [{ unbind() {}, subscriber: {} }];
-      engine.processEvent(flow, {}, {}, ACTION_START);
-      expect(engine.gestures).to.have.length(0);
-    });
-
-    it("should cancel an invalid gesture", () => {
-      validateUpdateStub.returns(false);
-      var flow = {};
-      engine.activeFlow = flow;
-      var gesture = { unbind() {}, subscriber: {}, cancel: sandbox.spy() };
-      gesture[GESTURE_STARTED] = true;
-      engine.gestures = [gesture];
-      engine.processEvent(flow, {}, {}, ACTION_UPDATE);
-      expect(gesture.cancel.callCount).to.equal(1);
-    });
-
     it("should set a gesture as started", () => {
       validateStartStub.returns(true);
       var gesture = { start: sandbox.stub(), subscriber: { options: {} } };
       var e = {};
-      var data = {};
       var flow = {};
       engine.activeFlow = flow;
       engine.gestures = [gesture];
       gesture.start.returns(1);
-      engine.processEvent(flow, e, data, ACTION_START);
+      engine.processEvent(flow, e, [], ACTION_START);
       expect(gesture[GESTURE_STARTED]).to.equal(true); //eslint-disable-line no-underscore-dangle
     });
 
@@ -250,12 +229,11 @@ describe("Engine", () => {
       validateUpdateStub.returns(true);
       var gesture = { unbind() {}, update: sandbox.stub(), subscriber: { options: {} } };
       var e = {};
-      var data = {};
       var flow = {};
       engine.activeFlow = flow;
       engine.gestures = [gesture];
       gesture.update.returns(2);
-      engine.processEvent(flow, e, data, ACTION_UPDATE);
+      engine.processEvent(flow, e, [], ACTION_UPDATE);
       expect(engine.gestures).to.have.length(0);
     });
 
@@ -266,14 +244,13 @@ describe("Engine", () => {
       otherGesture1[GESTURE_STARTED] = true;
       var otherGesture2 = { unbind() {}, update: sandbox.stub(), subscriber: { options: {} } };
       var e = {};
-      var data = {};
       var flow = {};
       engine.activeFlow = flow;
       engine.gestures = [otherGesture1, gesture, otherGesture2];
       gesture.update.returns(4);
       otherGesture1.update.returns(0);
       otherGesture2.update.returns(0);
-      engine.processEvent(flow, e, data, ACTION_UPDATE);
+      engine.processEvent(flow, e, [], ACTION_UPDATE);
       expect(engine.gestures).to.have.length(1);
       expect(engine.gestures[0]).to.equal(gesture);
       expect(otherGesture1.cancel.callCount).to.equal(1);

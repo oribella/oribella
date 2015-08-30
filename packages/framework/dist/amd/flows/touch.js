@@ -12,9 +12,11 @@ define(["exports", "./flow"], function (exports, _flow) {
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
   var TouchFlow = (function (_Flow) {
+    _inherits(TouchFlow, _Flow);
+
     function TouchFlow(element, Point) {
       _classCallCheck(this, TouchFlow);
 
@@ -28,8 +30,6 @@ define(["exports", "./flow"], function (exports, _flow) {
         cancel: ["touchcancel", "dragstart"]
       }], true);
     }
-
-    _inherits(TouchFlow, _Flow);
 
     _createClass(TouchFlow, [{
       key: "normalizePoints",

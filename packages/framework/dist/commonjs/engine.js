@@ -85,7 +85,7 @@ var Engine = (function () {
     }
   }, {
     key: "startFlow",
-    value: function startFlow(flow, event, data) {
+    value: function startFlow(flow, event, pagePoints) {
       if (!this.canActivateFlow(flow)) {
         return false;
       }
@@ -100,24 +100,24 @@ var Engine = (function () {
         return false; //No match don't continue
       }
 
-      this.processEvent(flow, event, data, ACTION_START);
+      this.processEvent(flow, event, pagePoints, ACTION_START);
 
       return true;
     }
   }, {
     key: "updateFlow",
-    value: function updateFlow(flow, event, data) {
-      this.processEvent(flow, event, data, ACTION_UPDATE);
+    value: function updateFlow(flow, event, pagePoints) {
+      this.processEvent(flow, event, pagePoints, ACTION_UPDATE);
     }
   }, {
     key: "cancelFlow",
-    value: function cancelFlow(flow, event, data) {
-      this.processEvent(flow, event, data, ACTION_CANCEL);
+    value: function cancelFlow(flow, event, pagePoints) {
+      this.processEvent(flow, event, pagePoints, ACTION_CANCEL);
     }
   }, {
     key: "endFlow",
-    value: function endFlow(flow, event, data) {
-      this.processEvent(flow, event, data, ACTION_END);
+    value: function endFlow(flow, event, pagePoints) {
+      this.processEvent(flow, event, pagePoints, ACTION_END);
     }
   }, {
     key: "stopFlow",
@@ -167,7 +167,7 @@ var Engine = (function () {
     }
   }, {
     key: "processEvent",
-    value: function processEvent(flow, event, data, action) {
+    value: function processEvent(flow, event, pagePoints, action) {
       if (this.activeFlow !== flow) {
         return false;
       }
@@ -178,33 +178,30 @@ var Engine = (function () {
           otherGestures,
           otherGesture;
 
+      pagePoints = pagePoints.map(function (p) {
+        return p.clone();
+      });
+
       while (gesture = gestures.shift()) {
         //Validate
         valid = true;
         switch (action) {
           case ACTION_START:
-            valid = this.validator[ACTION_START](event, data, gesture.subscriber.options);
+            valid = this.validator[ACTION_START](event, pagePoints, gesture.subscriber.options);
             break;
           case ACTION_UPDATE:
-            valid = this.validator[ACTION_UPDATE](event, data, gesture.subscriber.options);
+            valid = this.validator[ACTION_UPDATE](event, pagePoints, gesture.subscriber.options);
             break;
           case ACTION_END:
-            valid = this.validator[ACTION_END](event, data, gesture.subscriber.options);
+            valid = this.validator[ACTION_END](event, pagePoints, gesture.subscriber.options);
             valid = valid && gesture[_utils.GESTURE_STARTED];
             break;
-        }
-        if (valid === false) {
-          //Remove
-          if (gesture[_utils.GESTURE_STARTED]) {
-            gesture[ACTION_CANCEL]();
-          }
-          this.removeIn(gesture, gestures, this.gestures);
         }
         if (!valid) {
           continue;
         }
         //Call
-        result = gesture[action](event, data);
+        result = gesture[action](event, pagePoints);
         if (result & _utils.RETURN_FLAG.STARTED) {
           gesture[_utils.GESTURE_STARTED] = true;
         }

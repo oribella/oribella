@@ -41,19 +41,19 @@ describe("Validator", () => {
     var isValidMouseButtonStub = sinon.stub(validator, "isValidMouseButton", opts => { return opts.retVal; });
     expect(validator.start(true, {}, { retVal: false })).to.equal(false);
     expect(isValidMouseButtonStub.callCount).to.equal(1);
-    expect(validator.start(false, { pagePoints: [1, 2] }, { touches: 1 })).to.equal(false);
-    expect(validator.start(false, { pagePoints: [1, 2] }, { touches: 2 })).to.equal(true);
+    expect(validator.start(false, [1, 2], { touches: 1 })).to.equal(false);
+    expect(validator.start(false, [1, 2], { touches: 2 })).to.equal(true);
   });
 
   it("should validate update action", () => {
-    expect(validator.update({}, { pagePoints: [1, 2] }, { touches: 1 })).to.equal(false);
-    expect(validator.update({}, { pagePoints: [1, 2] }, { touches: 2 })).to.equal(true);
-    expect(validator.update({}, { pagePoints: [1, 2] }, { touches: 3 })).to.equal(undefined);
+    expect(validator.update({}, [1, 2], { touches: 1 })).to.equal(false);
+    expect(validator.update({}, [1, 2], { touches: 2 })).to.equal(true);
+    expect(validator.update({}, [1, 2], { touches: 3 })).to.equal(undefined);
   });
 
   it("should validate end action", () => {
-    expect(validator.end({}, { pagePoints: [1, 2] }, { touches: 1 })).to.equal(false);
-    expect(validator.end({}, { pagePoints: [1, 2] }, { touches: 2 })).to.equal(true);
-    expect(validator.end({}, { pagePoints: [1, 2] }, { touches: 3 })).to.equal(false);
+    expect(validator.end({}, [1, 2], { touches: 1 })).to.equal(false);
+    expect(validator.end({}, [1, 2], { touches: 2 })).to.equal(true);
+    expect(validator.end({}, [1, 2], { touches: 3 })).to.equal(false);
   });
 });

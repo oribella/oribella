@@ -11,9 +11,11 @@ define(["exports", "./flow"], function (exports, _flow) {
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
   var PointerFlow = (function (_Flow) {
+    _inherits(PointerFlow, _Flow);
+
     function PointerFlow(element, Point) {
       _classCallCheck(this, PointerFlow);
 
@@ -27,8 +29,6 @@ define(["exports", "./flow"], function (exports, _flow) {
         cancel: ["pointercancel", "dragstart"]
       }]);
     }
-
-    _inherits(PointerFlow, _Flow);
 
     _createClass(PointerFlow, [{
       key: "normalizePoints",

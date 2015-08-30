@@ -26,11 +26,11 @@ System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./fl
       Point = _point.Point;
 
       for (var _key in _point) {
-        _export(_key, _point[_key]);
+        if (_key !== "default") _export(_key, _point[_key]);
       }
     }, function (_utils) {
       for (var _key2 in _utils) {
-        _export(_key2, _utils[_key2]);
+        if (_key2 !== "default") _export(_key2, _utils[_key2]);
       }
     }],
     execute: function () {

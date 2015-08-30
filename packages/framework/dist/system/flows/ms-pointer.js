@@ -9,7 +9,7 @@ System.register(["./flow"], function (_export) {
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) subClass.__proto__ = superClass; }
+  function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
   return {
     setters: [function (_flow) {
@@ -17,6 +17,8 @@ System.register(["./flow"], function (_export) {
     }],
     execute: function () {
       MSPointerFlow = (function (_Flow) {
+        _inherits(MSPointerFlow, _Flow);
+
         function MSPointerFlow(element, Point) {
           _classCallCheck(this, MSPointerFlow);
 
@@ -30,8 +32,6 @@ System.register(["./flow"], function (_export) {
             cancel: ["MSPointerCancel", "dragstart"]
           }]);
         }
-
-        _inherits(MSPointerFlow, _Flow);
 
         _createClass(MSPointerFlow, [{
           key: "normalizePoints",

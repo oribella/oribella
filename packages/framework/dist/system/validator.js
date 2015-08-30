@@ -41,30 +41,30 @@ System.register([], function (_export) {
           }
         }, {
           key: "start",
-          value: function start(event, data, options) {
+          value: function start(event, pagePoints, options) {
             if (this.isMouse(event) && !this.isValidMouseButton(event, options.which)) {
               return false;
             }
-            if (this.hasMoreTouches(data.pagePoints, options.touches)) {
+            if (this.hasMoreTouches(pagePoints, options.touches)) {
               return false;
             }
             return true;
           }
         }, {
           key: "update",
-          value: function update(event, data, options) {
-            if (this.hasMoreTouches(data.pagePoints, options.touches)) {
+          value: function update(event, pagePoints, options) {
+            if (this.hasMoreTouches(pagePoints, options.touches)) {
               return false;
             }
-            if (this.hasEqualTouches(data.pagePoints, options.touches)) {
+            if (this.hasEqualTouches(pagePoints, options.touches)) {
               return true;
             }
             return undefined;
           }
         }, {
           key: "end",
-          value: function end(event, data, options) {
-            return this.hasEqualTouches(data.pagePoints, options.touches);
+          value: function end(event, pagePoints, options) {
+            return this.hasEqualTouches(pagePoints, options.touches);
           }
         }]);
 

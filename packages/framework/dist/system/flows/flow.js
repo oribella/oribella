@@ -106,7 +106,7 @@ System.register([], function (_export) {
           key: "start",
           value: function start(e) {
             this.normalizePoints(e, this.data, this.Point);
-            if (this.startCallback(this, e, this.data)) {
+            if (this.startCallback(this, e, this.data.pagePoints)) {
               this["continue"]();
             }
           }
@@ -124,13 +124,13 @@ System.register([], function (_export) {
           key: "update",
           value: function update(e) {
             this.normalizePoints(e, this.data, this.Point);
-            this.updateCallback(this, e, this.data);
+            this.updateCallback(this, e, this.data.pagePoints);
           }
         }, {
           key: "end",
           value: function end(e) {
             this.normalizePoints(e, this.data, this.Point);
-            this.endCallback(this, e, this.data);
+            this.endCallback(this, e, this.data.pagePoints);
             this.removePoints(e, this.data);
             if (!this.data.pagePoints.length) {
               this.stop();
@@ -140,7 +140,7 @@ System.register([], function (_export) {
           key: "cancel",
           value: function cancel(e) {
             this.normalizePoints(e, this.data, this.Point);
-            this.cancelCallback(this, e, this.data);
+            this.cancelCallback(this, e, this.data.pagePoints);
             this.stop();
           }
         }, {
