@@ -320,11 +320,12 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
           for (i = 0; i < this.handles.length; ++i) {
             //Always evaluate length since gestures could bind gestures
             handle = this.handles[i];
+            selector = handle.subscriber.selector;
 
-            if (!handle.element.contains(element) || handle.element === element) {
+            if (!handle.element.contains(element) || selector && handle.element === element) {
               continue;
             }
-            selector = handle.subscriber.selector;
+
             if (!selector && element === handle.element) {
               matched = true;
             } else if (selector) {
