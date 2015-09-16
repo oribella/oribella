@@ -1,4 +1,4 @@
-import {customAttribute, bindable, inject} from "aurelia-framework";
+import {customAttribute, bindable, inject, transient} from "aurelia-framework";
 import {oribella} from "oribella-default-gestures";
 
 class Gesture {
@@ -6,24 +6,25 @@ class Gesture {
     this.element = element;
     this.type = type;
   }
-  bind() {
+  attached() {
     this.remove = oribella.on(this.element, this.type, {
       selector: this.selector,
       options: this.options,
-      start: this.start,
-      update: this.update,
-      end: this.end,
-      cancel: this.cancel,
-      timeEnd: this.timeEnd
+      start: (event, data, element) => this.start({ event: event, data: data, element: element }),
+      update: (event, data, element) => this.update({ event: event, data: data, element: element }),
+      end: (event, data, element) => this.end({ event: event, data: data, element: element }),
+      cancel: (event, data, element) => this.cancel({ event: event, data: data, element: element }),
+      timeEnd: (event, data, element) => this.timeEnd({ event: event, data: data, element: element })
     });
   }
-  unbind() {
+  detached() {
     this.remove();
   }
 }
 
 @customAttribute("tap")
 @inject(Element)
+@transient()
 export class Tap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -38,6 +39,7 @@ export class Tap extends Gesture {
 
 @customAttribute("doubletap")
 @inject(Element)
+@transient()
 export class Doubletap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -52,6 +54,7 @@ export class Doubletap extends Gesture {
 
 @customAttribute("longtap")
 @inject(Element)
+@transient()
 export class Longtap extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -67,6 +70,7 @@ export class Longtap extends Gesture {
 
 @customAttribute("swipe")
 @inject(Element)
+@transient()
 export class Swipe extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -81,6 +85,7 @@ export class Swipe extends Gesture {
 
 @customAttribute("longtap-swipe")
 @inject(Element)
+@transient()
 export class LongtapSwipe extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -95,6 +100,7 @@ export class LongtapSwipe extends Gesture {
 
 @customAttribute("pinch")
 @inject(Element)
+@transient()
 export class Pinch extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};
@@ -109,6 +115,7 @@ export class Pinch extends Gesture {
 
 @customAttribute("rotate")
 @inject(Element)
+@transient()
 export class Rotate extends Gesture {
   @bindable selector = undefined;
   @bindable options = {};

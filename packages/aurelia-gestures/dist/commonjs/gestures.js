@@ -29,21 +29,33 @@ var Gesture = (function () {
   }
 
   _createClass(Gesture, [{
-    key: "bind",
-    value: function bind() {
+    key: "attached",
+    value: function attached() {
+      var _this = this;
+
       this.remove = _oribellaDefaultGestures.oribella.on(this.element, this.type, {
         selector: this.selector,
         options: this.options,
-        start: this.start,
-        update: this.update,
-        end: this.end,
-        cancel: this.cancel,
-        timeEnd: this.timeEnd
+        start: function start(event, data, element) {
+          return _this.start({ event: event, data: data, element: element });
+        },
+        update: function update(event, data, element) {
+          return _this.update({ event: event, data: data, element: element });
+        },
+        end: function end(event, data, element) {
+          return _this.end({ event: event, data: data, element: element });
+        },
+        cancel: function cancel(event, data, element) {
+          return _this.cancel({ event: event, data: data, element: element });
+        },
+        timeEnd: function timeEnd(event, data, element) {
+          return _this.timeEnd({ event: event, data: data, element: element });
+        }
       });
     }
   }, {
-    key: "unbind",
-    value: function unbind() {
+    key: "detached",
+    value: function detached() {
       this.remove();
     }
   }]);
@@ -120,6 +132,7 @@ var Tap = (function (_Gesture) {
     enumerable: true
   }], null, _instanceInitializers);
 
+  Tap = (0, _aureliaFramework.transient)()(Tap) || Tap;
   Tap = (0, _aureliaFramework.inject)(Element)(Tap) || Tap;
   Tap = (0, _aureliaFramework.customAttribute)("tap")(Tap) || Tap;
   return Tap;
@@ -196,6 +209,7 @@ var Doubletap = (function (_Gesture2) {
     enumerable: true
   }], null, _instanceInitializers2);
 
+  Doubletap = (0, _aureliaFramework.transient)()(Doubletap) || Doubletap;
   Doubletap = (0, _aureliaFramework.inject)(Element)(Doubletap) || Doubletap;
   Doubletap = (0, _aureliaFramework.customAttribute)("doubletap")(Doubletap) || Doubletap;
   return Doubletap;
@@ -281,6 +295,7 @@ var Longtap = (function (_Gesture3) {
     enumerable: true
   }], null, _instanceInitializers3);
 
+  Longtap = (0, _aureliaFramework.transient)()(Longtap) || Longtap;
   Longtap = (0, _aureliaFramework.inject)(Element)(Longtap) || Longtap;
   Longtap = (0, _aureliaFramework.customAttribute)("longtap")(Longtap) || Longtap;
   return Longtap;
@@ -357,6 +372,7 @@ var Swipe = (function (_Gesture4) {
     enumerable: true
   }], null, _instanceInitializers4);
 
+  Swipe = (0, _aureliaFramework.transient)()(Swipe) || Swipe;
   Swipe = (0, _aureliaFramework.inject)(Element)(Swipe) || Swipe;
   Swipe = (0, _aureliaFramework.customAttribute)("swipe")(Swipe) || Swipe;
   return Swipe;
@@ -433,6 +449,7 @@ var LongtapSwipe = (function (_Gesture5) {
     enumerable: true
   }], null, _instanceInitializers5);
 
+  LongtapSwipe = (0, _aureliaFramework.transient)()(LongtapSwipe) || LongtapSwipe;
   LongtapSwipe = (0, _aureliaFramework.inject)(Element)(LongtapSwipe) || LongtapSwipe;
   LongtapSwipe = (0, _aureliaFramework.customAttribute)("longtap-swipe")(LongtapSwipe) || LongtapSwipe;
   return LongtapSwipe;
@@ -509,6 +526,7 @@ var Pinch = (function (_Gesture6) {
     enumerable: true
   }], null, _instanceInitializers6);
 
+  Pinch = (0, _aureliaFramework.transient)()(Pinch) || Pinch;
   Pinch = (0, _aureliaFramework.inject)(Element)(Pinch) || Pinch;
   Pinch = (0, _aureliaFramework.customAttribute)("pinch")(Pinch) || Pinch;
   return Pinch;
@@ -585,6 +603,7 @@ var Rotate = (function (_Gesture7) {
     enumerable: true
   }], null, _instanceInitializers7);
 
+  Rotate = (0, _aureliaFramework.transient)()(Rotate) || Rotate;
   Rotate = (0, _aureliaFramework.inject)(Element)(Rotate) || Rotate;
   Rotate = (0, _aureliaFramework.customAttribute)("rotate")(Rotate) || Rotate;
   return Rotate;

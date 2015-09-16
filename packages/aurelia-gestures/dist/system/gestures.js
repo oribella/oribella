@@ -1,7 +1,7 @@
 System.register(["aurelia-framework", "oribella-default-gestures"], function (_export) {
   "use strict";
 
-  var customAttribute, bindable, inject, oribella, Gesture, Tap, Doubletap, Longtap, Swipe, LongtapSwipe, Pinch, Rotate;
+  var customAttribute, bindable, inject, transient, oribella, Gesture, Tap, Doubletap, Longtap, Swipe, LongtapSwipe, Pinch, Rotate;
 
   var _createDecoratedClass = (function () { function defineProperties(target, descriptors, initializers) { for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === "function") { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError("The decorator for method " + descriptor.key + " is of the invalid type " + typeof decorator); } } if (descriptor.initializer !== undefined) { initializers[key] = descriptor; continue; } } Object.defineProperty(target, key, descriptor); } } return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) { if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers); if (staticProps) defineProperties(Constructor, staticProps, staticInitializers); return Constructor; }; })();
 
@@ -20,6 +20,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
       customAttribute = _aureliaFramework.customAttribute;
       bindable = _aureliaFramework.bindable;
       inject = _aureliaFramework.inject;
+      transient = _aureliaFramework.transient;
     }, function (_oribellaDefaultGestures) {
       oribella = _oribellaDefaultGestures.oribella;
     }],
@@ -33,21 +34,33 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
         }
 
         _createClass(Gesture, [{
-          key: "bind",
-          value: function bind() {
+          key: "attached",
+          value: function attached() {
+            var _this = this;
+
             this.remove = oribella.on(this.element, this.type, {
               selector: this.selector,
               options: this.options,
-              start: this.start,
-              update: this.update,
-              end: this.end,
-              cancel: this.cancel,
-              timeEnd: this.timeEnd
+              start: function start(event, data, element) {
+                return _this.start({ event: event, data: data, element: element });
+              },
+              update: function update(event, data, element) {
+                return _this.update({ event: event, data: data, element: element });
+              },
+              end: function end(event, data, element) {
+                return _this.end({ event: event, data: data, element: element });
+              },
+              cancel: function cancel(event, data, element) {
+                return _this.cancel({ event: event, data: data, element: element });
+              },
+              timeEnd: function timeEnd(event, data, element) {
+                return _this.timeEnd({ event: event, data: data, element: element });
+              }
             });
           }
         }, {
-          key: "unbind",
-          value: function unbind() {
+          key: "detached",
+          value: function detached() {
             this.remove();
           }
         }]);
@@ -124,6 +137,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers);
 
+        Tap = transient()(Tap) || Tap;
         Tap = inject(Element)(Tap) || Tap;
         Tap = customAttribute("tap")(Tap) || Tap;
         return Tap;
@@ -200,6 +214,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers2);
 
+        Doubletap = transient()(Doubletap) || Doubletap;
         Doubletap = inject(Element)(Doubletap) || Doubletap;
         Doubletap = customAttribute("doubletap")(Doubletap) || Doubletap;
         return Doubletap;
@@ -285,6 +300,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers3);
 
+        Longtap = transient()(Longtap) || Longtap;
         Longtap = inject(Element)(Longtap) || Longtap;
         Longtap = customAttribute("longtap")(Longtap) || Longtap;
         return Longtap;
@@ -361,6 +377,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers4);
 
+        Swipe = transient()(Swipe) || Swipe;
         Swipe = inject(Element)(Swipe) || Swipe;
         Swipe = customAttribute("swipe")(Swipe) || Swipe;
         return Swipe;
@@ -437,6 +454,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers5);
 
+        LongtapSwipe = transient()(LongtapSwipe) || LongtapSwipe;
         LongtapSwipe = inject(Element)(LongtapSwipe) || LongtapSwipe;
         LongtapSwipe = customAttribute("longtap-swipe")(LongtapSwipe) || LongtapSwipe;
         return LongtapSwipe;
@@ -513,6 +531,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers6);
 
+        Pinch = transient()(Pinch) || Pinch;
         Pinch = inject(Element)(Pinch) || Pinch;
         Pinch = customAttribute("pinch")(Pinch) || Pinch;
         return Pinch;
@@ -589,6 +608,7 @@ System.register(["aurelia-framework", "oribella-default-gestures"], function (_e
           enumerable: true
         }], null, _instanceInitializers7);
 
+        Rotate = transient()(Rotate) || Rotate;
         Rotate = inject(Element)(Rotate) || Rotate;
         Rotate = customAttribute("rotate")(Rotate) || Rotate;
         return Rotate;
