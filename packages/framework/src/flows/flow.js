@@ -17,10 +17,7 @@ export class Flow {
     this.stopEmulatedMouseEvents = stopEmulatedMouseEvents;
     this.addListeners = [];
     this.removeListeners = [];
-    this.data = {
-      pointerIds: [],
-      pagePoints: []
-    };
+    this.pointers = {};
     this.init();
   }
   init() {
@@ -44,12 +41,8 @@ export class Flow {
       }
     }
   }
-  normalizePoints(event, data, Point) {
-    data.pagePoints.length = 0;
-    data.pagePoints.push(new Point(event.pageX, event.pageY));
-  }
-  removePoints(e, data) {
-    data.pagePoints.length = 0;
+  normalizePoints(/*event, data, Point*/) {
+    throw new Error("normalizePoints: must be implemented in sub class");
   }
   onStart(startCallback) {
     this.startCallback = startCallback;
@@ -73,9 +66,10 @@ export class Flow {
   activate() {
     return this.startListener();
   }
-  start(e) {
-    this.normalizePoints(e, this.data, this.Point);
-    if (this.startCallback(this, e, this.data.pagePoints)) {
+  start(event) {
+    let pointers = this.normalizePoints(event, this.Point);
+    Object.keys(pointers).forEach(key => this.pointers[key] = pointers[key]);
+    if (this.startCallback(this, event, this.pointers, pointers)) {
       this.continue();
     }
   }
@@ -87,21 +81,22 @@ export class Flow {
       this.removeListeners.push(this.addListeners[i]());
     }
   }
-  update(e) {
-    this.normalizePoints(e, this.data, this.Point);
-    this.updateCallback(this, e, this.data.pagePoints);
+  update(event) {
+    let pointers = this.normalizePoints(event, this.Point);
+    Object.keys(pointers).forEach(key => this.pointers[key] = pointers[key]);
+    this.updateCallback(this, event, this.pointers, pointers);
   }
-  end(e) {
-    this.normalizePoints(e, this.data, this.Point);
-    this.endCallback(this, e, this.data.pagePoints);
-    this.removePoints(e, this.data);
-    if(!this.data.pagePoints.length) {
+  end(event) {
+    let pointers = this.normalizePoints(event, this.Point);
+    pointers = pointers || this.pointers; //could return null
+    Object.keys(pointers).forEach(key => delete this.pointers[key]);
+    this.endCallback(this, event, this.pointers, pointers);
+    if(Object.keys(this.pointers).length === 0) {
       this.stop();
     }
   }
-  cancel(e) {
-    this.normalizePoints(e, this.data, this.Point);
-    this.cancelCallback(this, e, this.data.pagePoints);
+  cancel(event) {
+    this.cancelCallback(this, event, this.pointers, this.pointers);
     this.stop();
   }
   stop() {

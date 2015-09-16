@@ -1,7 +1,7 @@
-System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point", "./utils"], function (_export) {
+System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point", "./utils"], function (_export) {
   "use strict";
 
-  var Engine, Validator, Registry, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
+  var Engine, Registry, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -10,8 +10,6 @@ System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./fl
   return {
     setters: [function (_engine) {
       Engine = _engine.Engine;
-    }, function (_validator) {
-      Validator = _validator.Validator;
     }, function (_registry) {
       Registry = _registry.Registry;
     }, function (_flowsMouse) {
@@ -41,7 +39,7 @@ System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./fl
           this.element = element;
           this.config = config;
           this.registry = new Registry();
-          this.engine = new Engine(this.element, this.registry, new Validator(this.isMouse.bind(this)));
+          this.engine = new Engine(this.element, this.registry, this.isMouse.bind(this), this.isValidMouseButton.bind(this));
         }
 
         _createClass(Oribella, [{
@@ -91,6 +89,18 @@ System.register(["./engine", "./validator", "./registry", "./flows/mouse", "./fl
               return true;
             }
             return false;
+          }
+        }, {
+          key: "isValidMouseButton",
+          value: function isValidMouseButton(event, allowedBtn) {
+            var btn = event.button,
+                which = event.which,
+                actualBtn;
+
+            actualBtn = !which && btn !== undefined ? btn & 1 ? 1 : btn & 2 ? 3 : btn & 4 ? 2 : 0 : which;
+            return Array.isArray(allowedBtn) ? allowedBtn.some(function (val) {
+              return actualBtn === val;
+            }) : actualBtn === allowedBtn;
           }
         }]);
 

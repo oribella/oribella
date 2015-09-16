@@ -9,7 +9,12 @@ export class MouseFlow extends Flow {
     }, {
       end: ["mouseup"]
     }, {
-      cancel: ["dragstart"]
+      cancel: ["dragstart", "contextmenu"]
     }], false);
+  }
+  normalizePoints(event, Point) {
+    return {
+      1: new Point(event.pageX, event.pageY)
+    };
   }
 }

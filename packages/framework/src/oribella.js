@@ -1,5 +1,4 @@
 import {Engine} from "./engine";
-import {Validator} from "./validator";
 import {Registry} from "./registry";
 import {MouseFlow} from "./flows/mouse";
 import {TouchFlow} from "./flows/touch";
@@ -17,7 +16,8 @@ export class Oribella {
     this.registry = new Registry();
     this.engine = new Engine(this.element,
       this.registry,
-      new Validator(this.isMouse.bind(this))
+      this.isMouse.bind(this),
+      this.isValidMouseButton.bind(this)
     );
   }
   activate() {
@@ -55,5 +55,17 @@ export class Oribella {
       return true;
     }
     return false;
+  }
+  isValidMouseButton(event, allowedBtn) {
+    var btn = event.button,
+      which = event.which,
+      actualBtn;
+
+    actualBtn = (!which && btn !== undefined) ?
+                  (btn & 1 ? 1 : (btn & 2 ? 3 : (btn & 4 ? 2 : 0))) :
+                  which;
+    return Array.isArray(allowedBtn) ? allowedBtn.some(function (val) {
+      return actualBtn === val;
+    }) : actualBtn === allowedBtn;
   }
 }

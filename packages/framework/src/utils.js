@@ -1,5 +1,9 @@
 export var GESTURE_STARTED = "__started__";
 
+export var STRATEGY_FLAG = {
+  REMOVE_IF_POINTERS_GT: 1
+};
+
 export var RETURN_FLAG = {
   map(result) {
     switch (result) {
@@ -12,7 +16,6 @@ export var RETURN_FLAG = {
     case 1:
     case 2:
     case 4:
-    case 8:
       break;
     default:
       result = 0;

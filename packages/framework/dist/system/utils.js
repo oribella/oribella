@@ -1,7 +1,7 @@
 System.register([], function (_export) {
   "use strict";
 
-  var GESTURE_STARTED, RETURN_FLAG;
+  var GESTURE_STARTED, STRATEGY_FLAG, RETURN_FLAG;
 
   _export("matchesSelector", matchesSelector);
 
@@ -16,6 +16,12 @@ System.register([], function (_export) {
 
       _export("GESTURE_STARTED", GESTURE_STARTED);
 
+      STRATEGY_FLAG = {
+        REMOVE_IF_POINTERS_GT: 1
+      };
+
+      _export("STRATEGY_FLAG", STRATEGY_FLAG);
+
       RETURN_FLAG = {
         map: function map(result) {
           switch (result) {
@@ -28,7 +34,6 @@ System.register([], function (_export) {
             case 1:
             case 2:
             case 4:
-            case 8:
               break;
             default:
               result = 0;

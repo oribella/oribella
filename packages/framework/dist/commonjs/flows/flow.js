@@ -29,10 +29,7 @@ var Flow = (function () {
     this.stopEmulatedMouseEvents = stopEmulatedMouseEvents;
     this.addListeners = [];
     this.removeListeners = [];
-    this.data = {
-      pointerIds: [],
-      pagePoints: []
-    };
+    this.pointers = {};
     this.init();
   }
 
@@ -57,14 +54,8 @@ var Flow = (function () {
     }
   }, {
     key: "normalizePoints",
-    value: function normalizePoints(event, data, Point) {
-      data.pagePoints.length = 0;
-      data.pagePoints.push(new Point(event.pageX, event.pageY));
-    }
-  }, {
-    key: "removePoints",
-    value: function removePoints(e, data) {
-      data.pagePoints.length = 0;
+    value: function normalizePoints() /*event, data, Point*/{
+      throw new Error("normalizePoints: must be implemented in sub class");
     }
   }, {
     key: "onStart",
@@ -102,9 +93,14 @@ var Flow = (function () {
     }
   }, {
     key: "start",
-    value: function start(e) {
-      this.normalizePoints(e, this.data, this.Point);
-      if (this.startCallback(this, e, this.data.pagePoints)) {
+    value: function start(event) {
+      var _this = this;
+
+      var pointers = this.normalizePoints(event, this.Point);
+      Object.keys(pointers).forEach(function (key) {
+        return _this.pointers[key] = pointers[key];
+      });
+      if (this.startCallback(this, event, this.pointers, pointers)) {
         this["continue"]();
       }
     }
@@ -120,25 +116,34 @@ var Flow = (function () {
     }
   }, {
     key: "update",
-    value: function update(e) {
-      this.normalizePoints(e, this.data, this.Point);
-      this.updateCallback(this, e, this.data.pagePoints);
+    value: function update(event) {
+      var _this2 = this;
+
+      var pointers = this.normalizePoints(event, this.Point);
+      Object.keys(pointers).forEach(function (key) {
+        return _this2.pointers[key] = pointers[key];
+      });
+      this.updateCallback(this, event, this.pointers, pointers);
     }
   }, {
     key: "end",
-    value: function end(e) {
-      this.normalizePoints(e, this.data, this.Point);
-      this.endCallback(this, e, this.data.pagePoints);
-      this.removePoints(e, this.data);
-      if (!this.data.pagePoints.length) {
+    value: function end(event) {
+      var _this3 = this;
+
+      var pointers = this.normalizePoints(event, this.Point);
+      pointers = pointers || this.pointers; //could return null
+      Object.keys(pointers).forEach(function (key) {
+        return delete _this3.pointers[key];
+      });
+      this.endCallback(this, event, this.pointers, pointers);
+      if (Object.keys(this.pointers).length === 0) {
         this.stop();
       }
     }
   }, {
     key: "cancel",
-    value: function cancel(e) {
-      this.normalizePoints(e, this.data, this.Point);
-      this.cancelCallback(this, e, this.data.pagePoints);
+    value: function cancel(event) {
+      this.cancelCallback(this, event, this.pointers, this.pointers);
       this.stop();
     }
   }, {

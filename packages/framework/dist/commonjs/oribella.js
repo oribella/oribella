@@ -14,8 +14,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _engine = require("./engine");
 
-var _validator = require("./validator");
-
 var _registry = require("./registry");
 
 var _flowsMouse = require("./flows/mouse");
@@ -41,7 +39,7 @@ var Oribella = (function () {
     this.element = element;
     this.config = config;
     this.registry = new _registry.Registry();
-    this.engine = new _engine.Engine(this.element, this.registry, new _validator.Validator(this.isMouse.bind(this)));
+    this.engine = new _engine.Engine(this.element, this.registry, this.isMouse.bind(this), this.isValidMouseButton.bind(this));
   }
 
   _createClass(Oribella, [{
@@ -91,6 +89,18 @@ var Oribella = (function () {
         return true;
       }
       return false;
+    }
+  }, {
+    key: "isValidMouseButton",
+    value: function isValidMouseButton(event, allowedBtn) {
+      var btn = event.button,
+          which = event.which,
+          actualBtn;
+
+      actualBtn = !which && btn !== undefined ? btn & 1 ? 1 : btn & 2 ? 3 : btn & 4 ? 2 : 0 : which;
+      return Array.isArray(allowedBtn) ? allowedBtn.some(function (val) {
+        return actualBtn === val;
+      }) : actualBtn === allowedBtn;
     }
   }]);
 

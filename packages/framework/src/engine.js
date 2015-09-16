@@ -1,6 +1,8 @@
 /*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 import {Handle} from "./handle";
-import {GESTURE_STARTED, RETURN_FLAG, matchesSelector} from "./utils";
+import {GESTURE_STARTED, STRATEGY_FLAG, RETURN_FLAG, matchesSelector} from "./utils";
+
+var POINTERS = "__pointers__";
 
 export var ACTION_START = "start",
   ACTION_UPDATE = "update",
@@ -8,10 +10,11 @@ export var ACTION_START = "start",
   ACTION_CANCEL = "cancel";
 
 export class Engine {
-  constructor(element, registry, validator) {
+  constructor(element, registry, isMouse, isValidMouseButton) {
     this.element = element;
     this.registry = registry;
-    this.validator = validator;
+    this.isMouse = isMouse;
+    this.isValidMouseButton = isValidMouseButton;
     this.flows = [];
     this.activeFlow = null;
     this.handles = [];
@@ -54,7 +57,7 @@ export class Engine {
   canActivateFlow(flow) {
     return (this.activeFlow === null || this.activeFlow === flow);
   }
-  startFlow(flow, event, pagePoints) {
+  startFlow(flow, event, allPointers, currentPointers) {
     if (!this.canActivateFlow(flow)) {
       return false;
     }
@@ -72,25 +75,23 @@ export class Engine {
       return false; //No match don't continue
     }
 
-    this.processEvent(flow, event, pagePoints, ACTION_START);
+    this.processEvent(flow, event, allPointers, currentPointers, ACTION_START);
 
     return true;
   }
-  updateFlow(flow, event, pagePoints) {
-    this.processEvent(flow, event, pagePoints, ACTION_UPDATE);
+  updateFlow(flow, event, allPointers, currentPointers) {
+    this.processEvent(flow, event, allPointers, currentPointers, ACTION_UPDATE);
   }
-  cancelFlow(flow, event, pagePoints) {
-    this.processEvent(flow, event, pagePoints, ACTION_CANCEL);
+  cancelFlow(flow, event, allPointers, currentPointers) {
+    this.processEvent(flow, event, allPointers, currentPointers, ACTION_CANCEL);
   }
-  endFlow(flow, event, pagePoints) {
-    this.processEvent(flow, event, pagePoints, ACTION_END);
+  endFlow(flow, event, allPointers, currentPointers) {
+    this.processEvent(flow, event, allPointers, currentPointers, ACTION_END);
   }
   stopFlow() {
-    var gestures = this.gestures.slice(),
+    let gestures = this.gestures.slice(),
       gesture,
-      result,
-      handles = this.handles.slice(),
-      handler;
+      result;
 
     while (gesture = gestures.shift()) {
       result = gesture.unbind();
@@ -99,126 +100,190 @@ export class Engine {
       }
     }
 
-    while (handler = handles.shift()) {
-      handler.active = false;
-    }
     this.gestures.length = 0;
     this.activeFlow = null;
   }
-  removeIn(...args) {
-    var g = args.shift(),
-      arr;
-
-    g.unbind();
-
-    while (arr = args.shift()) {
-      var ix = arr.indexOf(g);
-      if (ix !== -1) {
-        arr.splice(ix, 1);
+  removeGesture(gesture, ...arr) {
+    if (gesture[GESTURE_STARTED]) {
+      gesture[ACTION_CANCEL]();
+    }
+    gesture.unbind();
+    let gestures;
+    while(gestures = arr.shift()) {
+      let ix = gestures.indexOf(gesture);
+      if( ix !== -1) {
+        gestures.splice(ix, 1);
       }
     }
   }
-  removeGesture(gesture) {
-    this.removeIn(gesture, this.gestures, this.composedGestures);
-  }
-  processEvent(flow, event, pagePoints, action) {
+  processEvent(flow, event, allPointers, currentPointers, action) {
     if (this.activeFlow !== flow) {
-      return false;
+      return;
     }
-    var gestures = this.gestures.slice(),
+    this.processGestures(event, allPointers, currentPointers, action);
+  }
+  getPointersDelta(event, pointerCount, options) {
+    if (this.isMouse(event) && !this.isValidMouseButton(event, options.which)) {
+      return -1;
+    }
+    return pointerCount - options.touches;
+  }
+  processGestures(event, allPointers, currentPointers, action) {
+    let gestures = this.gestures.slice(),
       gesture,
       result,
-      valid,
-      otherGestures,
-      otherGesture;
-
-    pagePoints = pagePoints.map(p => p.clone());
+      allPointerCnt = Object.keys(allPointers).length,
+      pointerIds = Object.keys(currentPointers),
+      pointerCnt = pointerIds.length,
+      pointerIx,
+      pointerId,
+      pointers,
+      hasPointer,
+      removeGesture,
+      pagePoints = [],
+      options;
 
     while (gesture = gestures.shift()) {
-      //Validate
-      valid = true;
-      switch (action) {
-      case ACTION_START:
-        valid = this.validator[ACTION_START](event, pagePoints, gesture.subscriber.options);
-        break;
-      case ACTION_UPDATE:
-        valid = this.validator[ACTION_UPDATE](event, pagePoints, gesture.subscriber.options);
-        break;
-      case ACTION_END:
-        valid = this.validator[ACTION_END](event, pagePoints, gesture.subscriber.options);
-        valid = valid && gesture[GESTURE_STARTED];
-        break;
-      }
-      if (!valid) {
+      hasPointer = false;
+      removeGesture = false;
+      pointers = gesture[POINTERS];
+      options = gesture.subscriber.options;
+
+      result = this.getPointersDelta(event, allPointerCnt, options);
+      if(result > 0 && options.strategy & STRATEGY_FLAG.REMOVE_IF_POINTERS_GT){
+        this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
         continue;
       }
-      //Call
-      result = gesture[action](event, pagePoints);
-      if (result & RETURN_FLAG.STARTED) {
-        gesture[GESTURE_STARTED] = true;
-      }
 
-      //Remove gesture
-      if (result & RETURN_FLAG.REMOVE) {
-        if (gesture[GESTURE_STARTED]) {
-          gesture[ACTION_CANCEL]();
-        }
-        this.removeIn(gesture, gestures, this.gestures);
-      }
-
-      //Remove all other gestures
-      if (result & RETURN_FLAG.REMOVE_OTHERS) {
-        otherGestures = this.gestures.slice();
-        while (otherGesture = otherGestures.shift()) {
-          if (gesture === otherGesture) {
+      result = this.getPointersDelta(event, pointerCnt, options);
+      switch(action) {
+        case ACTION_START:
+          if(result !== 0) {
             continue;
           }
-          if (otherGesture[GESTURE_STARTED]) {
-            otherGesture[ACTION_CANCEL]();
+          if(pointers && Object.keys(pointers).length === pointerCnt) {
+            continue;
           }
-          this.removeIn(otherGesture, gestures, this.gestures);
-        }
+          //Lock pointers for gesture
+          gesture[POINTERS] = pointers = currentPointers;
+          hasPointer = true;
+          break;
+        case ACTION_UPDATE:
+          //Update pointers for gesture
+          pointerIx = 0;
+          while(pointerIx < pointerCnt) {
+            pointerId = pointerIds[pointerIx];
+            if(pointers && pointers[pointerId]) {
+              pointers[pointerId] = currentPointers[pointerId];
+              hasPointer = true;
+            }
+            ++pointerIx;
+          }
+          break;
+        case ACTION_END:
+          if(!gesture[GESTURE_STARTED]){
+            continue;
+          }
+          //Remove pointers for gesture
+          pointerIx = 0;
+          while(pointerIx < pointerCnt) {
+            pointerId = pointerIds[pointerIx];
+            if(pointers && pointers[pointerId]) {
+              delete pointers[pointerId];
+              hasPointer = true;
+            }
+            ++pointerIx;
+          }
+          if(pointers && !Object.keys(pointers).length) {
+            pointers = undefined;
+            //Call end with currentPointers
+            pointers = currentPointers;
+            hasPointer = true;
+            removeGesture = true;
+          }
+          break;
+      }
+      if(!hasPointer) {
+        continue;
+      }
+      //Map pointers -> pagePoints
+      pointerIx = 0;
+      pointerCnt = Object.keys(pointers).length;
+      while(pointerIx < pointerCnt) {
+        pagePoints.push(pointers[pointerIds[pointerIx]]);
+        ++pointerIx;
+      }
+      this.processGesture(event, pagePoints, action, gesture, gestures);
+
+      if(removeGesture) {
+        gesture[GESTURE_STARTED] = false;
+        this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
       }
     }
-    return true;
+  }
+  processGesture(event, pagePoints, action, gesture, gestures) {
+    //Call
+    let result = gesture[action](event, pagePoints);
+    if(result & RETURN_FLAG.STARTED) {
+      gesture[GESTURE_STARTED] = true;
+    }
+
+    //Remove gesture
+    if(result & RETURN_FLAG.REMOVE) {
+      this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
+    }
+
+    //Remove all other gestures
+    if(result & RETURN_FLAG.REMOVE_OTHERS) {
+      let otherGestures = gestures.slice();
+      let otherGesture;
+      while(otherGesture = otherGestures.shift()) {
+        if(gesture === otherGesture) {
+          continue;
+        }
+        if(otherGesture[GESTURE_STARTED]) {
+          otherGesture[ACTION_CANCEL]();
+        }
+        this.removeGesture(otherGesture, this.gestures, this.composedGestures, gestures);
+      }
+    }
   }
   createGesture(handle, element) {
     var gesture = this.registry.create(handle.type, handle.subscriber, element);
-    gesture.bind(this.addHandle.bind(this), handle.element, this.removeGesture.bind(this, gesture));
+    gesture.bind(this.addHandle.bind(this), handle.element, this.removeGesture.bind(this, gesture, this.gestures, this.composedGestures), () => { gesture[GESTURE_STARTED] = true; });
     return gesture;
   }
   match(startElement) {
-    var i,
+    let i,
       handle,
       element,
       selector,
       gesture,
-      gestures = [];
+      gestures = [],
+      matched = false;
 
-    for (element = startElement; element !== this.element; element = element.parentNode) {
-      for (i = 0; i < this.handles.length; ++i) { //Always evaluate length since gestures could bind gestures
+    for(element = startElement; element !== this.element; element = element.parentNode) {
+      for(i = 0; i < this.handles.length; ++i) { //Always evaluate length since gestures could bind gestures
         handle = this.handles[i];
-        if (handle.active) {
-          continue;
-        }
-        if (!handle.element.contains(element)) {
+
+        if(!handle.element.contains(element) || handle.element === element) {
           continue;
         }
         selector = handle.subscriber.selector;
         if (!selector && element === handle.element) {
-          handle.active = true;
-        } else if (selector) {
-          if (matchesSelector(element, selector)) {
-            handle.active = true;
+          matched = true;
+        } else if(selector) {
+          if(matchesSelector(element, selector)) {
+            matched = true;
           }
         }
-        if (handle.active) {
-          while (gesture = this.composedGestures.shift()) {
-            if (gesture.subscriber === handle.subscriber) {
+        if (matched) {
+          while(gesture = this.composedGestures.shift()) {
+            if(gesture.subscriber === handle.subscriber) {
               break;
             }
           }
-          if (!gesture) {
+          if(!gesture) {
             gesture = this.createGesture(handle, element);
           }
           gestures.push(gesture);
