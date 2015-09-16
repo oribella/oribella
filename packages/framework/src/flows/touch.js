@@ -17,7 +17,7 @@ export class TouchFlow extends Flow {
     let map = {};
     switch(event.type) {
       default:
-        Array.from(event.changedTouches).forEach(pointer => {
+        Array.prototype.slice.call(event.changedTouches).forEach(pointer => {
           map[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
         });
         return map;

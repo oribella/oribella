@@ -37,7 +37,7 @@ define(["exports", "./flow"], function (exports, _flow) {
         var map = {};
         switch (event.type) {
           default:
-            Array.from(event.changedTouches).forEach(function (pointer) {
+            Array.prototype.slice.call(event.changedTouches).forEach(function (pointer) {
               map[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
             });
             return map;
