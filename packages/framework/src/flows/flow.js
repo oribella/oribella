@@ -17,7 +17,8 @@ export class Flow {
     this.stopEmulatedMouseEvents = stopEmulatedMouseEvents;
     this.addListeners = [];
     this.removeListeners = [];
-    this.pointers = {};
+    this.allPointers = {};
+    this.currentPointers = {};
     this.init();
   }
   init() {
@@ -67,9 +68,8 @@ export class Flow {
     return this.startListener();
   }
   start(event) {
-    let pointers = this.normalizePoints(event, this.Point);
-    Object.keys(pointers).forEach(key => this.pointers[key] = pointers[key]);
-    if (this.startCallback(this, event, this.pointers, pointers)) {
+    this.normalizePoints(event, this.Point);
+    if (this.startCallback(this, event, this.allPointers, this.currentPointers)) {
       this.continue();
     }
   }
@@ -82,16 +82,13 @@ export class Flow {
     }
   }
   update(event) {
-    let pointers = this.normalizePoints(event, this.Point);
-    Object.keys(pointers).forEach(key => this.pointers[key] = pointers[key]);
-    this.updateCallback(this, event, this.pointers, pointers);
+    this.normalizePoints(event, this.Point, this.pointers);
+    this.updateCallback(this, event, this.allPointers, this.currentPointers);
   }
   end(event) {
-    let pointers = this.normalizePoints(event, this.Point);
-    pointers = pointers || this.pointers; //could return null
-    Object.keys(pointers).forEach(key => delete this.pointers[key]);
-    this.endCallback(this, event, this.pointers, pointers);
-    if(Object.keys(this.pointers).length === 0) {
+    this.normalizePoints(event, this.Point, this.pointers);
+    this.endCallback(this, event, this.allPointers, this.currentPointers);
+    if(Object.keys(this.allPointers).length === 0) {
       this.stop();
     }
   }

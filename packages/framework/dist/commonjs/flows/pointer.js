@@ -34,9 +34,18 @@ var PointerFlow = (function (_Flow) {
   _createClass(PointerFlow, [{
     key: "normalizePoints",
     value: function normalizePoints(event, Point) {
-      var map = {};
-      map[event.pointerId] = new Point(event.pageX, event.pageY);
-      return map;
+      this.currentPointers = {};
+      this.currentPointers[event.pointerId] = new Point(event.pageX, event.pageY);
+
+      switch (event.type) {
+        case "pointerdown":
+        case "pointermove":
+          this.allPointers[event.pointerId] = new Point(event.pageX, event.pageY);
+          break;
+        default:
+          delete this.allPointers[event.pointerId];
+          break;
+      }
     }
   }]);
 

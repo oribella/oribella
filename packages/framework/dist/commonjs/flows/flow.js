@@ -29,7 +29,8 @@ var Flow = (function () {
     this.stopEmulatedMouseEvents = stopEmulatedMouseEvents;
     this.addListeners = [];
     this.removeListeners = [];
-    this.pointers = {};
+    this.allPointers = {};
+    this.currentPointers = {};
     this.init();
   }
 
@@ -94,13 +95,8 @@ var Flow = (function () {
   }, {
     key: "start",
     value: function start(event) {
-      var _this = this;
-
-      var pointers = this.normalizePoints(event, this.Point);
-      Object.keys(pointers).forEach(function (key) {
-        return _this.pointers[key] = pointers[key];
-      });
-      if (this.startCallback(this, event, this.pointers, pointers)) {
+      this.normalizePoints(event, this.Point);
+      if (this.startCallback(this, event, this.allPointers, this.currentPointers)) {
         this["continue"]();
       }
     }
@@ -117,26 +113,15 @@ var Flow = (function () {
   }, {
     key: "update",
     value: function update(event) {
-      var _this2 = this;
-
-      var pointers = this.normalizePoints(event, this.Point);
-      Object.keys(pointers).forEach(function (key) {
-        return _this2.pointers[key] = pointers[key];
-      });
-      this.updateCallback(this, event, this.pointers, pointers);
+      this.normalizePoints(event, this.Point, this.pointers);
+      this.updateCallback(this, event, this.allPointers, this.currentPointers);
     }
   }, {
     key: "end",
     value: function end(event) {
-      var _this3 = this;
-
-      var pointers = this.normalizePoints(event, this.Point);
-      pointers = pointers || this.pointers; //could return null
-      Object.keys(pointers).forEach(function (key) {
-        return delete _this3.pointers[key];
-      });
-      this.endCallback(this, event, this.pointers, pointers);
-      if (Object.keys(this.pointers).length === 0) {
+      this.normalizePoints(event, this.Point, this.pointers);
+      this.endCallback(this, event, this.allPointers, this.currentPointers);
+      if (Object.keys(this.allPointers).length === 0) {
         this.stop();
       }
     }

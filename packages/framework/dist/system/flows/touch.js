@@ -37,17 +37,18 @@ System.register(["./flow"], function (_export) {
         _createClass(TouchFlow, [{
           key: "normalizePoints",
           value: function normalizePoints(event, Point) {
-            var map = {};
-            switch (event.type) {
-              default:
-                Array.prototype.slice.call(event.changedTouches).forEach(function (pointer) {
-                  map[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
-                });
-                return map;
-              case "click":
-              case "mouseup":
-                return null;
-            }
+            var _this = this;
+
+            this.allPointers = {};
+            this.currentPointers = {};
+
+            Array.prototype.slice.call(event.touches).forEach(function (pointer) {
+              _this.allPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+            });
+
+            Array.prototype.slice.call(event.changedTouches).forEach(function (pointer) {
+              _this.currentPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+            });
           }
         }]);
 

@@ -178,36 +178,45 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
         var gestures = this.gestures.slice(),
             gesture = undefined,
             result = undefined,
+            allResult = undefined,
             allPointerCnt = Object.keys(allPointers).length,
-            pointerIds = Object.keys(currentPointers),
-            pointerCnt = pointerIds.length,
+            currentPointerIds = Object.keys(currentPointers),
+            currentPointerCnt = currentPointerIds.length,
             pointerIx = undefined,
             pointerId = undefined,
+            pointerIds = undefined,
+            pointerCnt = undefined,
             pointers = undefined,
             hasPointer = undefined,
+            removePointers = undefined,
             removeGesture = undefined,
             pagePoints = [],
             options = undefined;
 
         while (gesture = gestures.shift()) {
           hasPointer = false;
+          removePointers = false;
           removeGesture = false;
           pointers = gesture[POINTERS];
           options = gesture.subscriber.options;
 
-          result = this.getPointersDelta(event, allPointerCnt, options);
-          if (result > 0 && options.strategy & _utils.STRATEGY_FLAG.REMOVE_IF_POINTERS_GT) {
+          allResult = this.getPointersDelta(event, allPointerCnt, options);
+          if (allResult > 0 && options.strategy & _utils.STRATEGY_FLAG.REMOVE_IF_POINTERS_GT) {
             this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
             continue;
           }
 
-          result = this.getPointersDelta(event, pointerCnt, options);
+          result = this.getPointersDelta(event, currentPointerCnt, options);
           switch (action) {
             case ACTION_START:
               if (result !== 0) {
-                continue;
+                if (allResult === 0) {
+                  currentPointers = allPointers;
+                } else {
+                  continue;
+                }
               }
-              if (pointers && Object.keys(pointers).length === pointerCnt) {
+              if (pointers && Object.keys(pointers).length === currentPointerCnt) {
                 continue;
               }
               //Lock pointers for gesture
@@ -217,8 +226,8 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
             case ACTION_UPDATE:
               //Update pointers for gesture
               pointerIx = 0;
-              while (pointerIx < pointerCnt) {
-                pointerId = pointerIds[pointerIx];
+              while (pointerIx < currentPointerCnt) {
+                pointerId = currentPointerIds[pointerIx];
                 if (pointers && pointers[pointerId]) {
                   pointers[pointerId] = currentPointers[pointerId];
                   hasPointer = true;
@@ -230,20 +239,16 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
               if (!gesture[_utils.GESTURE_STARTED]) {
                 continue;
               }
-              //Remove pointers for gesture
               pointerIx = 0;
-              while (pointerIx < pointerCnt) {
-                pointerId = pointerIds[pointerIx];
+              while (pointerIx < currentPointerCnt) {
+                pointerId = currentPointerIds[pointerIx];
                 if (pointers && pointers[pointerId]) {
-                  delete pointers[pointerId];
                   hasPointer = true;
+                  removePointers = true;
                 }
                 ++pointerIx;
               }
               if (pointers && !Object.keys(pointers).length) {
-                pointers = undefined;
-                //Call end with currentPointers
-                pointers = currentPointers;
                 hasPointer = true;
                 removeGesture = true;
               }
@@ -254,14 +259,27 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
           }
           //Map pointers -> pagePoints
           pointerIx = 0;
-          pointerCnt = Object.keys(pointers).length;
+          pointerIds = Object.keys(pointers);
+          pointerCnt = pointerIds.length;
           while (pointerIx < pointerCnt) {
             pagePoints.push(pointers[pointerIds[pointerIx]]);
             ++pointerIx;
           }
           this.processGesture(event, pagePoints, action, gesture, gestures);
 
+          if (removePointers) {
+            pointerIx = 0;
+            while (pointerIx < currentPointerCnt) {
+              pointerId = currentPointerIds[pointerIx];
+              if (pointers[pointerId]) {
+                delete pointers[pointerId];
+              }
+              ++pointerIx;
+            }
+          }
+
           if (removeGesture) {
+            gesture[POINTERS] = null;
             gesture[_utils.GESTURE_STARTED] = false;
             this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
           }

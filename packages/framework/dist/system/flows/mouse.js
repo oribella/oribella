@@ -36,9 +36,17 @@ System.register(["./flow"], function (_export) {
         _createClass(MouseFlow, [{
           key: "normalizePoints",
           value: function normalizePoints(event, Point) {
-            return {
-              1: new Point(event.pageX, event.pageY)
-            };
+            switch (event.type) {
+              case "mousedown":
+              case "mousemove":
+                this.allPointers = this.currentPointers = {
+                  1: new Point(event.pageX, event.pageY)
+                };
+                break;
+              default:
+                this.allPointers = {};
+                break;
+            }
           }
         }]);
 

@@ -5,25 +5,25 @@ export class TouchFlow extends Flow {
   constructor(element, Point) {
     super(element, Point, [{
       start: ["touchstart"]
-  }, {
+    }, {
       update: ["touchmove"]
-  }, {
+    }, {
       end: ["touchend", "mouseup", "click"]
-  }, {
+    }, {
       cancel: ["touchcancel", "dragstart"]
-  }], true);
+    }], true);
   }
   normalizePoints(event, Point) {
-    let map = {};
-    switch(event.type) {
-      default:
-        Array.prototype.slice.call(event.changedTouches).forEach(pointer => {
-          map[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
-        });
-        return map;
-      case "click":
-      case "mouseup":
-        return null;
-    }
+    this.allPointers = {};
+    this.currentPointers = {};
+
+    Array.prototype.slice.call(event.touches).forEach(pointer => {
+      this.allPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+    });
+
+    Array.prototype.slice.call(event.changedTouches).forEach(pointer => {
+      this.currentPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+    });
+
   }
 }
