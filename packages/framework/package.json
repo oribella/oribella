@@ -1,5 +1,5 @@
 {
-  "name": "oribella-framework",
+  "name": "@oribella/framework",
   "version": "0.2.0",
   "description": "Normalizes event flows into an understandable consistent api",
   "license": "MIT",
