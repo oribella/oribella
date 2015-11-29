@@ -1,4 +1,4 @@
-#oribella-framework
+#@oribella/framework
 Have you felt frustrated over DOM events? Have you realised after getting some interaction working in Chrome that it doesn't work on IE on a hybrid device? Do you want to focus on features and be sure it works on all your supported browsers and devices?
 
 Well, this is the core library of ***Oribella*** cross browser, cross device, cross input gesture framework.
@@ -43,6 +43,6 @@ What? Why mouseup? Since there are browser quirks there are some use cases where
 ##### end - pointerup
 ##### cancel - pointercancel, dragstart
 
-So now we have covered the event flow which is the foundation for understanding how to build gestures. However there are a couple of more conventions in the flow engine. One is validation. The validation mechanism is called on **start**, **update**, **end** and cancel gestures that isn't valid anymore. It evalutates the `options.touches` property in an additive way. This means that in `start` it checks that you don't have more touch points (for mouse this is always 1) and triggers `start`. In `update` it will not trigger `update` if you don't have equal touch points. As soon as you have equal touch points it starts triggering `update`. In `end` it needs to be equal to the configured touch points.
+So now we have covered the event flow which is the foundation for understanding how to build gestures.
 
 To use the ***Oribella*** framework you need to instantiate the `Oribella` class and configure it. For convenience this is done for you by [Default gestures](https://github.com/oribella/default-gestures) repository.
