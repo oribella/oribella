@@ -1,4 +1,5 @@
 node_modules
 jspm_packages
 bower_components
+coverage
 .DS_STORE
