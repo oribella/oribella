@@ -13,7 +13,8 @@
     "version": "dev-changelog && git add CHANGELOG.md",
     "build": "dev-build -cas",
     "test": "dev-test",
-    "coverage": "dev-coverage"
+    "coverage": "dev-coverage",
+    "lint": "dev-lint"
   },
   "jspmNodeConversion": false,
   "jspm": {
@@ -24,6 +25,6 @@
     }
   },
   "devDependencies": {
-    "oribella-dev": "^0.1.0"
+    "oribella-dev": "^0.1.4"
   }
 }

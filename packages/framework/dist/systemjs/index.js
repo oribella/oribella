@@ -1,23 +1,16 @@
 "use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+System.register(["./oribella"], function (_export) {
+  return {
+    setters: [function (_oribella) {
+      var _exportObj = {};
+
+      for (var _key in _oribella) {
+        if (_key !== "default") _exportObj[_key] = _oribella[_key];
+      }
+
+      _export(_exportObj);
+    }],
+    execute: function () {}
+  };
 });
-
-var _oribella = require("./oribella");
-
-var _loop = function _loop(_key2) {
-  if (_key2 === "default") return "continue";
-  Object.defineProperty(exports, _key2, {
-    enumerable: true,
-    get: function get() {
-      return _oribella[_key2];
-    }
-  });
-};
-
-for (var _key2 in _oribella) {
-  var _ret = _loop(_key2);
-
-  if (_ret === "continue") continue;
-}
