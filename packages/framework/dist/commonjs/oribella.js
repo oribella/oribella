@@ -1,38 +1,63 @@
 "use strict";
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Oribella = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _point = require("./point");
 
-function _interopExportWildcard(obj, defaults) { var newObj = defaults({}, obj); delete newObj["default"]; return newObj; }
+var _loop = function _loop(_key3) {
+  if (_key3 === "default") return "continue";
+  Object.defineProperty(exports, _key3, {
+    enumerable: true,
+    get: function get() {
+      return _point[_key3];
+    }
+  });
+};
 
-function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
+for (var _key3 in _point) {
+  var _ret = _loop(_key3);
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  if (_ret === "continue") continue;
+}
+
+var _utils = require("./utils");
+
+var _loop2 = function _loop2(_key4) {
+  if (_key4 === "default") return "continue";
+  Object.defineProperty(exports, _key4, {
+    enumerable: true,
+    get: function get() {
+      return _utils[_key4];
+    }
+  });
+};
+
+for (var _key4 in _utils) {
+  var _ret2 = _loop2(_key4);
+
+  if (_ret2 === "continue") continue;
+}
 
 var _engine = require("./engine");
 
 var _registry = require("./registry");
 
-var _flowsMouse = require("./flows/mouse");
+var _mouse = require("./flows/mouse");
 
-var _flowsTouch = require("./flows/touch");
+var _touch = require("./flows/touch");
 
-var _flowsMsPointer = require("./flows/ms-pointer");
+var _msPointer = require("./flows/ms-pointer");
 
-var _flowsPointer = require("./flows/pointer");
+var _pointer = require("./flows/pointer");
 
-var _point = require("./point");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-_defaults(exports, _interopExportWildcard(_point, _defaults));
-
-var _utils = require("./utils");
-
-_defaults(exports, _interopExportWildcard(_utils, _defaults));
-
-var Oribella = (function () {
+var Oribella = exports.Oribella = (function () {
   function Oribella(element, config) {
     _classCallCheck(this, Oribella);
 
@@ -51,16 +76,16 @@ var Oribella = (function () {
     key: "withDefaultFlowStrategy",
     value: function withDefaultFlowStrategy() {
       if (this.config.msPointerEnabled) {
-        this.engine.addFlow(new _flowsMsPointer.MSPointerFlow(this.element, _point.Point));
+        this.engine.addFlow(new _msPointer.MSPointerFlow(this.element, _point.Point));
       }
       if (this.config.pointerEnabled) {
-        this.engine.addFlow(new _flowsPointer.PointerFlow(this.element, _point.Point));
+        this.engine.addFlow(new _pointer.PointerFlow(this.element, _point.Point));
       }
       if (this.config.touchEnabled) {
-        this.engine.addFlow(new _flowsTouch.TouchFlow(this.element, _point.Point));
+        this.engine.addFlow(new _touch.TouchFlow(this.element, _point.Point));
       }
 
-      this.engine.addFlow(new _flowsMouse.MouseFlow(this.element, _point.Point));
+      this.engine.addFlow(new _mouse.MouseFlow(this.element, _point.Point));
       return this;
     }
   }, {
@@ -106,5 +131,3 @@ var Oribella = (function () {
 
   return Oribella;
 })();
-
-exports.Oribella = Oribella;

@@ -1,31 +1,26 @@
-/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
 "use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })(); /*eslint no-cond-assign: 0*/
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+exports.Engine = exports.ACTION_CANCEL = exports.ACTION_END = exports.ACTION_UPDATE = exports.ACTION_START = undefined;
 
 var _handle = require("./handle");
 
 var _utils = require("./utils");
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 var POINTERS = "__pointers__";
 
-var ACTION_START = "start",
-    ACTION_UPDATE = "update",
-    ACTION_END = "end",
-    ACTION_CANCEL = "cancel";
+var ACTION_START = exports.ACTION_START = "start",
+    ACTION_UPDATE = exports.ACTION_UPDATE = "update",
+    ACTION_END = exports.ACTION_END = "end",
+    ACTION_CANCEL = exports.ACTION_CANCEL = "cancel";
 
-exports.ACTION_START = ACTION_START;
-exports.ACTION_UPDATE = ACTION_UPDATE;
-exports.ACTION_END = ACTION_END;
-exports.ACTION_CANCEL = ACTION_CANCEL;
-
-var Engine = (function () {
+var Engine = exports.Engine = (function () {
   function Engine(element, registry, isMouse, isValidMouseButton) {
     _classCallCheck(this, Engine);
 
@@ -374,5 +369,3 @@ var Engine = (function () {
 
   return Engine;
 })();
-
-exports.Engine = Engine;

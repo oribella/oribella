@@ -10,20 +10,12 @@
     "url": "http://github.com/oribella/framework"
   },
   "scripts": {
-    "version": "npm run changelog && git add CHANGELOG.md",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -w -r 0",
-    "build": "npm run build:commonjs && npm run build:system && npm run build:amd",
-    "build:commonjs": "babel src --out-dir dist/commonjs",
-    "build:watch:commonjs": "babel src --out-dir dist/commonjs -w",
-    "build:system": "babel src --modules system --out-dir dist/system",
-    "build:watch:system": "babel src --modules system --out-dir dist/system -w",
-    "build:amd": "babel src --modules amd --out-dir dist/amd",
-    "build:watch:amd": "babel src --modules amd --out-dir dist/amd -w",
-    "test": "mocha test",
-    "test:watch": "mocha test -w",
-    "test:coverage": "istanbul cover ./node_modules/mocha/bin/_mocha",
-    "lint": "eslint src"
+    "version": "dev-changelog && git add CHANGELOG.md",
+    "build": "dev-build -cas",
+    "test": "dev-test",
+    "coverage": "dev-coverage"
   },
+  "jspmNodeConversion": false,
   "jspm": {
     "main": "index",
     "format": "amd",
@@ -32,14 +24,6 @@
     }
   },
   "devDependencies": {
-    "babel": "^5.8.21",
-    "babel-eslint": "^4.1.0",
-    "chai": "^3.4.1",
-    "conventional-changelog": "^0.5.1",
-    "eslint": "^1.10.3",
-    "istanbul": "^1.0.0-alpha.2",
-    "mocha": "^2.3.4",
-    "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0"
+    "oribella-dev": "^0.1.0"
   }
 }

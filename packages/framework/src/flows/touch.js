@@ -1,4 +1,3 @@
-/*eslint no-cond-assign: 0*/
 import {Flow} from "./flow";
 
 export class TouchFlow extends Flow {

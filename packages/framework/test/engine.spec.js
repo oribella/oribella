@@ -1,6 +1,5 @@
 import {Engine, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL} from "../src/engine";
 import {MouseFlow} from "../src/flows/mouse";
-import {GESTURE_STARTED} from "../src/utils";
 
 describe("Engine", () => {
 

@@ -4,10 +4,20 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-function _interopExportWildcard(obj, defaults) { var newObj = defaults({}, obj); delete newObj["default"]; return newObj; }
-
-function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-
 var _oribella = require("./oribella");
 
-_defaults(exports, _interopExportWildcard(_oribella, _defaults));
+var _loop = function _loop(_key2) {
+  if (_key2 === "default") return "continue";
+  Object.defineProperty(exports, _key2, {
+    enumerable: true,
+    get: function get() {
+      return _oribella[_key2];
+    }
+  });
+};
+
+for (var _key2 in _oribella) {
+  var _ret = _loop(_key2);
+
+  if (_ret === "continue") continue;
+}

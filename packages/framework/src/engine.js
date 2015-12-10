@@ -1,4 +1,4 @@
-/*eslint no-cond-assign: 0, no-underscore-dangle: 0*/
+/*eslint no-cond-assign: 0*/
 import {Handle} from "./handle";
 import {GESTURE_STARTED, STRATEGY_FLAG, RETURN_FLAG, matchesSelector} from "./utils";
 

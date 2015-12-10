@@ -1,23 +1,23 @@
-/*eslint no-underscore-dangle: 0*/
 "use strict";
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var DefaultSubscriber = {
+var DefaultSubscriber = exports.DefaultSubscriber = {
   down: function down() {},
   start: function start() {},
   update: function update() {},
   end: function end() {},
   cancel: function cancel() {}
 };
-exports.DefaultSubscriber = DefaultSubscriber;
-var DefaultGesture = {
+var DefaultGesture = exports.DefaultGesture = {
   start: function start() {},
   update: function update() {},
   end: function end() {},
@@ -26,9 +26,7 @@ var DefaultGesture = {
   unbind: function unbind() {}
 };
 
-exports.DefaultGesture = DefaultGesture;
-
-var Registry = (function () {
+var Registry = exports.Registry = (function () {
   function Registry() {
     _classCallCheck(this, Registry);
 
@@ -66,7 +64,7 @@ var Registry = (function () {
     key: "ensure",
     value: function ensure(proto, defaultProto) {
       Object.keys(defaultProto).forEach(function (key) {
-        if (typeof proto[key] !== typeof defaultProto[key]) {
+        if (_typeof(proto[key]) !== _typeof(defaultProto[key])) {
           proto[key] = defaultProto[key];
         }
       });
@@ -74,7 +72,7 @@ var Registry = (function () {
   }, {
     key: "ensureSubscriberProto",
     value: function ensureSubscriberProto(subscriber) {
-      if (typeof subscriber !== "object") {
+      if ((typeof subscriber === "undefined" ? "undefined" : _typeof(subscriber)) !== "object") {
         throw new Error("Invalid parameter. Should be an object");
       }
       this.ensure(subscriber, DefaultSubscriber);
@@ -96,8 +94,8 @@ var Registry = (function () {
       }
 
       Object.keys(defaultOptions).forEach(function (key) {
-        var type = typeof options[key];
-        if (type === "undefined" || type !== typeof defaultOptions[key]) {
+        var type = _typeof(options[key]);
+        if (type === "undefined" || type !== _typeof(defaultOptions[key])) {
           options[key] = defaultOptions[key];
         }
       });
@@ -106,5 +104,3 @@ var Registry = (function () {
 
   return Registry;
 })();
-
-exports.Registry = Registry;
