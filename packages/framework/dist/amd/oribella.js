@@ -1,42 +1,10 @@
 "use strict";
 
-var _loop2 = function _loop2(_key4) {
-  if (_key4 === "default") return "continue";
-  Object.defineProperty(exports, _key4, {
-    enumerable: true,
-    get: function get() {
-      return _utils[_key4];
-    }
-  });
-};
-
-var _loop = function _loop(_key3) {
-  if (_key3 === "default") return "continue";
-  Object.defineProperty(exports, _key3, {
-    enumerable: true,
-    get: function get() {
-      return _point[_key3];
-    }
-  });
-};
-
-define(["exports", "./point", "./utils", "./engine", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer"], function (exports, _point, _utils, _engine, _registry, _mouse, _touch, _msPointer, _pointer) {
+define(["exports", "./engine", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (exports, _engine, _registry, _mouse, _touch, _msPointer, _pointer, _point) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.Oribella = undefined;
-
-  for (var _key3 in _point) {
-    var _ret = _loop(_key3);
-
-    if (_ret === "continue") continue;
-  }
-
-  for (var _key4 in _utils) {
-    var _ret2 = _loop2(_key4);
-
-    if (_ret2 === "continue") continue;
-  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {

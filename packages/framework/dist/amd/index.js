@@ -1,23 +1,43 @@
 "use strict";
 
-var _loop = function _loop(_key2) {
-  if (_key2 === "default") return "continue";
-  Object.defineProperty(exports, _key2, {
-    enumerable: true,
-    get: function get() {
-      return _oribella[_key2];
-    }
-  });
-};
-
-define(["exports", "./oribella"], function (exports, _oribella) {
+define(["exports", "./point", "./utils", "./oribella"], function (exports, _point, _utils, _oribella) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-
-  for (var _key2 in _oribella) {
-    var _ret = _loop(_key2);
-
-    if (_ret === "continue") continue;
-  }
+  Object.defineProperty(exports, "Point", {
+    enumerable: true,
+    get: function get() {
+      return _point.Point;
+    }
+  });
+  Object.defineProperty(exports, "GESTURE_STARTED", {
+    enumerable: true,
+    get: function get() {
+      return _utils.GESTURE_STARTED;
+    }
+  });
+  Object.defineProperty(exports, "STRATEGY_FLAG", {
+    enumerable: true,
+    get: function get() {
+      return _utils.STRATEGY_FLAG;
+    }
+  });
+  Object.defineProperty(exports, "RETURN_FLAG", {
+    enumerable: true,
+    get: function get() {
+      return _utils.RETURN_FLAG;
+    }
+  });
+  Object.defineProperty(exports, "matchesSelector", {
+    enumerable: true,
+    get: function get() {
+      return _utils.matchesSelector;
+    }
+  });
+  Object.defineProperty(exports, "Oribella", {
+    enumerable: true,
+    get: function get() {
+      return _oribella.Oribella;
+    }
+  });
 });

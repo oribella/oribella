@@ -1,10 +1,10 @@
-export var GESTURE_STARTED = "__started__";
+export const GESTURE_STARTED = "__started__";
 
-export var STRATEGY_FLAG = {
+export const STRATEGY_FLAG = {
   REMOVE_IF_POINTERS_GT: 1
 };
 
-export var RETURN_FLAG = {
+export const RETURN_FLAG = {
   map(result) {
     switch (result) {
     case true:

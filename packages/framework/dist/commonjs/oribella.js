@@ -7,42 +7,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Oribella = undefined;
 
-var _point = require("./point");
-
-var _loop = function _loop(_key3) {
-  if (_key3 === "default") return "continue";
-  Object.defineProperty(exports, _key3, {
-    enumerable: true,
-    get: function get() {
-      return _point[_key3];
-    }
-  });
-};
-
-for (var _key3 in _point) {
-  var _ret = _loop(_key3);
-
-  if (_ret === "continue") continue;
-}
-
-var _utils = require("./utils");
-
-var _loop2 = function _loop2(_key4) {
-  if (_key4 === "default") return "continue";
-  Object.defineProperty(exports, _key4, {
-    enumerable: true,
-    get: function get() {
-      return _utils[_key4];
-    }
-  });
-};
-
-for (var _key4 in _utils) {
-  var _ret2 = _loop2(_key4);
-
-  if (_ret2 === "continue") continue;
-}
-
 var _engine = require("./engine");
 
 var _registry = require("./registry");
@@ -54,6 +18,8 @@ var _touch = require("./flows/touch");
 var _msPointer = require("./flows/ms-pointer");
 
 var _pointer = require("./flows/pointer");
+
+var _point = require("./point");
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 

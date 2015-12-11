@@ -1,6 +1,6 @@
 "use strict";
 
-System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point", "./utils"], function (_export) {
+System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
   var Engine, Registry, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, _createClass, Oribella;
 
   function _classCallCheck(instance, Constructor) {
@@ -24,21 +24,6 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
       PointerFlow = _flowsPointer.PointerFlow;
     }, function (_point) {
       Point = _point.Point;
-      var _exportObj = {};
-
-      for (var _key in _point) {
-        if (_key !== "default") _exportObj[_key] = _point[_key];
-      }
-
-      _export(_exportObj);
-    }, function (_utils) {
-      var _exportObj2 = {};
-
-      for (var _key2 in _utils) {
-        if (_key2 !== "default") _exportObj2[_key2] = _utils[_key2];
-      }
-
-      _export(_exportObj2);
     }],
     execute: function () {
       _createClass = (function () {
