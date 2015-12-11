@@ -1,3 +1,13 @@
+<a name="0.3.4"></a>
+## [0.3.4](https://github.com/oribella/framework/compare/v0.3.3...v0.3.4) (2015-12-11)
+
+
+### Bug Fixes
+
+* **dist:** use `es2015`, `stage-1` and `stage-2` ([5681d02](https://github.com/oribella/framework/commit/5681d02))
+
+
+
 <a name="0.3.3"></a>
 ## [0.3.3](https://github.com/oribella/framework/compare/v0.3.2...v0.3.3) (2015-12-11)
 
