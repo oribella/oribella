@@ -1,3 +1,13 @@
+<a name="0.3.3"></a>
+## [0.3.3](https://github.com/oribella/framework/compare/v0.3.2...v0.3.3) (2015-12-11)
+
+
+### Bug Fixes
+
+* **dist:** update dist ([4421df5](https://github.com/oribella/framework/commit/4421df5))
+
+
+
 <a name="0.3.2"></a>
 ## [0.3.2](https://github.com/oribella/framework/compare/v0.3.1...v0.3.2) (2015-12-11)
 
