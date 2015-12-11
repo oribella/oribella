@@ -4,40 +4,34 @@ define(["exports", "./point", "./utils", "./oribella"], function (exports, _poin
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  Object.defineProperty(exports, "Point", {
-    enumerable: true,
-    get: function get() {
-      return _point.Point;
-    }
-  });
-  Object.defineProperty(exports, "GESTURE_STARTED", {
-    enumerable: true,
-    get: function get() {
-      return _utils.GESTURE_STARTED;
-    }
-  });
-  Object.defineProperty(exports, "STRATEGY_FLAG", {
-    enumerable: true,
-    get: function get() {
-      return _utils.STRATEGY_FLAG;
-    }
-  });
-  Object.defineProperty(exports, "RETURN_FLAG", {
-    enumerable: true,
-    get: function get() {
-      return _utils.RETURN_FLAG;
-    }
-  });
-  Object.defineProperty(exports, "matchesSelector", {
-    enumerable: true,
-    get: function get() {
-      return _utils.matchesSelector;
-    }
-  });
-  Object.defineProperty(exports, "Oribella", {
-    enumerable: true,
-    get: function get() {
-      return _oribella.Oribella;
-    }
-  });
+
+  for (let _key in _point) {
+    if (_key === "default") continue;
+    Object.defineProperty(exports, _key, {
+      enumerable: true,
+      get: function () {
+        return _point[_key];
+      }
+    });
+  }
+
+  for (let _key2 in _utils) {
+    if (_key2 === "default") continue;
+    Object.defineProperty(exports, _key2, {
+      enumerable: true,
+      get: function () {
+        return _utils[_key2];
+      }
+    });
+  }
+
+  for (let _key3 in _oribella) {
+    if (_key3 === "default") continue;
+    Object.defineProperty(exports, _key3, {
+      enumerable: true,
+      get: function () {
+        return _oribella[_key3];
+      }
+    });
+  }
 });

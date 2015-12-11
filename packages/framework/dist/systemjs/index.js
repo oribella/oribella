@@ -4,20 +4,26 @@ System.register(["./point", "./utils", "./oribella"], function (_export) {
   return {
     setters: [function (_point) {
       var _exportObj = {};
-      _exportObj.Point = _point.Point;
+
+      for (var _key in _point) {
+        if (_key !== "default") _exportObj[_key] = _point[_key];
+      }
 
       _export(_exportObj);
     }, function (_utils) {
       var _exportObj2 = {};
-      _exportObj2.GESTURE_STARTED = _utils.GESTURE_STARTED;
-      _exportObj2.STRATEGY_FLAG = _utils.STRATEGY_FLAG;
-      _exportObj2.RETURN_FLAG = _utils.RETURN_FLAG;
-      _exportObj2.matchesSelector = _utils.matchesSelector;
+
+      for (var _key2 in _utils) {
+        if (_key2 !== "default") _exportObj2[_key2] = _utils[_key2];
+      }
 
       _export(_exportObj2);
     }, function (_oribella) {
       var _exportObj3 = {};
-      _exportObj3.Oribella = _oribella.Oribella;
+
+      for (var _key3 in _oribella) {
+        if (_key3 !== "default") _exportObj3[_key3] = _oribella[_key3];
+      }
 
       _export(_exportObj3);
     }],

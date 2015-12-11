@@ -5,18 +5,15 @@ define(["exports"], function (exports) {
     value: true
   });
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
+  class Handle {
+    constructor(element, type, subscriber, active) {
+      this.element = element;
+      this.type = type;
+      this.subscriber = subscriber;
+      this.active = active;
     }
+
   }
 
-  var Handle = exports.Handle = function Handle(element, type, subscriber, active) {
-    _classCallCheck(this, Handle);
-
-    this.element = element;
-    this.type = type;
-    this.subscriber = subscriber;
-    this.active = active;
-  };
+  exports.Handle = Handle;
 });

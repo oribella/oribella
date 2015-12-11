@@ -4,14 +4,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.matchesSelector = matchesSelector;
-var GESTURE_STARTED = exports.GESTURE_STARTED = "__started__";
+const GESTURE_STARTED = exports.GESTURE_STARTED = "__started__";
 
-var STRATEGY_FLAG = exports.STRATEGY_FLAG = {
+const STRATEGY_FLAG = exports.STRATEGY_FLAG = {
   REMOVE_IF_POINTERS_GT: 1
 };
 
-var RETURN_FLAG = exports.RETURN_FLAG = {
-  map: function map(result) {
+const RETURN_FLAG = exports.RETURN_FLAG = {
+  map(result) {
     switch (result) {
       case true:
         result = this.REMOVE_OTHERS;
@@ -29,7 +29,6 @@ var RETURN_FLAG = exports.RETURN_FLAG = {
 
     return result;
   },
-
   STARTED: 1,
   REMOVE: 2,
   REMOVE_OTHERS: 4

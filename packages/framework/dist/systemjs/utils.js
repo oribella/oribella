@@ -1,22 +1,21 @@
 "use strict";
 
 System.register([], function (_export) {
-  var GESTURE_STARTED, STRATEGY_FLAG, RETURN_FLAG;
   return {
     setters: [],
     execute: function () {
-      _export("GESTURE_STARTED", GESTURE_STARTED = "__started__");
+      const GESTURE_STARTED = "__started__";
 
       _export("GESTURE_STARTED", GESTURE_STARTED);
 
-      _export("STRATEGY_FLAG", STRATEGY_FLAG = {
+      const STRATEGY_FLAG = {
         REMOVE_IF_POINTERS_GT: 1
-      });
+      };
 
       _export("STRATEGY_FLAG", STRATEGY_FLAG);
 
-      _export("RETURN_FLAG", RETURN_FLAG = {
-        map: function map(result) {
+      const RETURN_FLAG = {
+        map(result) {
           switch (result) {
             case true:
               result = this.REMOVE_OTHERS;
@@ -37,10 +36,11 @@ System.register([], function (_export) {
 
           return result;
         },
+
         STARTED: 1,
         REMOVE: 2,
         REMOVE_OTHERS: 4
-      });
+      };
 
       _export("RETURN_FLAG", RETURN_FLAG);
 

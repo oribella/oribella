@@ -25,6 +25,6 @@
     }
   },
   "devDependencies": {
-    "oribella-dev": "^0.1.4"
+    "oribella-dev": "^0.1.6"
   }
 }
