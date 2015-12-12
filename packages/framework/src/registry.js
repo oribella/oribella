@@ -1,76 +1,46 @@
-export var DefaultSubscriber = {
-  down() {},
-  start() {},
-  update() {},
-  end() {},
-  cancel() {}
-};
-export var DefaultGesture = {
-  start() {},
-  update() {},
-  end() {},
-  cancel() {},
-  bind() {},
-  unbind() {}
+export class Ensure {
+  constructor(fns) {
+    this.fns = fns;
+  }
+  ensure(o) {
+    this.fns.forEach(key => {
+      if(typeof o[key] !== "function") {
+        o[key] = function() {};
+      }
+    });
+  }
+}
+
+const DefaultGestureOptions = {
+  touches: 1,
+  which: 1,
+  prio: 100
 };
 
 export class Registry {
   constructor() {
     this.gestures = {};
+    this.defaultGesture = new Ensure(["start", "update", "end", "cancel", "bind", "unbind"]);
+    this.defaultSubscriber = new Ensure(["down", "start", "update", "end", "cancel"]);
   }
   register(type, Gesture) {
-    this.ensure(Gesture.prototype, DefaultGesture);
+    this.defaultGesture.ensure(Gesture.prototype);
     this.gestures[type] = Gesture;
   }
   getTypes() {
     return Object.keys(this.gestures);
   }
   create(type, subscriber, element) {
-    var defaultOptions;
-    this.ensureSubscriberProto(subscriber);
+    let defaultOptions;
+    this.defaultSubscriber.ensure(subscriber);
     if (typeof this.gestures[type].defaultOptions === "function") {
       defaultOptions = this.gestures[type].defaultOptions();
+      const defaultOptionsPropertyDescriptors = Object.getOwnPropertyDescriptors(defaultOptions);
+      defaultOptions = Object.create(DefaultGestureOptions, defaultOptionsPropertyDescriptors);
     }
-    if(typeof subscriber.options === "undefined") {
-      subscriber.options = {};
-    }
-    this.ensureSubscriberOptions(defaultOptions, subscriber.options);
-    var gesture = new this.gestures[type](subscriber, element);
-    //gesture.__type__ = type;
+    const optionsPropertyDescriptors = Object.getOwnPropertyDescriptors(subscriber.options);
+    subscriber.options = Object.create(defaultOptions, optionsPropertyDescriptors);
+    let gesture = new this.gestures[type](subscriber, element);
     return gesture;
-  }
-  ensure(proto, defaultProto) {
-    Object.keys(defaultProto).forEach(key => {
-      if(typeof proto[key] !== typeof defaultProto[key]) {
-        proto[key] = defaultProto[key];
-      }
-    });
-  }
-  ensureSubscriberProto(subscriber) {
-    if (typeof subscriber !== "object") {
-      throw new Error("Invalid parameter. Should be an object");
-    }
-    this.ensure(subscriber, DefaultSubscriber);
-  }
-  ensureSubscriberOptions(defaultOptions, options) {
-    if(typeof defaultOptions === "undefined") {
-      defaultOptions = {};
-    }
-    if(typeof defaultOptions.touches !== "number") {
-      defaultOptions.touches = 1;
-    }
-    if(typeof defaultOptions.which !== "number") {
-      defaultOptions.which = 1;
-    }
-    if(typeof defaultOptions.prio !== "number") {
-      defaultOptions.prio = 100;
-    }
-
-    Object.keys(defaultOptions).forEach(key => {
-      var type = typeof options[key];
-      if (type === "undefined" || type !== typeof defaultOptions[key]) {
-        options[key] = defaultOptions[key];
-      }
-    });
   }
 }
