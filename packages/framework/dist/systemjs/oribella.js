@@ -1,13 +1,11 @@
-"use strict";
-
 System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./flows/ms-pointer", "./flows/pointer", "./point"], function (_export) {
-  var Engine, Registry, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, _createClass, Oribella;
+  "use strict";
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  var Engine, Registry, MouseFlow, TouchFlow, MSPointerFlow, PointerFlow, Point, Oribella;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   return {
     setters: [function (_engine) {
@@ -26,25 +24,7 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
       Point = _point.Point;
     }],
     execute: function () {
-      _createClass = (function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      })();
-
-      _export("Oribella", Oribella = (function () {
+      Oribella = (function () {
         function Oribella(element, config) {
           _classCallCheck(this, Oribella);
 
@@ -65,11 +45,9 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
             if (this.config.msPointerEnabled) {
               this.engine.addFlow(new MSPointerFlow(this.element, Point));
             }
-
             if (this.config.pointerEnabled) {
               this.engine.addFlow(new PointerFlow(this.element, Point));
             }
-
             if (this.config.touchEnabled) {
               this.engine.addFlow(new TouchFlow(this.element, Point));
             }
@@ -92,17 +70,16 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
           key: "isMouse",
           value: function isMouse(e) {
             if (this.config.msPointerEnabled && e.pointerType === e.MSPOINTER_TYPE_MOUSE) {
+              //IE10
               return true;
             }
-
             if (this.config.pointerEnabled && e.pointerType === "mouse") {
+              //IE11
               return true;
             }
-
             if (e.type.indexOf("mouse") !== -1) {
               return true;
             }
-
             return false;
           }
         }, {
@@ -111,6 +88,7 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
             var btn = event.button,
                 which = event.which,
                 actualBtn;
+
             actualBtn = !which && btn !== undefined ? btn & 1 ? 1 : btn & 2 ? 3 : btn & 4 ? 2 : 0 : which;
             return Array.isArray(allowedBtn) ? allowedBtn.some(function (val) {
               return actualBtn === val;
@@ -119,7 +97,7 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
         }]);
 
         return Oribella;
-      })());
+      })();
 
       _export("Oribella", Oribella);
     }

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Handle = exports.Handle = function Handle(element, type, subscriber, active) {
+var Handle = function Handle(element, type, subscriber, active) {
   _classCallCheck(this, Handle);
 
   this.element = element;
@@ -14,3 +14,5 @@ var Handle = exports.Handle = function Handle(element, type, subscriber, active)
   this.subscriber = subscriber;
   this.active = active;
 };
+
+exports.Handle = Handle;

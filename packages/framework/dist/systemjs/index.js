@@ -1,31 +1,19 @@
-"use strict";
-
 System.register(["./point", "./utils", "./oribella"], function (_export) {
+  "use strict";
+
   return {
     setters: [function (_point) {
-      var _exportObj = {};
-
-      for (var _key in _point) {
-        if (_key !== "default") _exportObj[_key] = _point[_key];
-      }
-
-      _export(_exportObj);
+      _export("Point", _point.Point);
     }, function (_utils) {
-      var _exportObj2 = {};
+      _export("GESTURE_STARTED", _utils.GESTURE_STARTED);
 
-      for (var _key2 in _utils) {
-        if (_key2 !== "default") _exportObj2[_key2] = _utils[_key2];
-      }
+      _export("STRATEGY_FLAG", _utils.STRATEGY_FLAG);
 
-      _export(_exportObj2);
+      _export("RETURN_FLAG", _utils.RETURN_FLAG);
+
+      _export("matchesSelector", _utils.matchesSelector);
     }, function (_oribella) {
-      var _exportObj3 = {};
-
-      for (var _key3 in _oribella) {
-        if (_key3 !== "default") _exportObj3[_key3] = _oribella[_key3];
-      }
-
-      _export(_exportObj3);
+      _export("Oribella", _oribella.Oribella);
     }],
     execute: function () {}
   };

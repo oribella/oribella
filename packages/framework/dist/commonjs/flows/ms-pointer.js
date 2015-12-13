@@ -3,23 +3,22 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MSPointerFlow = undefined;
 
-var _pointer = require("./pointer");
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MSPointerFlow = exports.MSPointerFlow = (function (_PointerFlow) {
+var _pointer = require("./pointer");
+
+var MSPointerFlow = (function (_PointerFlow) {
   _inherits(MSPointerFlow, _PointerFlow);
 
   function MSPointerFlow(element, Point) {
     _classCallCheck(this, MSPointerFlow);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(MSPointerFlow).call(this, element, Point, [{
+    _get(Object.getPrototypeOf(MSPointerFlow.prototype), "constructor", this).call(this, element, Point, [{
       start: ["MSPointerDown"]
     }, {
       update: ["MSPointerMove"]
@@ -27,8 +26,10 @@ var MSPointerFlow = exports.MSPointerFlow = (function (_PointerFlow) {
       end: ["MSPointerUp"]
     }, {
       cancel: ["MSPointerCancel", "dragstart"]
-    }]));
+    }]);
   }
 
   return MSPointerFlow;
 })(_pointer.PointerFlow);
+
+exports.MSPointerFlow = MSPointerFlow;

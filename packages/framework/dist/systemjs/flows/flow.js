@@ -1,13 +1,13 @@
-"use strict";
-
 System.register([], function (_export) {
-  var _createClass, Flow;
+  /*eslint no-cond-assign: 0*/
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  "use strict";
+
+  var Flow;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   function removeListener(element, event, fn) {
     element.removeEventListener(event, fn, false);
@@ -21,25 +21,7 @@ System.register([], function (_export) {
   return {
     setters: [],
     execute: function () {
-      _createClass = (function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      })();
-
-      _export("Flow", Flow = (function () {
+      Flow = (function () {
         function Flow(element, Point, events, stopEmulatedMouseEvents) {
           _classCallCheck(this, Flow);
 
@@ -75,7 +57,7 @@ System.register([], function (_export) {
           }
         }, {
           key: "normalizePoints",
-          value: function normalizePoints() {
+          value: function normalizePoints() /*event, data, Point*/{
             throw new Error("normalizePoints: must be implemented in sub class");
           }
         }, {
@@ -116,9 +98,8 @@ System.register([], function (_export) {
           key: "start",
           value: function start(event) {
             this.normalizePoints(event, this.Point);
-
             if (this.startCallback(this, event, this.allPointers, this.currentPointers)) {
-              this.continue();
+              this["continue"]();
             }
           }
         }, {
@@ -142,7 +123,6 @@ System.register([], function (_export) {
           value: function end(event) {
             this.normalizePoints(event, this.Point, this.pointers);
             this.endCallback(this, event, this.allPointers, this.currentPointers);
-
             if (Object.keys(this.allPointers).length === 0) {
               this.stop();
             }
@@ -162,14 +142,13 @@ System.register([], function (_export) {
             for (i = 0; i < cnt; ++i) {
               this.removeListeners[i]();
             }
-
             this.removeListeners.length = 0;
             this.stopCallback(this);
           }
         }]);
 
         return Flow;
-      })());
+      })();
 
       _export("Flow", Flow);
     }

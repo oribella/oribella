@@ -1,13 +1,12 @@
-"use strict";
-
 System.register(["./handle", "./utils"], function (_export) {
-  var Handle, GESTURE_STARTED, STRATEGY_FLAG, RETURN_FLAG, matchesSelector, _createClass, POINTERS, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
+  /*eslint no-cond-assign: 0*/
+  "use strict";
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  var Handle, GESTURE_STARTED, STRATEGY_FLAG, RETURN_FLAG, matchesSelector, POINTERS, ACTION_START, ACTION_UPDATE, ACTION_END, ACTION_CANCEL, Engine;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
   return {
     setters: [function (_handle) {
@@ -19,33 +18,11 @@ System.register(["./handle", "./utils"], function (_export) {
       matchesSelector = _utils.matchesSelector;
     }],
     execute: function () {
-      _createClass = (function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      })();
-
       POINTERS = "__pointers__";
-
-      _export("ACTION_START", ACTION_START = "start");
-
-      _export("ACTION_UPDATE", ACTION_UPDATE = "update");
-
-      _export("ACTION_END", ACTION_END = "end");
-
-      _export("ACTION_CANCEL", ACTION_CANCEL = "cancel");
+      ACTION_START = "start";
+      ACTION_UPDATE = "update";
+      ACTION_END = "end";
+      ACTION_CANCEL = "cancel";
 
       _export("ACTION_START", ACTION_START);
 
@@ -55,7 +32,7 @@ System.register(["./handle", "./utils"], function (_export) {
 
       _export("ACTION_CANCEL", ACTION_CANCEL);
 
-      _export("Engine", Engine = (function () {
+      Engine = (function () {
         function Engine(element, registry, isMouse, isValidMouseButton) {
           _classCallCheck(this, Engine);
 
@@ -94,10 +71,11 @@ System.register(["./handle", "./utils"], function (_export) {
             var _this = this;
 
             var handle = new Handle(element, type, subscriber);
+
             this.handles.push(handle);
+
             return function () {
               var ix = _this.handles.indexOf(handle);
-
               if (ix !== -1) {
                 _this.handles.splice(ix, 1);
               }
@@ -123,15 +101,17 @@ System.register(["./handle", "./utils"], function (_export) {
             }
 
             this.activeFlow = flow;
+
             this.gestures = this.gestures.concat(this.match(event.target)).sort(function (g1, g2) {
               return g1.subscriber.options.prio - g2.subscriber.options.prio;
             });
 
             if (!this.gestures.length) {
-              return false;
+              return false; //No match don't continue
             }
 
             this.processEvent(flow, event, allPointers, currentPointers, ACTION_START);
+
             return true;
           }
         }, {
@@ -158,7 +138,6 @@ System.register(["./handle", "./utils"], function (_export) {
 
             while (gesture = gestures.shift()) {
               result = gesture.unbind();
-
               if (result === false) {
                 this.composedGestures.push(gesture);
               }
@@ -173,7 +152,6 @@ System.register(["./handle", "./utils"], function (_export) {
             if (gesture[GESTURE_STARTED]) {
               gesture[ACTION_CANCEL]();
             }
-
             gesture.unbind();
             var gestures = undefined;
 
@@ -183,7 +161,6 @@ System.register(["./handle", "./utils"], function (_export) {
 
             while (gestures = arr.shift()) {
               var ix = gestures.indexOf(gesture);
-
               if (ix !== -1) {
                 gestures.splice(ix, 1);
               }
@@ -195,7 +172,6 @@ System.register(["./handle", "./utils"], function (_export) {
             if (this.activeFlow !== flow) {
               return;
             }
-
             this.processGestures(event, allPointers, currentPointers, action);
           }
         }, {
@@ -204,7 +180,6 @@ System.register(["./handle", "./utils"], function (_export) {
             if (this.isMouse(event) && !this.isValidMouseButton(event, options.which)) {
               return -1;
             }
-
             return pointerCount - options.touches;
           }
         }, {
@@ -234,15 +209,14 @@ System.register(["./handle", "./utils"], function (_export) {
               removeGesture = false;
               pointers = gesture[POINTERS];
               options = gesture.subscriber.options;
-              allResult = this.getPointersDelta(event, allPointerCnt, options);
 
+              allResult = this.getPointersDelta(event, allPointerCnt, options);
               if (allResult > 0 && options.strategy & STRATEGY_FLAG.REMOVE_IF_POINTERS_GT) {
                 this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
                 continue;
               }
 
               result = this.getPointersDelta(event, currentPointerCnt, options);
-
               switch (action) {
                 case ACTION_START:
                   if (result !== 0) {
@@ -252,82 +226,64 @@ System.register(["./handle", "./utils"], function (_export) {
                       continue;
                     }
                   }
-
                   if (pointers && Object.keys(pointers).length === currentPointerCnt) {
                     continue;
                   }
-
+                  //Lock pointers for gesture
                   gesture[POINTERS] = pointers = currentPointers;
                   hasPointer = true;
                   break;
-
                 case ACTION_UPDATE:
+                  //Update pointers for gesture
                   pointerIx = 0;
-
                   while (pointerIx < currentPointerCnt) {
                     pointerId = currentPointerIds[pointerIx];
-
                     if (pointers && pointers[pointerId]) {
                       pointers[pointerId] = currentPointers[pointerId];
                       hasPointer = true;
                     }
-
                     ++pointerIx;
                   }
-
                   break;
-
                 case ACTION_END:
                   if (!gesture[GESTURE_STARTED]) {
                     continue;
                   }
-
                   pointerIx = 0;
-
                   while (pointerIx < currentPointerCnt) {
                     pointerId = currentPointerIds[pointerIx];
-
                     if (pointers && pointers[pointerId]) {
                       hasPointer = true;
                       removePointers = true;
                     }
-
                     ++pointerIx;
                   }
-
                   if (pointers && !Object.keys(pointers).length) {
                     hasPointer = true;
                     removeGesture = true;
                   }
-
                   break;
               }
-
               if (!hasPointer) {
                 continue;
               }
-
+              //Map pointers -> pagePoints
               pointerIx = 0;
               pointerIds = Object.keys(pointers);
               pointerCnt = pointerIds.length;
-
               while (pointerIx < pointerCnt) {
                 pagePoints.push(pointers[pointerIds[pointerIx]]);
                 ++pointerIx;
               }
-
               this.processGesture(event, pagePoints, action, gesture, gestures);
 
               if (removePointers) {
                 pointerIx = 0;
-
                 while (pointerIx < currentPointerCnt) {
                   pointerId = currentPointerIds[pointerIx];
-
                   if (pointers[pointerId]) {
                     delete pointers[pointerId];
                   }
-
                   ++pointerIx;
                 }
               }
@@ -342,29 +298,28 @@ System.register(["./handle", "./utils"], function (_export) {
         }, {
           key: "processGesture",
           value: function processGesture(event, pagePoints, action, gesture, gestures) {
+            //Call
             var result = gesture[action](event, pagePoints);
-
             if (result & RETURN_FLAG.STARTED) {
               gesture[GESTURE_STARTED] = true;
             }
 
+            //Remove gesture
             if (result & RETURN_FLAG.REMOVE) {
               this.removeGesture(gesture, this.gestures, this.composedGestures, gestures);
             }
 
+            //Remove all other gestures
             if (result & RETURN_FLAG.REMOVE_OTHERS) {
               var otherGestures = gestures.slice();
               var otherGesture = undefined;
-
               while (otherGesture = otherGestures.shift()) {
                 if (gesture === otherGesture) {
                   continue;
                 }
-
                 if (otherGesture[GESTURE_STARTED]) {
                   otherGesture[ACTION_CANCEL]();
                 }
-
                 this.removeGesture(otherGesture, this.gestures, this.composedGestures, gestures);
               }
             }
@@ -391,6 +346,7 @@ System.register(["./handle", "./utils"], function (_export) {
 
             for (element = startElement; element !== this.element; element = element.parentNode) {
               for (i = 0; i < this.handles.length; ++i) {
+                //Always evaluate length since gestures could bind gestures
                 handle = this.handles[i];
                 selector = handle.subscriber.selector;
 
@@ -405,18 +361,15 @@ System.register(["./handle", "./utils"], function (_export) {
                     matched = true;
                   }
                 }
-
                 if (matched) {
                   while (gesture = this.composedGestures.shift()) {
                     if (gesture.subscriber === handle.subscriber) {
                       break;
                     }
                   }
-
                   if (!gesture) {
                     gesture = this.createGesture(handle, element);
                   }
-
                   gestures.push(gesture);
                 }
               }
@@ -427,7 +380,7 @@ System.register(["./handle", "./utils"], function (_export) {
         }]);
 
         return Engine;
-      })());
+      })();
 
       _export("Engine", Engine);
     }

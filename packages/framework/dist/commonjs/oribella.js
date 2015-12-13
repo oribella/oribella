@@ -1,29 +1,28 @@
 "use strict";
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Oribella = undefined;
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var _engine = require("./engine");
 
 var _registry = require("./registry");
 
-var _mouse = require("./flows/mouse");
+var _flowsMouse = require("./flows/mouse");
 
-var _touch = require("./flows/touch");
+var _flowsTouch = require("./flows/touch");
 
-var _msPointer = require("./flows/ms-pointer");
+var _flowsMsPointer = require("./flows/ms-pointer");
 
-var _pointer = require("./flows/pointer");
+var _flowsPointer = require("./flows/pointer");
 
 var _point = require("./point");
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Oribella = exports.Oribella = (function () {
+var Oribella = (function () {
   function Oribella(element, config) {
     _classCallCheck(this, Oribella);
 
@@ -42,16 +41,16 @@ var Oribella = exports.Oribella = (function () {
     key: "withDefaultFlowStrategy",
     value: function withDefaultFlowStrategy() {
       if (this.config.msPointerEnabled) {
-        this.engine.addFlow(new _msPointer.MSPointerFlow(this.element, _point.Point));
+        this.engine.addFlow(new _flowsMsPointer.MSPointerFlow(this.element, _point.Point));
       }
       if (this.config.pointerEnabled) {
-        this.engine.addFlow(new _pointer.PointerFlow(this.element, _point.Point));
+        this.engine.addFlow(new _flowsPointer.PointerFlow(this.element, _point.Point));
       }
       if (this.config.touchEnabled) {
-        this.engine.addFlow(new _touch.TouchFlow(this.element, _point.Point));
+        this.engine.addFlow(new _flowsTouch.TouchFlow(this.element, _point.Point));
       }
 
-      this.engine.addFlow(new _mouse.MouseFlow(this.element, _point.Point));
+      this.engine.addFlow(new _flowsMouse.MouseFlow(this.element, _point.Point));
       return this;
     }
   }, {
@@ -97,3 +96,5 @@ var Oribella = exports.Oribella = (function () {
 
   return Oribella;
 })();
+
+exports.Oribella = Oribella;
