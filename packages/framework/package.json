@@ -26,6 +26,6 @@
   },
   "devDependencies": {
     "jspm": "^0.16.15",
-    "oribella-dev": "^0.1.7"
+    "oribella-dev": "^0.1.13"
   }
 }
