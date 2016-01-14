@@ -44,10 +44,13 @@ System.register(["./engine", "./registry", "./flows/mouse", "./flows/touch", "./
           value: function withDefaultFlowStrategy() {
             if (this.config.msPointerEnabled) {
               this.engine.addFlow(new MSPointerFlow(this.element, Point));
+              return this;
             }
             if (this.config.pointerEnabled) {
               this.engine.addFlow(new PointerFlow(this.element, Point));
+              return this;
             }
+
             if (this.config.touchEnabled) {
               this.engine.addFlow(new TouchFlow(this.element, Point));
             }

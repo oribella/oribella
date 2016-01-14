@@ -60,13 +60,14 @@ var Registry = (function () {
   }, {
     key: "create",
     value: function create(type, subscriber, element) {
-      var defaultOptions = undefined;
+      var defaultOptions = null;
+      var defaultOptionsPropertyDescriptors = {};
       this.defaultSubscriber.ensure(subscriber);
       if (typeof this.gestures[type].defaultOptions === "function") {
         defaultOptions = this.gestures[type].defaultOptions();
-        var defaultOptionsPropertyDescriptors = Object.getOwnPropertyDescriptors(defaultOptions);
-        defaultOptions = Object.create(DefaultGestureOptions, defaultOptionsPropertyDescriptors);
+        defaultOptionsPropertyDescriptors = Object.getOwnPropertyDescriptors(defaultOptions);
       }
+      defaultOptions = Object.create(DefaultGestureOptions, defaultOptionsPropertyDescriptors);
       var optionsPropertyDescriptors = Object.getOwnPropertyDescriptors(subscriber.options);
       subscriber.options = Object.create(defaultOptions, optionsPropertyDescriptors);
       var gesture = new this.gestures[type](subscriber, element);

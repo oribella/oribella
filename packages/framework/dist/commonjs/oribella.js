@@ -42,10 +42,13 @@ var Oribella = (function () {
     value: function withDefaultFlowStrategy() {
       if (this.config.msPointerEnabled) {
         this.engine.addFlow(new _flowsMsPointer.MSPointerFlow(this.element, _point.Point));
+        return this;
       }
       if (this.config.pointerEnabled) {
         this.engine.addFlow(new _flowsPointer.PointerFlow(this.element, _point.Point));
+        return this;
       }
+
       if (this.config.touchEnabled) {
         this.engine.addFlow(new _flowsTouch.TouchFlow(this.element, _point.Point));
       }

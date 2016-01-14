@@ -31,13 +31,14 @@ export class Registry {
     return Object.keys(this.gestures);
   }
   create(type, subscriber, element) {
-    let defaultOptions;
+    let defaultOptions = null;
+    let defaultOptionsPropertyDescriptors = {};
     this.defaultSubscriber.ensure(subscriber);
     if (typeof this.gestures[type].defaultOptions === "function") {
       defaultOptions = this.gestures[type].defaultOptions();
-      const defaultOptionsPropertyDescriptors = Object.getOwnPropertyDescriptors(defaultOptions);
-      defaultOptions = Object.create(DefaultGestureOptions, defaultOptionsPropertyDescriptors);
+      defaultOptionsPropertyDescriptors = Object.getOwnPropertyDescriptors(defaultOptions);
     }
+    defaultOptions = Object.create(DefaultGestureOptions, defaultOptionsPropertyDescriptors);
     const optionsPropertyDescriptors = Object.getOwnPropertyDescriptors(subscriber.options);
     subscriber.options = Object.create(defaultOptions, optionsPropertyDescriptors);
     let gesture = new this.gestures[type](subscriber, element);
