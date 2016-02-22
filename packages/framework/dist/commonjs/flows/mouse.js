@@ -38,7 +38,10 @@ var MouseFlow = (function (_Flow) {
         case "mousedown":
         case "mousemove":
           this.allPointers = this.currentPointers = {
-            1: new Point(event.pageX, event.pageY)
+            1: {
+              page: new Point(event.pageX, event.pageY),
+              client: new Point(event.clientX, event.clientY)
+            }
           };
           break;
         default:

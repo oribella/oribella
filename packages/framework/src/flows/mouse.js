@@ -13,11 +13,14 @@ export class MouseFlow extends Flow {
     }], false);
   }
   normalizePoints(event, Point) {
-    switch(event.type) {
+    switch (event.type) {
       case "mousedown":
       case "mousemove":
         this.allPointers = this.currentPointers = {
-          1: new Point(event.pageX, event.pageY)
+          1: {
+            page: new Point(event.pageX, event.pageY),
+            client: new Point(event.clientX, event.clientY)
+          }
         };
         break;
       default:

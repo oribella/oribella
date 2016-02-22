@@ -37,12 +37,18 @@ System.register(["./flow"], function (_export) {
           key: "normalizePoints",
           value: function normalizePoints(event, Point) {
             this.currentPointers = {};
-            this.currentPointers[event.pointerId] = new Point(event.pageX, event.pageY);
+            this.currentPointers[event.pointerId] = {
+              page: new Point(event.pageX, event.pageY),
+              client: new Point(event.clientX, event.clientY)
+            };
 
             switch (event.type) {
               case "pointerdown":
               case "pointermove":
-                this.allPointers[event.pointerId] = new Point(event.pageX, event.pageY);
+                this.allPointers[event.pointerId] = {
+                  page: new Point(event.pageX, event.pageY),
+                  client: new Point(event.clientX, event.clientY)
+                };
                 break;
               default:
                 delete this.allPointers[event.pointerId];

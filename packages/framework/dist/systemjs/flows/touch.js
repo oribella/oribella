@@ -42,11 +42,17 @@ System.register(["./flow"], function (_export) {
             this.currentPointers = {};
 
             Array.prototype.slice.call(event.touches).forEach(function (pointer) {
-              _this.allPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+              _this.allPointers[pointer.identifier] = {
+                page: new Point(pointer.pageX, pointer.pageY),
+                client: new Point(pointer.clientX, pointer.clientY)
+              };
             });
 
             Array.prototype.slice.call(event.changedTouches).forEach(function (pointer) {
-              _this.currentPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+              _this.currentPointers[pointer.identifier] = {
+                page: new Point(pointer.pageX, pointer.pageY),
+                client: new Point(pointer.clientX, pointer.clientY)
+              };
             });
           }
         }]);

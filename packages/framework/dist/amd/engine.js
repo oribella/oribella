@@ -190,7 +190,6 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
             hasPointer = undefined,
             removePointers = undefined,
             removeGesture = undefined,
-            pagePoints = [],
             options = undefined;
 
         while (gesture = gestures.shift()) {
@@ -257,15 +256,16 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
           if (!hasPointer) {
             continue;
           }
-          //Map pointers -> pagePoints
+          //Map pointers to separate object reference
+          var mappedPointers = [];
           pointerIx = 0;
           pointerIds = Object.keys(pointers);
           pointerCnt = pointerIds.length;
           while (pointerIx < pointerCnt) {
-            pagePoints.push(pointers[pointerIds[pointerIx]]);
+            mappedPointers.push(pointers[pointerIds[pointerIx]]);
             ++pointerIx;
           }
-          this.processGesture(event, pagePoints, action, gesture, gestures);
+          this.processGesture(event, mappedPointers, action, gesture, gestures);
 
           if (removePointers) {
             pointerIx = 0;
@@ -287,9 +287,9 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
       }
     }, {
       key: "processGesture",
-      value: function processGesture(event, pagePoints, action, gesture, gestures) {
+      value: function processGesture(event, pointers, action, gesture, gestures) {
         //Call
-        var result = gesture[action](event, pagePoints);
+        var result = gesture[action](event, pointers);
         if (result & _utils.RETURN_FLAG.STARTED) {
           gesture[_utils.GESTURE_STARTED] = true;
         }

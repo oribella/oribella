@@ -17,11 +17,17 @@ export class TouchFlow extends Flow {
     this.currentPointers = {};
 
     Array.prototype.slice.call(event.touches).forEach(pointer => {
-      this.allPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+      this.allPointers[pointer.identifier] = {
+        page: new Point(pointer.pageX, pointer.pageY),
+        client: new Point(pointer.clientX, pointer.clientY)
+      };
     });
 
     Array.prototype.slice.call(event.changedTouches).forEach(pointer => {
-      this.currentPointers[pointer.identifier] = new Point(pointer.pageX, pointer.pageY);
+      this.currentPointers[pointer.identifier] = {
+        page: new Point(pointer.pageX, pointer.pageY),
+        client: new Point(pointer.clientX, pointer.clientY)
+      };
     });
 
   }

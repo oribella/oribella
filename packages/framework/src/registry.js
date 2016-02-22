@@ -4,7 +4,7 @@ export class Ensure {
   }
   ensure(o) {
     this.fns.forEach(key => {
-      if(typeof o[key] !== "function") {
+      if (typeof o[key] !== "function") {
         o[key] = function() {};
       }
     });
