@@ -1,5 +1,20 @@
+<a name="0.4.0"></a>
+# 0.4.0 (2016-02-22)
+
+
+### Features
+
+* **pointers:** expose pointer object with `page` and `client` properties containing points ([cf67415](https://github.com/oribella/framework/commit/cf67415))
+
+
+### BREAKING CHANGES
+
+* pointers: 
+
+
+
 <a name="0.3.5"></a>
-## [0.3.5](https://github.com/oribella/framework/compare/v0.3.4...v0.3.5) (2015-12-13)
+## [0.3.5](https://github.com/oribella/framework/compare/f607af6...v0.3.5) (2015-12-13)
 
 
 ### Bug Fixes
@@ -9,7 +24,7 @@
 
 
 <a name="0.3.4"></a>
-## [0.3.4](https://github.com/oribella/framework/compare/v0.3.3...v0.3.4) (2015-12-11)
+## [0.3.4](https://github.com/oribella/framework/compare/5681d02...v0.3.4) (2015-12-11)
 
 
 ### Bug Fixes
@@ -19,7 +34,7 @@
 
 
 <a name="0.3.3"></a>
-## [0.3.3](https://github.com/oribella/framework/compare/v0.3.2...v0.3.3) (2015-12-11)
+## [0.3.3](https://github.com/oribella/framework/compare/4421df5...v0.3.3) (2015-12-11)
 
 
 ### Bug Fixes
@@ -29,7 +44,7 @@
 
 
 <a name="0.3.2"></a>
-## [0.3.2](https://github.com/oribella/framework/compare/v0.3.1...v0.3.2) (2015-12-11)
+## [0.3.2](https://github.com/oribella/framework/compare/3486319...v0.3.2) (2015-12-11)
 
 
 ### Bug Fixes
@@ -39,7 +54,7 @@
 
 
 <a name="0.3.1"></a>
-## [0.3.1](https://github.com/oribella/framework/compare/v0.3.0...v0.3.1) (2015-12-10)
+## [0.3.1](https://github.com/oribella/framework/compare/8f58bdb...v0.3.1) (2015-12-10)
 
 
 ### Bug Fixes
@@ -49,7 +64,7 @@
 
 
 <a name="0.3.0"></a>
-# [0.3.0](https://github.com/oribella/framework/compare/v0.2.0...v0.3.0) (2015-12-10)
+# [0.3.0](https://github.com/oribella/framework/compare/48e21e5...v0.3.0) (2015-12-10)
 
 
 ### Bug Fixes
@@ -76,7 +91,7 @@ object that is sent out to the subscribers.
 
 
 <a name="0.2.0"></a>
-# [0.2.0](https://github.com/oribella/framework/compare/0.1.0...v0.2.0) (2015-08-14)
+# [0.2.0](https://github.com/oribella/framework/compare/efe66e2...v0.2.0) (2015-08-14)
 
 
 ### Bug Fixes
