@@ -3,7 +3,9 @@ import {Registry} from "../src/registry";
 describe("Registry", () => {
   let sandbox;
   let reg;
-  class Foo {}
+  class Foo {
+    static defaultOptions() { return { touches: 2 }; }
+  }
   class Bar {}
 
   beforeEach(() => {
@@ -50,7 +52,7 @@ describe("Registry", () => {
 
     it("should ensure gesture defaults", () => {
       reg.create("foo", subscriber, element);
-      expect(subscriber.options).to.deep.equal({ touches: 1, which: 1, prio: 100 });
+      expect(subscriber.options).to.deep.equal({ touches: 2, which: 1, prio: 100 });
     });
 
   });
