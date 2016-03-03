@@ -1,5 +1,15 @@
+<a name="0.4.1"></a>
+## 0.4.1 (2016-03-03)
+
+
+### Bug Fixes
+
+* **registry:** remove `Object.getOwnPropertyDescriptors` and use internal `getOwnPropertyDescri ([8a8b118](https://github.com/oribella/framework/commit/8a8b118))
+
+
+
 <a name="0.4.0"></a>
-# 0.4.0 (2016-02-22)
+# [0.4.0](https://github.com/oribella/framework/compare/cf67415...v0.4.0) (2016-02-22)
 
 
 ### Features

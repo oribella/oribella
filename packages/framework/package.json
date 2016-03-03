@@ -1,6 +1,6 @@
 {
   "name": "oribella-framework",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Normalizes event flows into an understandable consistent api",
   "license": "MIT",
   "author": "Christoffer Åström",
