@@ -1,5 +1,15 @@
+<a name="0.4.2"></a>
+## 0.4.2 (2016-03-04)
+
+
+### Bug Fixes
+
+* **dist:** update dist ([de679a9](https://github.com/oribella/framework/commit/de679a9))
+
+
+
 <a name="0.4.1"></a>
-## 0.4.1 (2016-03-03)
+## [0.4.1](https://github.com/oribella/framework/compare/8a8b118...v0.4.1) (2016-03-03)
 
 
 ### Bug Fixes
