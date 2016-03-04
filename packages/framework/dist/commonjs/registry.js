@@ -37,6 +37,14 @@ var DefaultGestureOptions = {
   prio: 100
 };
 
+function getOwnPropertyDescriptors(src) {
+  var descriptors = {};
+  Object.getOwnPropertyNames(src).forEach(function (key) {
+    descriptors[key] = Object.getOwnPropertyDescriptor(src, key);
+  });
+  return descriptors;
+}
+
 var Registry = (function () {
   function Registry() {
     _classCallCheck(this, Registry);
@@ -65,10 +73,10 @@ var Registry = (function () {
       this.defaultSubscriber.ensure(subscriber);
       if (typeof this.gestures[type].defaultOptions === "function") {
         defaultOptions = this.gestures[type].defaultOptions();
-        defaultOptionsPropertyDescriptors = Object.getOwnPropertyDescriptors(defaultOptions);
+        defaultOptionsPropertyDescriptors = getOwnPropertyDescriptors(defaultOptions);
       }
       defaultOptions = Object.create(DefaultGestureOptions, defaultOptionsPropertyDescriptors);
-      var optionsPropertyDescriptors = Object.getOwnPropertyDescriptors(subscriber.options);
+      var optionsPropertyDescriptors = getOwnPropertyDescriptors(subscriber.options);
       subscriber.options = Object.create(defaultOptions, optionsPropertyDescriptors);
       var gesture = new this.gestures[type](subscriber, element);
       return gesture;
