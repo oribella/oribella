@@ -1,5 +1,15 @@
+<a name="0.4.3"></a>
+## 0.4.3 (2016-03-07)
+
+
+### Bug Fixes
+
+* **flow:** pass correct parameters to `cancelCallback` ([831b321](https://github.com/oribella/framework/commit/831b321))
+
+
+
 <a name="0.4.2"></a>
-## 0.4.2 (2016-03-04)
+## [0.4.2](https://github.com/oribella/framework/compare/de679a9...v0.4.2) (2016-03-04)
 
 
 ### Bug Fixes
