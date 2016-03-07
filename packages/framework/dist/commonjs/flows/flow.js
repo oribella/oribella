@@ -113,13 +113,13 @@ var Flow = (function () {
   }, {
     key: "update",
     value: function update(event) {
-      this.normalizePoints(event, this.Point, this.pointers);
+      this.normalizePoints(event, this.Point);
       this.updateCallback(this, event, this.allPointers, this.currentPointers);
     }
   }, {
     key: "end",
     value: function end(event) {
-      this.normalizePoints(event, this.Point, this.pointers);
+      this.normalizePoints(event, this.Point);
       this.endCallback(this, event, this.allPointers, this.currentPointers);
       if (Object.keys(this.allPointers).length === 0) {
         this.stop();
@@ -128,7 +128,7 @@ var Flow = (function () {
   }, {
     key: "cancel",
     value: function cancel(event) {
-      this.cancelCallback(this, event, this.pointers, this.pointers);
+      this.cancelCallback(this, event, this.allPointers, this.currentPointers);
       this.stop();
     }
   }, {
