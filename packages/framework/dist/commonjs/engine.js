@@ -255,6 +255,10 @@ var Engine = (function () {
               removeGesture = true;
             }
             break;
+          case ACTION_CANCEL:
+            pointers = currentPointers;
+            hasPointer = true;
+            break;
         }
         if (!hasPointer) {
           continue;

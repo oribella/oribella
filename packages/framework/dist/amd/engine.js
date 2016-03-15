@@ -252,6 +252,10 @@ define(["exports", "./handle", "./utils"], function (exports, _handle, _utils) {
                 removeGesture = true;
               }
               break;
+            case ACTION_CANCEL:
+              pointers = currentPointers;
+              hasPointer = true;
+              break;
           }
           if (!hasPointer) {
             continue;
