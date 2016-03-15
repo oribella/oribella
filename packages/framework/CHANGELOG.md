@@ -1,5 +1,15 @@
+<a name="0.4.4"></a>
+## 0.4.4 (2016-03-15)
+
+
+### Bug Fixes
+
+* **engine:** make sure to process gestures cancel callback ([1aaca55](https://github.com/oribella/framework/commit/1aaca55))
+
+
+
 <a name="0.4.3"></a>
-## 0.4.3 (2016-03-07)
+## [0.4.3](https://github.com/oribella/framework/compare/831b321...v0.4.3) (2016-03-07)
 
 
 ### Bug Fixes
