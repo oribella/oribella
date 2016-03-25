@@ -4,28 +4,28 @@
   "description": "Normalizes event flows into an understandable consistent api",
   "license": "MIT",
   "author": "Christoffer Åström",
-  "main": "dist/commonjs/index.js",
+  "main": "dist/commonjs/oribella-framework.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/oribella/framework"
+    "url": "https://github.com/oribella/framework"
   },
   "scripts": {
     "version": "dev-changelog && git add CHANGELOG.md",
-    "build": "dev-build -cas",
+    "build": "dev-build",
     "test": "dev-test",
     "coverage": "dev-coverage",
     "lint": "dev-lint"
   },
-  "jspmNodeConversion": false,
   "jspm": {
-    "main": "index",
+    "registry": "npm",
+    "jspmPackage": true,
+    "main": "oribella-framework",
     "format": "amd",
     "directories": {
       "lib": "dist/amd"
     }
   },
   "devDependencies": {
-    "jspm": "^0.16.19",
-    "oribella-dev": "^0.1.22"
+    "oribella-dev": "^0.3.4"
   }
 }
