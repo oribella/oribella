@@ -4,7 +4,7 @@
   "description": "Normalizes event flows into an understandable consistent api",
   "license": "MIT",
   "author": "Christoffer Åström",
-  "main": "dist/commonjs/oribella-framework.js",
+  "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/oribella/framework"
@@ -26,6 +26,6 @@
     }
   },
   "devDependencies": {
-    "oribella-dev": "^0.3.4"
+    "oribella-dev": "^0.3.7"
   }
 }
