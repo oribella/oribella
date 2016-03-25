@@ -1,3 +1,13 @@
+<a name="0.5.1"></a>
+## 0.5.1 (2016-03-25)
+
+
+### Bug Fixes
+
+* **package:** update dist ([6d3fd91](https://github.com/oribella/framework/commit/6d3fd91))
+
+
+
 <a name="0.5.0"></a>
 # 0.5.0 (2016-03-25)
 
