@@ -1,5 +1,11 @@
+<a name="0.5.0"></a>
+# 0.5.0 (2016-03-25)
+
+
+
+
 <a name="0.4.4"></a>
-## 0.4.4 (2016-03-15)
+## [0.4.4](https://github.com/oribella/framework/compare/1aaca55...v0.4.4) (2016-03-15)
 
 
 ### Bug Fixes
