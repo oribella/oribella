@@ -30,9 +30,11 @@ var DefaultGestureOptions = {
   prio: 100
 };
 
-function getOwnPropertyDescriptors(src) {
+function getOwnPropertyDescriptors() {
+  var src = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
   var descriptors = {};
-  Object.getOwnPropertyNames(src).forEach(function (key) {
+  Object.keys(src).forEach(function (key) {
     descriptors[key] = Object.getOwnPropertyDescriptor(src, key);
   });
   return descriptors;

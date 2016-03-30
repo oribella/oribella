@@ -17,9 +17,9 @@ const DefaultGestureOptions = {
   prio: 100
 };
 
-function getOwnPropertyDescriptors(src) {
+function getOwnPropertyDescriptors(src = {}) {
   const descriptors = {};
-  Object.getOwnPropertyNames(src).forEach(key => {
+  Object.keys(src).forEach(key => {
     descriptors[key] = Object.getOwnPropertyDescriptor(src, key);
   } );
   return descriptors;
