@@ -1,5 +1,15 @@
+<a name="0.5.2"></a>
+## 0.5.2 (2016-04-07)
+
+
+### Bug Fixes
+
+* **package:** update main entry for `jspm` ([88a815b](https://github.com/oribella/framework/commit/88a815b))
+
+
+
 <a name="0.5.1"></a>
-## 0.5.1 (2016-03-25)
+## [0.5.1](https://github.com/oribella/framework/compare/6d3fd91...v0.5.1) (2016-03-25)
 
 
 ### Bug Fixes
