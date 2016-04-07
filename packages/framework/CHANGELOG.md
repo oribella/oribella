@@ -1,5 +1,15 @@
+<a name="0.5.3"></a>
+## 0.5.3 (2016-04-07)
+
+
+### Bug Fixes
+
+* **package:** update `jspm` directories to `dist` ([bc53217](https://github.com/oribella/framework/commit/bc53217))
+
+
+
 <a name="0.5.2"></a>
-## 0.5.2 (2016-04-07)
+## [0.5.2](https://github.com/oribella/framework/compare/88a815b...v0.5.2) (2016-04-07)
 
 
 ### Bug Fixes
