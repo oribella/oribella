@@ -19,7 +19,7 @@
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
-    "main": "oribella-framework",
+    "main": "index",
     "format": "amd",
     "directories": {
       "lib": "dist/amd"
