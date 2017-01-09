@@ -1,6 +1,6 @@
 # oribella-framework
 
-[![CircleCI](https://circleci.com/gh/oribella/framework/tree/ts.svg?style=shield)](https://circleci.com/gh/oribella/framework/tree/ts) [![Coverage Status](https://coveralls.io/repos/github/oribella/framework/badge.svg?branch=ts)](https://coveralls.io/github/oribella/framework?branch=ts)
+[![CircleCI](https://circleci.com/gh/oribella/framework.svg?style=shield)](https://circleci.com/gh/oribella/framework/tree/ts) [![Coverage Status](https://coveralls.io/repos/github/oribella/framework/badge.svg?branch=ts)](https://coveralls.io/github/oribella/framework?branch=ts)
 
 Have you felt frustrated over DOM events? Have you realised after getting some interaction working in Chrome that it doesn't work on IE on a hybrid device? Do you want to focus on features and be sure it works on all your supported browsers and devices?
 
