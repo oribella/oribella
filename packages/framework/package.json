@@ -24,6 +24,10 @@
   },
   "author": "Christoffer Åström",
   "license": "MIT",
+  "files": [
+    "dist",
+    "src"
+  ],
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
