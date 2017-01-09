@@ -72,6 +72,6 @@
     "instrument": true
   },
   "dependencies": {
-    "oribella-framework": "^0.6.0"
+    "oribella-framework": "^0.6.1"
   }
 }
