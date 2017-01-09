@@ -2,20 +2,28 @@
   "name": "oribella-framework",
   "version": "0.5.3",
   "description": "Normalizes event flows into an understandable consistent api",
-  "license": "MIT",
-  "author": "Christoffer Åström",
-  "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/oribella/framework"
   },
+  "main": "dist/commonjs/index.js",
+  "typings": "dist/commonjs/index.d.ts",
   "scripts": {
-    "version": "dev-changelog && git add CHANGELOG.md",
-    "build": "dev-build",
-    "test": "dev-test",
-    "coverage": "dev-coverage",
-    "lint": "dev-lint"
+    "lint": "tslint -c tslint.json --project tsconfig.json",
+    "pretest": "npm run lint",
+    "test": "nyc mocha --recursive --compilers ts:ts-node/register --require test/setup.ts",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "clean": "rimraf dist",
+    "compile": "tsc -p tsconfig.build.json",
+    "commonjs": "npm run compile -- --module commonjs --outDir dist/commonjs",
+    "amd": "npm run compile -- --module amd --outDir dist/amd",
+    "amd-bundled": "npm run compile -- --module amd --outFile dist/framework.js",
+    "system": "npm run compile -- --module system --outDir dist/system",
+    "es2015": "npm run compile -- --module es2015 --outDir dist/es2015 --target es2015",
+    "build": "npm-run-all -n clean --parallel commonjs amd amd-bundled system es2015"
   },
+  "author": "Christoffer Åström",
+  "license": "MIT",
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
@@ -26,6 +34,37 @@
     }
   },
   "devDependencies": {
-    "oribella-dev": "^0.3.7"
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.15",
+    "jsdom": "^9.8.3",
+    "mocha": "^3.2.0",
+    "npm-run-all": "^3.1.1",
+    "nyc": "^10.0.0",
+    "rimraf": "^2.5.4",
+    "sinon": "^1.17.6",
+    "sinon-chai": "^2.8.0",
+    "ts-node": "^1.7.0",
+    "tslint": "^4.0.2",
+    "typescript": "^2.1.4",
+    "typings": "^2.0.0"
+  },
+  "nyc": {
+    "include": [
+      "src/*"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "exclude": [
+      "dist",
+      "typings"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "all": true,
+    "sourceMap": true,
+    "instrument": true
   }
 }
