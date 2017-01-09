@@ -3,6 +3,7 @@
   "main": "dist/amd/index.d.ts",
   "globalDevDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160601211834",
+    "jquery": "registry:dt/jquery#1.10.0+20170104155652",
     "mocha": "registry:env/mocha#2.2.5+20160926180742",
     "node": "registry:dt/node#6.0.0+20170109183608",
     "sinon": "registry:dt/sinon#1.16.1+20161208163514"
