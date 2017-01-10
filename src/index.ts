@@ -17,6 +17,7 @@ export * from './rotate';
 export * from './pinch';
 
 oribella.registerDefaultFlowStrategy();
+oribella.activate();
 registerTap(oribella);
 registerDoubletap(oribella);
 registerLongtap(oribella);
@@ -24,3 +25,4 @@ registerSwipe(oribella);
 registerLongtapSwipe(oribella);
 registerRotate(oribella);
 registerPinch(oribella);
+
