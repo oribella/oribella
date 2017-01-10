@@ -49,6 +49,6 @@ export class Rotate extends Gesture<RotateData, Listener<RotateOptions, RotateDa
   }
 }
 
-export function register(oribella: Oribella) {
+export function registerRotate(oribella: Oribella) {
   oribella.registerGesture(Rotate, RotateOptions, undefined, RotateData);
 }

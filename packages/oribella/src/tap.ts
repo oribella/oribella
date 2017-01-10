@@ -26,6 +26,6 @@ export class Tap extends Gesture<Data, Listener<TapOptions, Data>> {
   }
 }
 
-export function register(oribella: Oribella) {
+export function registerTap(oribella: Oribella) {
   oribella.registerGesture(Tap, TapOptions);
 }

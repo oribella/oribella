@@ -59,6 +59,6 @@ export class LongtapSwipe extends Gesture<Data, Listener<LongtapSwipeOptions, Da
   }
 }
 
-export function register(oribella: Oribella) {
+export function registerLongtapSwipe(oribella: Oribella) {
   oribella.registerGesture(LongtapSwipe, LongtapSwipeOptions);
 }

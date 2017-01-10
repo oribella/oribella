@@ -2,8 +2,8 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { Oribella } from 'oribella-framework';
 import { jsdom } from 'jsdom';
-import { register as registerTap } from '../../src/tap';
-import { Doubletap, register as registerDoubletap } from '../../src/doubletap';
+import { registerTap } from '../../src/tap';
+import { Doubletap, registerDoubletap } from '../../src/doubletap';
 import { dispatchMouseEvent } from './utils';
 
 describe('Doubletap', () => {

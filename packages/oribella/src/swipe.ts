@@ -50,6 +50,6 @@ export class Swipe extends Gesture<SwipeData, Listener<SwipeOptions, SwipeData>>
   }
 }
 
-export function register(oribella: Oribella) {
+export function registerSwipe(oribella: Oribella) {
   oribella.registerGesture(Swipe, SwipeOptions, undefined, SwipeData);
 }

@@ -41,6 +41,6 @@ export class Doubletap extends Gesture<Data, Listener<DoubletapOptions, Data>> {
   }
 }
 
-export function register(oribella: Oribella) {
+export function registerDoubletap(oribella: Oribella) {
   oribella.registerGesture(Doubletap, DoubletapOptions);
 }
