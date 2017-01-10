@@ -1,13 +1,20 @@
 import { Oribella } from 'oribella-framework';
-import { register as registerTap } from './tap';
-import { register as registerDoubletap } from './doubletap';
-import { register as registerLongtap } from './longtap';
-import { register as registerSwipe } from './swipe';
-import { register as registerLongtapSwipe } from './longtap-swipe';
-import { register as registerRotate } from './rotate';
-import { register as registerPinch } from './pinch';
+import { registerTap } from './tap';
+import { registerDoubletap } from './doubletap';
+import { registerLongtap } from './longtap';
+import { registerSwipe } from './swipe';
+import { registerLongtapSwipe } from './longtap-swipe';
+import { registerRotate } from './rotate';
+import { registerPinch } from './pinch';
 
 export const oribella = new Oribella();
+export * from './tap';
+export * from './doubletap';
+export * from './longtap';
+export * from './swipe';
+export * from './longtap-swipe';
+export * from './rotate';
+export * from './pinch';
 
 oribella.registerDefaultFlowStrategy();
 registerTap(oribella);
