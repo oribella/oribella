@@ -25,4 +25,3 @@ registerSwipe(oribella);
 registerLongtapSwipe(oribella);
 registerRotate(oribella);
 registerPinch(oribella);
-
