@@ -50,7 +50,7 @@
     "ts-node": "^1.7.0",
     "tslint": "^4.0.2",
     "typescript": "^2.1.4",
-    "typings": "^2.0.0"
+    "typings": "^2.1.0"
   },
   "nyc": {
     "include": [

@@ -65,7 +65,7 @@ export interface PointerData {
   page: Point;
   client: Point;
 };
-export class PointerDataMap extends Map<number, PointerData> {};
+export class PointerDataMap extends Map<number, PointerData> { };
 export interface Pointers {
   all: PointerDataMap;
   changed: PointerDataMap;
@@ -86,4 +86,13 @@ export class Options {
 
 export class Data {
   public pointers: PointerData[];
+}
+
+export function ensureProperties<T1, T2 extends T1>(target: T2, source: T2): T1 & T2 {
+  for (const key in source) {
+    if (source.hasOwnProperty(key) && !target.hasOwnProperty(key)) {
+      target[key] = source[key];
+    }
+  }
+  return target;
 }

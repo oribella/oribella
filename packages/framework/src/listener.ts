@@ -1,16 +1,17 @@
-import { Options, Data, RETURN_FLAG } from './utils';
+import { Options, Data, RETURN_FLAG, ensureProperties } from './utils';
 
 export class Listener<O extends Options, D extends Data> {
   public selector: string = '';
   public listener: Listener<O, D>;
   constructor(public options: O, listener: Listener<O, D> = {} as Listener<O, D>) {
-    this.listener = Object.assign({
+    this.listener = ensureProperties(listener, {
+      selector: '',
       down(_1, _2, _3) { },
       start(_1, _2, _3) { },
       update(_1, _2, _3) { },
       end(_1, _2, _3) { },
       cancel() { }
-    } as DefaultListener, listener);
+    } as Listener<O, D>);
   }
   public down(evt: Event, data: D, target: Element): number { return RETURN_FLAG.map(this.listener.down(evt, data, target)); }
   public start(evt: Event, data: D, target: Element): number {

@@ -25,6 +25,8 @@ describe('Tap', () => {
   let document: Document;
   let target: Element;
   let listener: any;
+  let myListener: any;
+  class MyListener {};
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -47,7 +49,8 @@ describe('Tap', () => {
       end: sandbox.spy(),
       cancel: sandbox.spy()
     };
-
+    myListener = new MyListener();
+    myListener.start = sandbox.spy();
     target = document.querySelector('.target') as Element;
     if (!target) {
       throw new Error(`target not found ${html}`);
@@ -60,9 +63,9 @@ describe('Tap', () => {
   });
 
   it('should call listener start', () => {
-    instance.on(Tap, target, listener);
+    instance.on(Tap, target, myListener);
     const evt = dispatchMouseEvent(document, target);
-    expect(listener.start).to.have.been.calledWithExactly(evt, sinon.match({
+    expect(myListener.start).to.have.been.calledWithExactly(evt, sinon.match({
       pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }]
     }), target);
   });
