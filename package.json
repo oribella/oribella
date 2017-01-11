@@ -35,6 +35,12 @@
     "format": "amd",
     "directories": {
       "dist": "dist/amd"
+    },
+    "peerDependencies": {
+      "oribella-framework": "^0.6.3"
+    },
+    "dependencies": {
+      "oribella-framework": "^0.6.3"
     }
   },
   "devDependencies": {
@@ -51,6 +57,9 @@
     "tslint": "^4.0.2",
     "typescript": "^2.1.4",
     "typings": "^2.0.0"
+  },
+  "dependencies": {
+    "oribella-framework": "^0.6.3"
   },
   "nyc": {
     "include": [
@@ -70,8 +79,5 @@
     "all": true,
     "sourceMap": true,
     "instrument": true
-  },
-  "dependencies": {
-    "oribella-framework": "^0.6.1"
   }
 }
