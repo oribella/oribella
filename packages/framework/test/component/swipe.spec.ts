@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella } from '../../src/oribella';
+import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
 import { Swipe, register as registerSwipe } from './gestures/swipe';
 import { dispatchMouseEvent } from './utils';
 
 describe('Swipe', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -38,7 +38,7 @@ describe('Swipe', () => {
         pointerEnabled
       }
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerSwipe(instance);
     instance.activate();

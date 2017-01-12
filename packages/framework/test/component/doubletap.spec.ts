@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella } from '../../src/oribella';
+import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
 import { register as registerTap } from './gestures/tap';
 import { Doubletap, register as registerDoubletap } from './gestures/doubletap';
@@ -8,7 +8,7 @@ import { dispatchMouseEvent } from './utils';
 
 describe('Doubletap', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -46,7 +46,7 @@ describe('Doubletap', () => {
       setTimeout,
       clearTimeout
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerTap(instance);
     registerDoubletap(instance);

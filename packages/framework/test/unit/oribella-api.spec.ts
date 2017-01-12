@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella } from '../../src/oribella';
+import { OribellaApi } from '../../src/oribella-api';
 import { MSPointerFlow } from '../../src/flows/ms-pointer';
 import { PointerFlow } from '../../src/flows/pointer';
 import { TouchFlow } from '../../src/flows/touch';
@@ -8,8 +8,8 @@ import { Gesture } from '../../src/gesture';
 import { Listener, DefaultListener } from '../../src/listener';
 import { Options, Data } from '../../src/utils';
 
-describe('Oribella', () => {
-  let instance: Oribella;
+describe('OribellaApi', () => {
+  let instance: OribellaApi;
   let sandbox: Sinon.SinonSandbox;
   let document: Document;
   const msPointerEnabled = false;
@@ -27,7 +27,7 @@ describe('Oribella', () => {
         pointerEnabled
       }
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
   });
 
   afterEach(() => {
@@ -42,7 +42,7 @@ describe('Oribella', () => {
   it('should use parameters', () => {
     const element = {} as Element;
     const supports = { msPointerEnabled: true, pointerEnabled: true, touchEnabled: false };
-    instance = new Oribella(element, supports);
+    instance = new OribellaApi(element, supports);
     expect(instance['element']).to.equal(element);
     expect(instance['supports']).to.deep.equal({ pointerEnabled: true, msPointerEnabled: true, touchEnabled: false });
   });
@@ -52,7 +52,7 @@ describe('Oribella', () => {
     it('should register MSPointerFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: true, pointerEnabled: false, touchEnabled: false };
-      instance = new Oribella(element, supports);
+      instance = new OribellaApi(element, supports);
       const registerFlow = sandbox.stub(instance['engine'], 'registerFlow');
       instance.registerDefaultFlowStrategy();
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(MSPointerFlow));
@@ -61,7 +61,7 @@ describe('Oribella', () => {
     it('should register PointerFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: false, pointerEnabled: true, touchEnabled: false };
-      instance = new Oribella(element, supports);
+      instance = new OribellaApi(element, supports);
       const registerFlow = sandbox.stub(instance['engine'], 'registerFlow');
       instance.registerDefaultFlowStrategy();
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(PointerFlow));
@@ -70,7 +70,7 @@ describe('Oribella', () => {
     it('should register TouchFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: false, pointerEnabled: false, touchEnabled: true };
-      instance = new Oribella(element, supports);
+      instance = new OribellaApi(element, supports);
       const registerFlow = sandbox.stub(instance['engine'], 'registerFlow');
       instance.registerDefaultFlowStrategy();
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(TouchFlow));

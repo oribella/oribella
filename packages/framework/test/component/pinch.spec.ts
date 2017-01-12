@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella } from '../../src/oribella';
+import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
 import { Pinch, register as registerPinch } from './gestures/pinch';
 import { dispatchTouchEvent } from './utils';
@@ -8,7 +8,7 @@ import { Point } from '../../src/point';
 
 describe('Pinch', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -39,7 +39,7 @@ describe('Pinch', () => {
         pointerEnabled
       }
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerPinch(instance);
     instance.activate();

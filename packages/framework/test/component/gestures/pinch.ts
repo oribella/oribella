@@ -1,4 +1,4 @@
-import { Oribella } from '../../../src/oribella';
+import { OribellaApi } from '../../../src/oribella-api';
 import { Options, Data } from '../../../src/utils';
 import { RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
@@ -71,6 +71,6 @@ export class Pinch extends Gesture<PinchData, Listener<PinchOptions, PinchData>>
   }
 }
 
-export function register(oribella: Oribella) {
+export function register(oribella: OribellaApi) {
   oribella.registerGesture(Pinch, PinchOptions, undefined, PinchData);
 }

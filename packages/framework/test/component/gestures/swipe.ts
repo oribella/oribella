@@ -1,4 +1,4 @@
-import { Oribella } from '../../../src/oribella';
+import { OribellaApi } from '../../../src/oribella-api';
 import { Options, Data } from '../../../src/utils';
 import { RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
@@ -55,6 +55,6 @@ export class Swipe extends Gesture<SwipeData, Listener<SwipeOptions, SwipeData>>
   }
 }
 
-export function register(oribella: Oribella) {
+export function register(oribella: OribellaApi) {
   oribella.registerGesture(Swipe, SwipeOptions, undefined, SwipeData);
 }

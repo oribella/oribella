@@ -13,7 +13,7 @@ export interface ListenerType {
   listener: Partial<DefaultListener>;
 };
 
-export class Oribella {
+export class OribellaApi {
   private engine: Engine;
   private deactivateFlows: Array<Array<() => void>> | null = null;
 
