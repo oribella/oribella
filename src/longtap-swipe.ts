@@ -1,4 +1,4 @@
-import { Oribella, Options, Data, RETURN_FLAG, Gesture, Listener, DefaultListener } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, DefaultListener } from 'oribella-framework';
 import { Longtap, LongtapOptions, LongtapListener } from './longtap';
 import { Swipe } from './swipe';
 
@@ -59,6 +59,6 @@ export class LongtapSwipe extends Gesture<Data, Listener<LongtapSwipeOptions, Da
   }
 }
 
-export function registerLongtapSwipe(oribella: Oribella) {
+export function registerLongtapSwipe(oribella: OribellaApi) {
   oribella.registerGesture(LongtapSwipe, LongtapSwipeOptions);
 }

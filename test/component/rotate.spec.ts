@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella, Point } from 'oribella-framework';
+import { OribellaApi, Point } from 'oribella-framework';
 import { jsdom } from 'jsdom';
 import { Rotate, registerRotate } from '../../src/rotate';
 import { dispatchTouchEvent } from './utils';
 
 describe('Rotate', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -38,7 +38,7 @@ describe('Rotate', () => {
         pointerEnabled
       }
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerRotate(instance);
     instance.activate();

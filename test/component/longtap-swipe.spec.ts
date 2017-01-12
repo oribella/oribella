@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella } from 'oribella-framework';
+import { OribellaApi } from 'oribella-framework';
 import { jsdom } from 'jsdom';
 import { registerLongtap } from '../../src/longtap';
 import { registerSwipe } from '../../src/swipe';
@@ -9,7 +9,7 @@ import { dispatchMouseEvent } from './utils';
 
 describe('LongtapSwipe', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -47,7 +47,7 @@ describe('LongtapSwipe', () => {
       setTimeout,
       clearTimeout
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerLongtap(instance);
     registerSwipe(instance);

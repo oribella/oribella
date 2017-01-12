@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella } from 'oribella-framework';
+import { OribellaApi } from 'oribella-framework';
 import { jsdom } from 'jsdom';
 import { Tap, registerTap } from '../../src/tap';
 import { dispatchMouseEvent } from './utils';
 
 describe('Tap', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -38,7 +38,7 @@ describe('Tap', () => {
         pointerEnabled
       }
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerTap(instance);
     instance.activate();

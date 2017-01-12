@@ -1,4 +1,4 @@
-import { Oribella, Options, Data, RETURN_FLAG, Gesture, Listener, DefaultListener } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, DefaultListener } from 'oribella-framework';
 import { Tap } from './tap';
 
 export class DoubletapOptions extends Options {
@@ -41,6 +41,6 @@ export class Doubletap extends Gesture<Data, Listener<DoubletapOptions, Data>> {
   }
 }
 
-export function registerDoubletap(oribella: Oribella) {
+export function registerDoubletap(oribella: OribellaApi) {
   oribella.registerGesture(Doubletap, DoubletapOptions);
 }
