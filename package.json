@@ -59,7 +59,7 @@
     "typings": "^2.0.0"
   },
   "dependencies": {
-    "oribella-framework": "^0.6.3"
+    "oribella-framework": "^0.7.0"
   },
   "nyc": {
     "include": [
