@@ -1,4 +1,4 @@
-import { Oribella, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
 
 export class Observation {
   constructor(public point: Point, public timeStamp: number) { }
@@ -50,6 +50,6 @@ export class Swipe extends Gesture<SwipeData, Listener<SwipeOptions, SwipeData>>
   }
 }
 
-export function registerSwipe(oribella: Oribella) {
+export function registerSwipe(oribella: OribellaApi) {
   oribella.registerGesture(Swipe, SwipeOptions, undefined, SwipeData);
 }

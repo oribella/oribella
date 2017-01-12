@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-import { Oribella, Point } from 'oribella-framework';
+import { OribellaApi, Point } from 'oribella-framework';
 import { jsdom } from 'jsdom';
 import { Pinch, registerPinch } from '../../src/pinch';
 import { dispatchTouchEvent } from './utils';
 
 describe('Pinch', () => {
   let sandbox: Sinon.SinonSandbox;
-  let instance: Oribella;
+  let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
   const html = `
@@ -38,7 +38,7 @@ describe('Pinch', () => {
         pointerEnabled
       }
     };
-    instance = new Oribella();
+    instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
     registerPinch(instance);
     instance.activate();

@@ -1,4 +1,4 @@
-import { Oribella, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
 
 export class LongtapOptions extends Options {
   public radiusThreshold: number = 2;
@@ -49,6 +49,6 @@ export class Longtap extends Gesture<Data, LongtapListener> {
   }
 }
 
-export function registerLongtap(oribella: Oribella) {
+export function registerLongtap(oribella: OribellaApi) {
   oribella.registerGesture(Longtap, LongtapOptions, LongtapListener);
 }

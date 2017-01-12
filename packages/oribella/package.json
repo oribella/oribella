@@ -6,8 +6,8 @@
     "type": "git",
     "url": "https://github.com/oribella/oribella"
   },
-  "main": "dist/commonjs/index.js",
-  "typings": "dist/commonjs/index.d.ts",
+  "main": "dist/commonjs/oribella.js",
+  "typings": "dist/commonjs/oribella.d.ts",
   "scripts": {
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pretest": "npm run lint",

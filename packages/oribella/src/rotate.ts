@@ -1,4 +1,4 @@
-import { Oribella, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
 
 export class RotateOptions extends Options {
   public pointers: number = 2;
@@ -49,6 +49,6 @@ export class Rotate extends Gesture<RotateData, Listener<RotateOptions, RotateDa
   }
 }
 
-export function registerRotate(oribella: Oribella) {
+export function registerRotate(oribella: OribellaApi) {
   oribella.registerGesture(Rotate, RotateOptions, undefined, RotateData);
 }
