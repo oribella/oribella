@@ -37,10 +37,10 @@
       "dist": "dist/amd"
     },
     "peerDependencies": {
-      "oribella-framework": "^0.6.3"
+      "oribella-framework": "^0.7.0"
     },
     "dependencies": {
-      "oribella-framework": "^0.6.3"
+      "oribella-framework": "^0.7.0"
     }
   },
   "devDependencies": {
@@ -55,7 +55,7 @@
     "sinon-chai": "^2.8.0",
     "ts-node": "^1.7.0",
     "tslint": "^4.0.2",
-    "typescript": "^2.1.4",
+    "typescript": "^2.1.5",
     "typings": "^2.0.0"
   },
   "dependencies": {
