@@ -1,6 +1,4 @@
 {
-  "name": "oribella-framework",
-  "main": "dist/amd/index.d.ts",
   "globalDevDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160601211834",
     "jquery": "registry:dt/jquery#1.10.0+20170104155652",
