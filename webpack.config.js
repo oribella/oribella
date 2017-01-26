@@ -1,4 +1,5 @@
-import path = require('path');
+const path = require('path');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
   entry: './src/oribella.ts',
@@ -19,5 +20,14 @@ module.exports = {
       { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' }
     ]
   },
+  plugins: [
+    new CompressionPlugin({
+      asset: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.map$/,
+      threshold: 10240,
+      minRatio: 0.8
+    })
+  ],
   devtool: 'source-map'
 };
