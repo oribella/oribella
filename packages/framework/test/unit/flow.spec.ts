@@ -154,7 +154,7 @@ describe('Flow', () => {
   it('should emit end', () => {
     const emitSpy = sandbox.spy(instance, 'emit');
     const e = {} as Event;
-    instance.allPointers.set(1);
+    instance.allPointers.set(1, {} as PointerData);
     instance.end(e);
     expect(emitSpy).to.have.been.calledWithExactly('end', e, {
       all: new Map<number, PointerData>(),

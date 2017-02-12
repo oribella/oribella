@@ -170,17 +170,17 @@ describe('Engine', () => {
     });
 
     it('should unbind gesture', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       gesture.unbind = sandbox.spy();
       instance['removeGesture'](gesture);
       expect(gesture.unbind).to.have.been.calledOnce;
     });
 
     it('should remove gesture', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
-      const g1 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
-      const g2 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
-      const g3 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
+      const g1 = new Gesture({} as DefaultListener, {} as Data, {} as Element);
+      const g2 = new Gesture({} as DefaultListener, {} as Data, {} as Element);
+      const g3 = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       const gestures = [g1, gesture, g2, g3];
       const gestures2 = [g1, g2, g3];
       instance['removeGesture'](gesture, gestures, gestures2);
@@ -561,12 +561,14 @@ describe('Engine', () => {
       expect(instance['composedGestures']).to.deep.equal([g]);
     });
 
-    it('should not compose gestures', () => {
+    it('should stop gestures', () => {
       const g = {} as DefaultGesture;
       g.unbind = sandbox.stub().returns(RETURN_FLAG.REMOVE);
+      g.stop = sandbox.spy();
       instance['gestures'] = [g];
       instance['onStop']();
       expect(instance['composedGestures']).to.have.length(0);
+      expect(g.stop).to.have.been.calledWithExactly();
     });
 
   });

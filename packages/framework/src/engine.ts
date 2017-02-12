@@ -223,6 +223,8 @@ export class Engine {
     while (gesture = gestures.shift()) {
       if (RETURN_FLAG.COMPOSE === gesture.unbind()) {
         this.composedGestures.push(gesture);
+      } else {
+        gesture.stop();
       }
     }
 
