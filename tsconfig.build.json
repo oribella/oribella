@@ -16,7 +16,8 @@
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "noEmitHelpers": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "importHelpers": true
   },
   "exclude": [
     ".vscode",
@@ -24,6 +25,6 @@
     "doc",
     "node_modules",
     "test",
-    "webpack.config.ts"
+    "webpack.config.js"
   ]
 }
