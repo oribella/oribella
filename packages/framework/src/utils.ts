@@ -32,7 +32,25 @@ export const RETURN_FLAG = {
   COMPOSE: 16
 };
 
-export function isMouse(supports: Supports, evt: any) {
+export interface Supports {
+  msPointerEnabled: boolean;
+  pointerEnabled: boolean;
+  touchEnabled: boolean;
+}
+
+export const SUPPORTS: Supports = {
+  get touchEnabled() {
+    return ('ontouchstart' in window);
+  },
+  get pointerEnabled() {
+    return (window && window.navigator.pointerEnabled);
+  },
+  get msPointerEnabled() {
+    return (window && window.navigator.msPointerEnabled);
+  }
+};
+
+export function isMouse(evt: any, supports: Supports = SUPPORTS) {
   if (supports.msPointerEnabled && evt.pointerType === evt.MSPOINTER_TYPE_MOUSE) { // IE10
     return true;
   }
@@ -70,12 +88,6 @@ export interface Pointers {
   all: PointerDataMap;
   changed: PointerDataMap;
 };
-
-export interface Supports {
-  msPointerEnabled: boolean;
-  pointerEnabled: boolean;
-  touchEnabled: boolean;
-}
 
 export class Options {
   public pointers: number = 1;

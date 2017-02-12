@@ -25,17 +25,17 @@ describe('Utils', () => {
 
   it('should detect mouse IE10', () => {
     const supports = { msPointerEnabled: true, pointerEnabled: false, touchEnabled: false };
-    expect(isMouse(supports, { pointerType: 'foo', MSPOINTER_TYPE_MOUSE: 'foo' })).to.equal(true);
+    expect(isMouse({ pointerType: 'foo', MSPOINTER_TYPE_MOUSE: 'foo' }, supports)).to.equal(true);
   });
 
   it('should detect mouse IE11', () => {
     const supports = { msPointerEnabled: false, pointerEnabled: true, touchEnabled: false };
-    expect(isMouse(supports, { pointerType: 'mouse' })).to.equal(true);
+    expect(isMouse({ pointerType: 'mouse' }, supports, )).to.equal(true);
   });
 
   it('should detect mouse', () => {
     const supports = { msPointerEnabled: false, pointerEnabled: false, touchEnabled: false };
-    expect(isMouse(supports, { type: 'mouse' })).to.equal(true);
+    expect(isMouse({ type: 'mouse' }, supports)).to.equal(true);
   });
 
   it('should validate mouse button', () => {

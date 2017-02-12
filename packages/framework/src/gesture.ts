@@ -7,7 +7,7 @@ export class Gesture<D extends Data, L extends DefaultListener> {
   public startEmitted: boolean = false;
   constructor(public listener: L, public data: D, public target: Element) { }
 
-  public bind(target: Element, registerListener: <T extends typeof Gesture>(Type: T, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void): void;
+  public bind(target: Element, registerListener: <T extends typeof Gesture>(Type: T, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void, evt: Event): void;
   public bind() { }
   public unbind(): number { return 0; }
   public start(evt: Event, data: D): number;

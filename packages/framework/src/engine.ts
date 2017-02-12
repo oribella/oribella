@@ -2,7 +2,7 @@ import { Registry } from './registry';
 import { Gesture, DefaultGesture } from './gesture';
 import { Listener, DefaultListener } from './listener';
 import { Flow } from './flow';
-import { Options, Data, Pointers, PointerDataMap, PointerData, isMouse, isValidMouseButton, RETURN_FLAG, GESTURE_STRATEGY_FLAG, Supports, matchesSelector } from './utils';
+import { Options, Data, Pointers, PointerDataMap, PointerData, isMouse, isValidMouseButton, RETURN_FLAG, GESTURE_STRATEGY_FLAG, matchesSelector } from './utils';
 import { ListenerHandle } from './listener-handle';
 
 export interface PointersDelta {
@@ -27,7 +27,6 @@ export class Engine {
 
   constructor(
     private element: Element | Document,
-    private supports: Supports,
     private registry: Registry = new Registry(),
   ) { }
 
@@ -61,7 +60,7 @@ export class Engine {
     return (this.activeFlow === null || this.activeFlow === flow);
   }
   private getPointersDelta(evt: Event, pointers: Pointers, configuredPointers: number, configuredWhich: number[] | number): PointersDelta {
-    if (isMouse(this.supports, evt) &&
+    if (isMouse(evt) &&
       !isValidMouseButton(evt as MouseEvent, configuredWhich)) {
       return { all: -1, changed: -1 };
     }
@@ -183,7 +182,7 @@ export class Engine {
     this.activeFlow.continue();
 
     this.gestures = this.gestures
-      .concat(this.match(evt.target as Node))
+      .concat(this.match(evt.target as Node, evt))
       .sort((g1, g2) => {
         return g1.listener.options.prio -
           g2.listener.options.prio;
@@ -231,12 +230,12 @@ export class Engine {
     this.gestures.length = 0;
     this.activeFlow = null;
   }
-  private addGesture<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>): DefaultGesture {
+  private addGesture<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>, evt: Event): DefaultGesture {
     const gesture = this.registry.create<T>(Type, element, handle.listener);
-    gesture.bind(handle.element, this.registerListener.bind(this), this.removeGesture.bind(this, gesture, this.gestures, this.composedGestures));
+    gesture.bind(handle.element, this.registerListener.bind(this), this.removeGesture.bind(this, gesture, this.gestures, this.composedGestures), evt);
     return gesture;
   }
-  private composeGesture<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>): DefaultGesture {
+  private composeGesture<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>, evt: Event): DefaultGesture {
     let gesture;
     while (gesture = this.composedGestures.shift()) {
       if (gesture.listener === handle.listener) {
@@ -244,7 +243,7 @@ export class Engine {
       }
     }
     if (!gesture) {
-      gesture = this.addGesture(Type, element, handle);
+      gesture = this.addGesture(Type, element, handle, evt);
     }
     return gesture;
   }
@@ -265,25 +264,25 @@ export class Engine {
     }
     return true;
   }
-  private matchHandle<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>): DefaultGesture | undefined {
+  private matchHandle<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>, evt: Event): DefaultGesture | undefined {
     if (!this.matchesHandle(element, handle)) {
       return;
     }
-    return this.composeGesture(Type, element, handle);
+    return this.composeGesture(Type, element, handle, evt);
   }
-  private matchHandles(element: Element, gestures: DefaultGesture[]): DefaultGesture[] {
+  private matchHandles(element: Element, gestures: DefaultGesture[], evt: Event): DefaultGesture[] {
     for (const handle of this.handles) { // Always evaluate length since gestures could bind gestures
-      const gesture = this.matchHandle(handle.Type, element, handle);
+      const gesture = this.matchHandle(handle.Type, element, handle, evt);
       if (gesture) {
         gestures.push(gesture);
       }
     }
     return gestures;
   }
-  private match(target: Node): DefaultGesture[] {
+  private match(target: Node, evt: Event): DefaultGesture[] {
     const gestures: DefaultGesture[] = [];
     for (let node: Node | null = target; node && node.nodeType === 1 && node !== this.element; node = node.parentNode) {
-      this.matchHandles(node as Element, gestures);
+      this.matchHandles(node as Element, gestures, evt);
     }
     return gestures;
   }

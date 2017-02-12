@@ -36,15 +36,12 @@ describe('OribellaApi', () => {
 
   it('should use defaults', () => {
     expect(instance['element']).to.equal(document);
-    expect(instance['supports']).to.deep.equal({ pointerEnabled: false, msPointerEnabled: false, touchEnabled: true });
   });
 
   it('should use parameters', () => {
     const element = {} as Element;
-    const supports = { msPointerEnabled: true, pointerEnabled: true, touchEnabled: false };
-    instance = new OribellaApi(element, supports);
+    instance = new OribellaApi(element);
     expect(instance['element']).to.equal(element);
-    expect(instance['supports']).to.deep.equal({ pointerEnabled: true, msPointerEnabled: true, touchEnabled: false });
   });
 
   describe('Register default flow strategy', () => {
@@ -52,27 +49,27 @@ describe('OribellaApi', () => {
     it('should register MSPointerFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: true, pointerEnabled: false, touchEnabled: false };
-      instance = new OribellaApi(element, supports);
+      instance = new OribellaApi(element);
       const registerFlow = sandbox.stub(instance['engine'], 'registerFlow');
-      instance.registerDefaultFlowStrategy();
+      instance.registerDefaultFlowStrategy(supports);
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(MSPointerFlow));
     });
 
     it('should register PointerFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: false, pointerEnabled: true, touchEnabled: false };
-      instance = new OribellaApi(element, supports);
+      instance = new OribellaApi(element);
       const registerFlow = sandbox.stub(instance['engine'], 'registerFlow');
-      instance.registerDefaultFlowStrategy();
+      instance.registerDefaultFlowStrategy(supports);
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(PointerFlow));
     });
 
     it('should register TouchFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: false, pointerEnabled: false, touchEnabled: true };
-      instance = new OribellaApi(element, supports);
+      instance = new OribellaApi(element);
       const registerFlow = sandbox.stub(instance['engine'], 'registerFlow');
-      instance.registerDefaultFlowStrategy();
+      instance.registerDefaultFlowStrategy(supports);
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(TouchFlow));
     });
 
