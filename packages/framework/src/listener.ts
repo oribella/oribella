@@ -10,7 +10,8 @@ export class Listener<O extends Options, D extends Data> {
       start(_1, _2, _3) { },
       update(_1, _2, _3) { },
       end(_1, _2, _3) { },
-      cancel() { }
+      cancel() { },
+      stop() {}
     } as Listener<O, D>);
   }
   public down(evt: Event, data: D, target: Element): number { return RETURN_FLAG.map(this.listener.down(evt, data, target)); }
@@ -24,6 +25,7 @@ export class Listener<O extends Options, D extends Data> {
   public update(evt: Event, data: D, target: Element): number { return RETURN_FLAG.map(this.listener.update(evt, data, target)); }
   public end(evt: Event, data: D, target: Element): number { return RETURN_FLAG.map(this.listener.end(evt, data, target)); }
   public cancel(): number { return RETURN_FLAG.map(this.listener.cancel()); }
+  public stop() { this.listener.stop(); }
 }
 
 export class DefaultListener extends Listener<Options, Data> { }

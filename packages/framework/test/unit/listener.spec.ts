@@ -43,7 +43,8 @@ describe('Default listener', () => {
       start: sandbox.stub().withArgs(evt, data, target),
       update: sandbox.stub().withArgs(evt, data, target),
       end: sandbox.stub().withArgs(evt, data, target),
-      cancel: sandbox.stub()
+      cancel: sandbox.stub(),
+      stop: sandbox.stub()
     } as DefaultListener;
     instance = new Listener({
       prio: 100,

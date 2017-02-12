@@ -17,7 +17,7 @@ export class Gesture<D extends Data, L extends DefaultListener> {
   public end(evt: Event, data: D): number;
   public end() { return 0; }
   public cancel(): number { return 0; }
-  public stop(): void {}
+  public stop(): void { this.listener.stop(); }
 }
 
 export class DefaultGesture extends Gesture<Data, DefaultListener> { }

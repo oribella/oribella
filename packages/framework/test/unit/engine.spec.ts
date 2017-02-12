@@ -545,7 +545,7 @@ describe('Engine', () => {
   describe('On stop', () => {
 
     it('should reset current gestures and active flow', () => {
-      instance['gestures'] = [new Gesture({} as DefaultListener, {} as Data, {} as Element)];
+      instance['gestures'] = [new Gesture(new DefaultListener({} as Options), {} as Data, {} as Element)];
       instance['activeFlow'] = mouseFlow;
       instance['onStop']();
       expect(instance['gestures']).to.have.length(0);
