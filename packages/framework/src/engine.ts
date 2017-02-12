@@ -68,8 +68,7 @@ export class Engine {
     const changed = pointers.changed.size - configuredPointers;
     return { all, changed };
   }
-  private removeGesture(
-    gesture: DefaultGesture, ...arr: DefaultGesture[][]) {
+  private removeGesture(gesture: DefaultGesture, ...arr: DefaultGesture[][]) {
     if (gesture.startEmitted) {
       gesture.cancel();
     }
@@ -82,7 +81,7 @@ export class Engine {
       }
     }
   }
-  private evaluateStrategyReturnFlag(gestures: DefaultGesture[], gesture: DefaultGesture, flag: number) {
+  private evaluateStrategyReturnFlag(gesture: DefaultGesture, flag: number) {
     if (flag & RETURN_FLAG.START_EMITTED) {
       gesture.startEmitted = true;
     }
@@ -96,7 +95,7 @@ export class Engine {
         if (gesture === otherGesture) {
           continue;
         }
-        this.removeGesture(otherGesture, gestures, this.gestures, this.composedGestures);
+        this.removeGesture(otherGesture, this.gestures, this.composedGestures);
       }
     }
   }
@@ -110,7 +109,7 @@ export class Engine {
         continue;
       }
       const flag = execStrategy({ evt, gestures, gesture, pointers, pointersDelta });
-      this.evaluateStrategyReturnFlag(gestures, gesture, flag);
+      this.evaluateStrategyReturnFlag(gesture, flag);
     }
   }
   private addPointerId(gesture: DefaultGesture, pointerId: number) {
@@ -162,6 +161,7 @@ export class Engine {
   }
   private endStrategy(state: ExecStrategyState): number {
     if (!state.gesture.startEmitted) {
+      state.gesture.stop();
       return RETURN_FLAG.REMOVE;
     }
     this.removePointerIds(state.pointers.changed, state.gesture, Array.from(state.pointers.changed.keys()));

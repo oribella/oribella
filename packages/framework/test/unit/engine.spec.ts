@@ -195,14 +195,14 @@ describe('Engine', () => {
     it('should set startEmitted', () => {
       const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
       expect(gesture.startEmitted).to.be.false;
-      instance['evaluateStrategyReturnFlag']([], gesture, RETURN_FLAG.START_EMITTED);
+      instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.START_EMITTED);
       expect(gesture.startEmitted).to.be.true;
     });
 
     it('should remove gesture', () => {
       const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
       const removeGesture = sandbox.stub(instance, 'removeGesture');
-      instance['evaluateStrategyReturnFlag']([], gesture, RETURN_FLAG.REMOVE);
+      instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.REMOVE);
       expect(removeGesture).to.have.been.calledWithExactly(gesture, instance['gestures'], instance['composedGestures']);
     });
 
@@ -212,7 +212,7 @@ describe('Engine', () => {
       const g2 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
       const g3 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
       instance['gestures'] = [g1, gesture, g2, g3];
-      instance['evaluateStrategyReturnFlag']([], gesture, RETURN_FLAG.REMOVE_OTHERS);
+      instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.REMOVE_OTHERS);
       expect(instance['gestures'][0]).to.equal(gesture);
     });
 
@@ -389,9 +389,11 @@ describe('Engine', () => {
   describe('End strategy', () => {
 
     it('should remove gesture if start has not been emitted', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, {} as Element); ;
+      gesture.stop = sandbox.spy();
       const state = { gesture } as ExecStrategyState;
       expect(instance['endStrategy'](state)).to.equal(RETURN_FLAG.REMOVE);
+      expect(gesture.stop).to.have.been.calledWithExactly();
     });
 
     it('should idle gesture if not all locked pointers was removed', () => {
