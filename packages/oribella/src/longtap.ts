@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point, ensureProperties } from 'oribella-framework';
 
 export class LongtapOptions extends Options {
   public radiusThreshold: number = 2;
@@ -9,9 +9,9 @@ export class LongtapListener extends Listener<LongtapOptions, Data> {
   public listener: LongtapListener;
   constructor(public options: LongtapOptions, listener: LongtapListener) {
     super(options, listener);
-    this.listener = Object.assign({
+    this.listener = ensureProperties(listener, {
       timeEnd() { }
-    } as LongtapListener, this.listener);
+    } as LongtapListener);
   }
   public timeEnd(): number { return RETURN_FLAG.map(this.listener.timeEnd()); }
 }
