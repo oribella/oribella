@@ -1,4 +1,4 @@
-# oribella-aurelia-sortable
+# oribella-aurelia-gestures
 
 [![npm version](https://badge.fury.io/js/oribella-aurelia-gestures.svg)](https://badge.fury.io/js/oribella-aurelia-gestures)
 
