@@ -21,7 +21,7 @@ describe('MouseFlow', () => {
     expect(instance.config.start.getEvents()).to.deep.equal(['mousedown']);
     expect(instance.config.update.getEvents()).to.deep.equal(['mousemove']);
     expect(instance.config.end.getEvents()).to.deep.equal(['mouseup']);
-    expect(instance.config.cancel.getEvents()).to.deep.equal(['dragstart', 'contextmenu']);
+    expect(instance.config.cancel.getEvents()).to.deep.equal(['dragstart']);
   });
 
   it('should set pointers on mousedown', () => {

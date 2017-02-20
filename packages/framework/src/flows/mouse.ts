@@ -5,7 +5,7 @@ export const MouseConfig = {
   start: new EventConfig('mousedown'),
   update: new EventConfig('mousemove'),
   end: new EventConfig('mouseup'),
-  cancel: new EventConfig('dragstart', 'contextmenu')
+  cancel: new EventConfig('dragstart')
 };
 
 export class MouseFlow extends Flow {
