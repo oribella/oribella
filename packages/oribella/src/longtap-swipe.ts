@@ -30,6 +30,18 @@ export class LongtapSwipe extends Gesture<Data, Listener<LongtapSwipeOptions, Da
     });
     this.remove = remove;
   }
+  public start(_: DefaultListenerArgs): number {
+    return RETURN_FLAG.IDLE;
+  }
+  public update(_: DefaultListenerArgs): number {
+    return RETURN_FLAG.IDLE;
+  }
+  public end(_: DefaultListenerArgs): number {
+    return RETURN_FLAG.IDLE;
+  }
+  public cancel(): number {
+    return RETURN_FLAG.IDLE;
+  }
   public longtapDown() {
     this.allowSwipe = false;
     return RETURN_FLAG.IDLE;
