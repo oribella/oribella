@@ -1,8 +1,8 @@
 <template>
   <div
-    oa-tap.call="onTap()"
-    oa-doubletap="end.call: onDoubletap()"
-    oa-longtap="time-end.call: onLongtap()"
-    oa-swipe="update.call: onSwipe()"
-    oa-longtap-swipe="update.call: onLongtapSwipe()">Gesture me!</div>
+    oa-tap.call="onTap($event)"
+    oa-doubletap="end.call: onDoubletap($event)"
+    oa-longtap="time-end.call: onLongtap($event)"
+    oa-swipe="update.call: onSwipe($event)"
+    oa-longtap-swipe="update.call: onLongtapSwipe($event)">Gesture me!</div>
 </template>

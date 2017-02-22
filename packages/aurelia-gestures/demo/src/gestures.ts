@@ -1,17 +1,20 @@
+import { ListenerArgs, DefaultListenerArgs } from 'oribella-framework';
+import { SwipeData } from 'oribella';
+
 export class Gestures {
-  public onTap() {
-    console.log('tap');
+  public onTap(args: DefaultListenerArgs) {
+    console.log('tap', args);
   }
-  public onDoubletap() {
-    console.log('doubletap');
+  public onDoubletap(args: DefaultListenerArgs) {
+    console.log('doubletap', args);
   }
-  public onLongtap() {
-    console.log('longtap');
+  public onLongtap(args: DefaultListenerArgs) {
+    console.log('longtap', args);
   }
-  public onSwipe() {
-    console.log('swipe');
+  public onSwipe(args: ListenerArgs<SwipeData>) {
+    console.log('swipe', args);
   }
-  public onLongtapSwipe() {
-    console.log('longtap swipe');
+  public onLongtapSwipe(args: ListenerArgs<SwipeData>) {
+    console.log('longtap swipe', args);
   }
 }
