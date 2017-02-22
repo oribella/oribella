@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, ListenerArgs, Point } from 'oribella-framework';
 
 export class RotateOptions extends Options {
   public pointers: number = 2;
@@ -25,27 +25,22 @@ export class Rotate extends Gesture<RotateData, Listener<RotateOptions, RotateDa
     this.currentPoint1 = data.pointers[1].page;
     data.rotation = this.calculateRotation(this.startPoint0, this.startPoint1, this.currentPoint0, this.currentPoint1);
   }
-  public start(evt: Event, data: RotateData): number {
-    this.startPoint0 = data.pointers[0].page;
-    this.startPoint1 = data.pointers[1].page;
-    return this.listener.down(evt, data, this.target);
+  public start(args: ListenerArgs<RotateData>): number {
+    const { data: { pointers: [{ page: p0 }, { page: p1 }] } } = args;
+    this.startPoint0 = p0;
+    this.startPoint1 = p1;
+    return this.listener.down(args);
   }
-  public update(evt: Event, data: RotateData): number {
+  public update(args: ListenerArgs<RotateData>): number {
+    const { data } = args;
     this.setData(data);
 
     if (Math.abs(data.rotation) < this.listener.options.rotationThreshold) {
       return RETURN_FLAG.IDLE;
     }
-    if (!this.startEmitted) {
-      return this.listener.start(evt, data, this.target);
-    }
-    return this.listener.update(evt, data, this.target);
-  }
-  public end(evt: Event, data: RotateData): number {
-    return this.listener.end(evt, data, this.target);
-  }
-  public cancel() {
-    return this.listener.cancel();
+    return !this.startEmitted ?
+      this.listener.start(args) :
+      this.listener.update(args);
   }
 }
 

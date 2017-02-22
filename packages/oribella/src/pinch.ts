@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, ListenerArgs, Point } from 'oribella-framework';
 
 export class PinchOptions extends Options {
   public pointers: number = 2;
@@ -42,27 +42,22 @@ export class Pinch extends Gesture<PinchData, Listener<PinchOptions, PinchData>>
     data.centerPoint.x = (this.currentPoint0.x + this.currentPoint1.x) / 2;
     data.centerPoint.y = (this.currentPoint0.y + this.currentPoint1.y) / 2;
   }
-  public start(evt: Event, data: PinchData): number {
-    this.startPoint0 = data.pointers[0].page;
-    this.startPoint1 = data.pointers[1].page;
-    return this.listener.down(evt, data, this.target);
+  public start(args: ListenerArgs<PinchData>): number {
+    const { data: { pointers: [{ page: p0 }, { page: p1 }] } } = args;
+    this.startPoint0 = p0;
+    this.startPoint1 = p1;
+    return this.listener.down(args);
   }
-  public update(evt: Event, data: PinchData): number {
+  public update(args: ListenerArgs<PinchData>): number {
+    const { data } = args;
     this.setData(data);
 
     if (Math.abs(data.distance) < this.listener.options.pinchThreshold) {
       return RETURN_FLAG.IDLE;
     }
-    if (!this.startEmitted) {
-      return this.listener.start(evt, data, this.target);
-    }
-    return this.listener.update(evt, data, this.target);
-  }
-  public end(evt: Event, data: PinchData): number {
-    return this.listener.end(evt, data, this.target);
-  }
-  public cancel() {
-    return this.listener.cancel();
+    return !this.startEmitted ?
+      this.listener.start(args) :
+      this.listener.update(args);
   }
 }
 
