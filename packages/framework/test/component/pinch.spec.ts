@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
-import { Pinch, register as registerPinch } from './gestures/pinch';
+import { Pinch, registerPinch } from './gestures/pinch';
 import { dispatchTouchEvent } from './utils';
 import { Point } from '../../src/point';
 

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
-import { Rotate, register as registerRotate } from './gestures/rotate';
+import { Rotate, registerRotate } from './gestures/rotate';
 import { dispatchTouchEvent } from './utils';
 import { Point } from '../../src/point';
 

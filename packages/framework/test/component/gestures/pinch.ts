@@ -66,6 +66,6 @@ export class Pinch extends Gesture<PinchData, Listener<PinchOptions, PinchData>>
   }
 }
 
-export function register(oribella: OribellaApi) {
+export function registerPinch(oribella: OribellaApi) {
   oribella.registerGesture(Pinch, PinchOptions, undefined, PinchData);
 }

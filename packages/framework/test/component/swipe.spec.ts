@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
-import { Swipe, register as registerSwipe } from './gestures/swipe';
+import { Swipe, registerSwipe } from './gestures/swipe';
 import { dispatchMouseEvent } from './utils';
 
 describe('Swipe', () => {

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
 import { jsdom } from 'jsdom';
-import { Longtap, register as registerLongtap } from './gestures/longtap';
+import { Longtap, registerLongtap } from './gestures/longtap';
 import { dispatchMouseEvent } from './utils';
 
 describe('Longtap', () => {

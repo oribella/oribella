@@ -54,6 +54,6 @@ export class Longtap extends Gesture<Data, LongtapListener> {
   }
 }
 
-export function register(oribella: OribellaApi) {
+export function registerLongtap(oribella: OribellaApi) {
   oribella.registerGesture(Longtap, LongtapOptions, LongtapListener);
 }
