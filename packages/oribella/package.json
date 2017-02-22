@@ -1,6 +1,6 @@
 {
   "name": "oribella",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "A set of preconfigured gestures like tap, longtap, doubletap, swipe, longtap-swipe, pinch, rotate",
   "repository": {
     "type": "git",
