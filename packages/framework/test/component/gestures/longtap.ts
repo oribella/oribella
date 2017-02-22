@@ -1,5 +1,5 @@
 import { OribellaApi } from '../../../src/oribella-api';
-import { Options, Data } from '../../../src/utils';
+import { Options, Data, ensureProperties } from '../../../src/utils';
 import { RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
 import { Listener, DefaultListenerArgs } from '../../../src/listener';
@@ -14,9 +14,9 @@ export class LongtapListener extends Listener<LongtapOptions, Data> {
   public listener: LongtapListener;
   constructor(public options: LongtapOptions, listener: LongtapListener) {
     super(options, listener);
-    this.listener = Object.assign({
+    this.listener = ensureProperties(listener, {
       timeEnd() { }
-    } as LongtapListener, this.listener);
+    } as LongtapListener);
   }
   public timeEnd(): number { return RETURN_FLAG.map(this.listener.timeEnd()); }
 }
