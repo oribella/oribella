@@ -67,12 +67,16 @@ describe('Rotate', () => {
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
       { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
     ]);
-    expect(listener.down).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [
-        { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
-        { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } }
-      ]
-    }), target);
+    expect(listener.down).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: {
+        pointers: [
+          { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
+          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } }
+        ]
+      },
+      target
+    }));
   });
 
   it('should call listener down when fulfilled configured pointers', () => {
@@ -83,12 +87,16 @@ describe('Rotate', () => {
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
       { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
     ]);
-    expect(listener.down).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [
-        { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
-        { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } }
-      ]
-    }), target);
+    expect(listener.down).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: {
+        pointers: [
+          { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
+          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } }
+        ]
+      },
+      target
+    }));
   });
 
   it('should call listener start', () => {
@@ -101,12 +109,16 @@ describe('Rotate', () => {
       { page: new Point(110, 200), client: new Point(110, 200), identifier: 1 },
       { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 }
     ]);
-    expect(listener.start).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [
-        { page: { x: 110, y: 200 }, client: { x: 110, y: 200 } },
-        { page: { x: 90, y: 210 }, client: { x: 90, y: 210 } }
-      ]
-    }), target);
+    expect(listener.start).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: {
+        pointers: [
+          { page: { x: 110, y: 200 }, client: { x: 110, y: 200 } },
+          { page: { x: 90, y: 210 }, client: { x: 90, y: 210 } }
+        ]
+      },
+      target
+    }));
   });
 
   it('should call listener update', () => {
@@ -123,12 +135,16 @@ describe('Rotate', () => {
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
       { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
     ]);
-    expect(listener.update).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [
-        { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-        { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
-      ]
-    }), target);
+    expect(listener.update).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: {
+        pointers: [
+          { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
+          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
+        ]
+      },
+      target
+    }));
   });
 
   it('should call listener end', () => {
@@ -149,12 +165,16 @@ describe('Rotate', () => {
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
       { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
     ]);
-    expect(listener.end).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [
-        { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-        { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
-      ]
-    }), target);
+    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: {
+        pointers: [
+          { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
+          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
+        ]
+      },
+      target
+    }));
   });
 
   it('should call listener end when all locked pointers are removed', () => {
@@ -177,12 +197,16 @@ describe('Rotate', () => {
     const evt = dispatchTouchEvent(document, target, 'touchend', [], [
       { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
     ]);
-    expect(listener.end).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [
-        { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-        { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
-      ]
-    }), target);
+    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: {
+        pointers: [
+          { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
+          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
+        ]
+      },
+      target
+    }));
   });
 
 });
