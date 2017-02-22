@@ -1,6 +1,6 @@
 import { OribellaApi } from '../../../src/oribella-api';
 import { Options, Data, RETURN_FLAG } from '../../../src/utils';
-import { Listener, DefaultListener } from '../../../src/listener';
+import { Listener, DefaultListener, DefaultListenerArgs } from '../../../src/listener';
 import { Gesture } from '../../../src/gesture';
 import { Tap } from './tap';
 
@@ -29,7 +29,7 @@ export class Doubletap extends Gesture<Data, Listener<DoubletapOptions, Data>> {
     }
     return RETURN_FLAG.COMPOSE;
   }
-  public tapEnd(evt: Event, data: Data) {
+  public tapEnd(args: DefaultListenerArgs) {
     ++this.count;
     if (this.count === 1) {
       this.timeoutId = window.setTimeout(() => {
@@ -38,7 +38,7 @@ export class Doubletap extends Gesture<Data, Listener<DoubletapOptions, Data>> {
       }, this.listener.options.timeThreshold);
     } else if (this.count === 2) {
       window.clearTimeout(this.timeoutId);
-      return this.listener.end(evt, data, this.target);
+      return this.listener.end(args);
     }
     return RETURN_FLAG.IDLE;
   }

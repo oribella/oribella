@@ -75,9 +75,11 @@ describe('LongtapSwipe', () => {
   it('should call listener down', () => {
     instance.on(LongtapSwipe, target, listener);
     const evt = dispatchMouseEvent(document, target);
-    expect(listener.down).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }]
-    }), target);
+    expect(listener.down).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      target
+    }));
   });
 
   it('should remove gesture if not longtap time threshold is met', () => {
@@ -92,9 +94,11 @@ describe('LongtapSwipe', () => {
     dispatchMouseEvent(document, target);
     setTimeout.callArg(0);
     const evt = dispatchMouseEvent(document, target, 'mousemove', 250, 250, 250, 250);
-    expect(listener.start).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [{ client: { x: 250, y: 250 }, page: { x: 250, y: 250 } }]
-    }), target);
+    expect(listener.start).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: { pointers: [{ client: { x: 250, y: 250 }, page: { x: 250, y: 250 } }] },
+      target
+    }));
   });
 
   it('should call listener update', () => {
@@ -103,9 +107,11 @@ describe('LongtapSwipe', () => {
     setTimeout.callArg(0);
     dispatchMouseEvent(document, target, 'mousemove', 250, 250, 250, 250);
     const evt = dispatchMouseEvent(document, target, 'mousemove', 300, 300, 300, 300);
-    expect(listener.update).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [{ client: { x: 300, y: 300 }, page: { x: 300, y: 300 } }]
-    }), target);
+    expect(listener.update).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: { pointers: [{ client: { x: 300, y: 300 }, page: { x: 300, y: 300 } }] },
+      target
+    }));
   });
 
   it('should call listener end', () => {
@@ -115,9 +121,11 @@ describe('LongtapSwipe', () => {
     dispatchMouseEvent(document, target, 'mousemove', 250, 250, 250, 250);
     dispatchMouseEvent(document, target, 'mousemove', 300, 300, 300, 300);
     const evt = dispatchMouseEvent(document, target, 'mouseup', 350, 350, 350, 350);
-    expect(listener.end).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }]
-    }), target);
+    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },
+      target
+    }));
   });
 
   it('should call listener cancel', () => {

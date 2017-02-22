@@ -1,4 +1,4 @@
-import {PointerData, Pointers} from './utils';
+import { PointerData, Pointers } from './utils';
 
 export class EventEmitter {
   private listenerMap: Map<string, Function[]> = new Map();
@@ -14,11 +14,6 @@ export class EventEmitter {
     listeners.forEach((listener) => listener.apply(null, args));
     return true;
   }
-  // removeAllListeners(event?: string): this {
-  //   event === undefined ? this.listenerMap.clear() :
-  //     this.listenerMap.delete(event);
-  //   return this;
-  // }
 }
 
 export class EventConfig {

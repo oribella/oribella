@@ -2,7 +2,7 @@ import { OribellaApi } from '../../../src/oribella-api';
 import { Options, Data } from '../../../src/utils';
 import { RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
-import { Listener } from '../../../src/listener';
+import { Listener, ListenerArgs } from '../../../src/listener';
 import { Point } from '../../../src/point';
 
 export class Observation {
@@ -28,30 +28,29 @@ export class SwipeOptions extends Options {
 
 export class Swipe extends Gesture<SwipeData, Listener<SwipeOptions, SwipeData>> {
   public startPoint: Point;
-
-  public start(evt: Event, data: SwipeData): number {
-    this.startPoint = data.pointers[0].page;
+  public start({ data, evt }: ListenerArgs<SwipeData>): number {
+    const { pointers: [{ page }] } = data;
+    this.startPoint = page;
     data.add(this.startPoint, evt.timeStamp);
-    return this.listener.down(evt, data, this.target);
+    return this.listener.down(this.args);
   }
-  public update(evt: Event, data: SwipeData): number {
-    const currentPoint = data.pointers[0].page;
-    if (currentPoint.distanceTo(this.startPoint) < this.listener.options.radiusThreshold) {
+  public update(args: ListenerArgs<SwipeData>): number {
+    const { data, evt } = args;
+    const { pointers: [{ page }] } = data;
+    if (page.distanceTo(this.startPoint) < this.listener.options.radiusThreshold) {
       return RETURN_FLAG.IDLE;
     }
-    data.add(currentPoint, evt.timeStamp);
+    data.add(page, evt.timeStamp);
     if (!this.startEmitted) {
-      return this.listener.start(evt, data, this.target);
+      return this.listener.start(args);
     }
-    return this.listener.update(evt, data, this.target);
+    return this.listener.update(args);
   }
-  public end(evt: Event, data: SwipeData): number {
-    const currentPoint = data.pointers[0].page;
-    data.add(currentPoint, evt.timeStamp);
-    return this.listener.end(evt, data, this.target);
-  }
-  public cancel() {
-    return this.listener.cancel();
+  public end(args: ListenerArgs<SwipeData>): number {
+    const { data, evt } = args;
+    const { pointers: [{ page }] } = data;
+    data.add(page, evt.timeStamp);
+    return this.listener.end(args);
   }
 }
 

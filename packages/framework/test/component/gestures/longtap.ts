@@ -2,7 +2,7 @@ import { OribellaApi } from '../../../src/oribella-api';
 import { Options, Data } from '../../../src/utils';
 import { RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
-import { Listener } from '../../../src/listener';
+import { Listener, DefaultListenerArgs } from '../../../src/listener';
 import { Point } from '../../../src/point';
 
 export class LongtapOptions extends Options {
@@ -26,27 +26,27 @@ export class Longtap extends Gesture<Data, LongtapListener> {
   public timeoutId: number = 0;
   public timeEndEmitted: boolean = false;
 
-  public start(evt: Event, data: Data): number {
-    this.startPoint = data.pointers[0].page;
+  public start(args: DefaultListenerArgs): number {
+    const { data: { pointers: [{ page: p0 }] } } = args;
+    this.startPoint = p0;
     this.timeoutId = window.setTimeout(() => {
       this.listener.timeEnd();
       this.timeEndEmitted = true;
     }, this.listener.options.timeThreshold);
-    return this.listener.start(evt, data, this.target);
+    return this.listener.start(args);
   }
-  public update(_: Event, data: Data): number {
-    const p = data.pointers[0].page;
-    if (p.distanceTo(this.startPoint) > this.listener.options.radiusThreshold) {
+  public update({ data: { pointers: [{ page }] } }: DefaultListenerArgs): number {
+    if (page.distanceTo(this.startPoint) > this.listener.options.radiusThreshold) {
       return RETURN_FLAG.REMOVE;
     }
     return RETURN_FLAG.IDLE;
   }
-  public end(evt: Event, data: Data): number {
+  public end(args: DefaultListenerArgs): number {
     window.clearTimeout(this.timeoutId);
     if (!this.timeEndEmitted) {
       return RETURN_FLAG.REMOVE;
     }
-    return this.listener.end(evt, data, this.target);
+    return this.listener.end(args);
   }
   public cancel() {
     window.clearTimeout(this.timeoutId);

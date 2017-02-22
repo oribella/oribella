@@ -149,15 +149,17 @@ export class Engine {
     }
     // Lock pointer ids on gesture
     state.pointers.all.forEach((_, pointerId) => this.addPointerId(state.gesture, pointerId));
-    state.gesture.data.pointers = this.getPointers(state.pointers.all, this.getPointerIds(state.gesture));
-    return state.gesture.start(state.evt, state.gesture.data);
+    state.gesture.args.data.pointers = this.getPointers(state.pointers.all, this.getPointerIds(state.gesture));
+    state.gesture.args.evt = state.evt;
+    return state.gesture.start(state.gesture.args);
   }
   private updateStrategy(state: ExecStrategyState): number {
     if (!this.isLockedPointers(state.gesture, state.pointers.all)) {
       return RETURN_FLAG.IDLE;
     }
-    state.gesture.data.pointers = this.getPointers(state.pointers.all, this.getPointerIds(state.gesture));
-    return state.gesture.update(state.evt, state.gesture.data);
+    state.gesture.args.data.pointers = this.getPointers(state.pointers.all, this.getPointerIds(state.gesture));
+    state.gesture.args.evt = state.evt;
+    return state.gesture.update(state.gesture.args);
   }
   private endStrategy(state: ExecStrategyState): number {
     if (!state.gesture.startEmitted) {
@@ -168,8 +170,9 @@ export class Engine {
     if (this.getPointerIds(state.gesture).length !== 0) {
       return RETURN_FLAG.IDLE;
     }
-    state.gesture.data.pointers = this.getRemovedPointers(state.gesture);
-    return state.gesture.end(state.evt, state.gesture.data);
+    state.gesture.args.data.pointers = this.getRemovedPointers(state.gesture);
+    state.gesture.args.evt = state.evt;
+    return state.gesture.end(state.gesture.args);
   }
   private cancelStrategy(state: ExecStrategyState): number {
     return state.gesture.cancel();

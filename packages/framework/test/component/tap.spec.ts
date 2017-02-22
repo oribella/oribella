@@ -26,7 +26,7 @@ describe('Tap', () => {
   let target: Element;
   let listener: any;
   let myListener: any;
-  class MyListener {};
+  class MyListener { };
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -65,9 +65,11 @@ describe('Tap', () => {
   it('should call listener start', () => {
     instance.on(Tap, target, myListener);
     const evt = dispatchMouseEvent(document, target);
-    expect(myListener.start).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }]
-    }), target);
+    expect(myListener.start).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      target
+    }));
   });
 
   it('should call listener cancel', () => {
@@ -81,9 +83,11 @@ describe('Tap', () => {
     instance.on(Tap, target, listener);
     dispatchMouseEvent(document, target);
     const evt = dispatchMouseEvent(document, target, 'mouseup');
-    expect(listener.end).to.have.been.calledWithExactly(evt, sinon.match({
-      pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }]
-    }), target);
+    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
+      evt,
+      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      target
+    }));
   });
 
 });

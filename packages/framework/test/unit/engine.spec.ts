@@ -161,7 +161,7 @@ describe('Engine', () => {
   describe('remove gesture', () => {
 
     it('should cancel gesture', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       gesture.cancel = sandbox.spy();
       gesture.startEmitted = true;
       instance['removeGesture'](gesture);
@@ -193,24 +193,24 @@ describe('Engine', () => {
   describe('Evaluate strategy return flag', () => {
 
     it('should set startEmitted', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       expect(gesture.startEmitted).to.be.false;
       instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.START_EMITTED);
       expect(gesture.startEmitted).to.be.true;
     });
 
     it('should remove gesture', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       const removeGesture = sandbox.stub(instance, 'removeGesture');
       instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.REMOVE);
       expect(removeGesture).to.have.been.calledWithExactly(gesture, instance['gestures'], instance['composedGestures']);
     });
 
     it('should remove other gestures', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
-      const g1 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
-      const g2 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
-      const g3 = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
+      const g1 = new Gesture({} as DefaultListener, {} as Data, {} as Element);
+      const g2 = new Gesture({} as DefaultListener, {} as Data, {} as Element);
+      const g3 = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       instance['gestures'] = [g1, gesture, g2, g3];
       instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.REMOVE_OTHERS);
       expect(instance['gestures'][0]).to.equal(gesture);
@@ -254,7 +254,7 @@ describe('Engine', () => {
   });
 
   it('should add pointer id', () => {
-    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
     instance['addPointerId'](gesture, 1);
     expect(instance['getPointerIds'](gesture)).to.deep.equal([1]);
   });
@@ -278,7 +278,7 @@ describe('Engine', () => {
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
       [3, { page: new Point(9, 10), client: new Point(11, 12) }]
     ]);
-    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
     instance['addPointerId'](gesture, 1);
     instance['addPointerId'](gesture, 2);
     instance['addPointerId'](gesture, 3);
@@ -290,7 +290,7 @@ describe('Engine', () => {
   });
 
   it('should return true if matches locked pointers', () => {
-    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
     instance['addPointerId'](gesture, 1);
     instance['addPointerId'](gesture, 2);
     instance['addPointerId'](gesture, 3);
@@ -303,7 +303,7 @@ describe('Engine', () => {
   });
 
   it('should return false if gesture has pointer', () => {
-    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+    const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
     instance['addPointerId'](gesture, 1);
     const map = new Map([
       [1, { page: new Point(1, 2), client: new Point(3, 4) }],
@@ -321,7 +321,7 @@ describe('Engine', () => {
     });
 
     it('should lock pointers', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, {} as Element);
       const pointers = {
         all: new Map([
           [1, { page: new Point(1, 2), client: new Point(3, 4) }],
@@ -335,7 +335,8 @@ describe('Engine', () => {
     });
 
     it('should call start', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const target = {} as Element;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, target);
       gesture.start = sandbox.spy();
       const fooPointer = { page: new Point(1, 2), client: new Point(3, 4) };
       const barPointer = { page: new Point(5, 6), client: new Point(7, 8) };
@@ -347,9 +348,10 @@ describe('Engine', () => {
           [3, bazPointer]
         ])
       } as Pointers;
-      const state = { gesture, pointers, pointersDelta: { all: 0 } } as ExecStrategyState;
+      const evt = {} as Event;
+      const state = { evt, gesture, pointers, pointersDelta: { all: 0 } } as ExecStrategyState;
       instance['startStrategy'](state);
-      expect(gesture.start).to.have.been.calledWithExactly(state.evt, { pointers: [fooPointer, barPointer, bazPointer] });
+      expect(gesture.start).to.have.been.calledWithExactly( { evt, data: { pointers: [fooPointer, barPointer, bazPointer]}, target });
     });
 
   });
@@ -363,7 +365,8 @@ describe('Engine', () => {
     });
 
     it('should call update', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const target = {} as Element;
+      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, target);
       sandbox.spy(gesture, 'update');
       const fooPointer = { page: new Point(1, 2), client: new Point(3, 4) };
       const barPointer = { page: new Point(5, 6), client: new Point(7, 8) };
@@ -375,13 +378,14 @@ describe('Engine', () => {
           [3, bazPointer]
         ])
       } as Pointers;
-      const state = { gesture, pointers } as ExecStrategyState;
+      const evt = {} as Event;
+      const state = { evt, gesture, pointers } as ExecStrategyState;
       sandbox.stub(instance, 'isLockedPointers').returns(true);
       instance['addPointerId'](gesture, 1);
       instance['addPointerId'](gesture, 2);
       instance['addPointerId'](gesture, 3);
       instance['updateStrategy'](state);
-      expect(gesture.update).to.have.been.calledWithExactly(state.evt, { pointers: [fooPointer, barPointer, bazPointer] });
+      expect(gesture.update).to.have.been.calledWithExactly({ evt, data: { pointers: [fooPointer, barPointer, bazPointer] }, target });
     });
 
   });
@@ -389,7 +393,7 @@ describe('Engine', () => {
   describe('End strategy', () => {
 
     it('should remove gesture if start has not been emitted', () => {
-      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, {} as Element); ;
+      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, {} as Element);
       gesture.stop = sandbox.spy();
       const state = { gesture } as ExecStrategyState;
       expect(instance['endStrategy'](state)).to.equal(RETURN_FLAG.REMOVE);
@@ -397,7 +401,7 @@ describe('Engine', () => {
     });
 
     it('should idle gesture if not all locked pointers was removed', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
       gesture.startEmitted = true;
       sandbox.stub(instance, 'getPointerIds').returns([1]);
       const pointers = { changed: new Map() } as Pointers;
@@ -406,7 +410,8 @@ describe('Engine', () => {
     });
 
     it('should call end', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const target = {} as Element;
+      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, target);
       gesture.startEmitted = true;
       sandbox.spy(gesture, 'end');
       const fooPointer = { page: new Point(1, 2), client: new Point(3, 4) };
@@ -419,12 +424,13 @@ describe('Engine', () => {
           [3, bazPointer]
         ])
       } as Pointers;
-      const state = { gesture, pointers } as ExecStrategyState;
+      const evt = {} as Event;
+      const state = { evt, gesture, pointers } as ExecStrategyState;
       instance['addPointerId'](gesture, 1);
       instance['addPointerId'](gesture, 2);
       instance['addPointerId'](gesture, 3);
       instance['endStrategy'](state);
-      expect(gesture.end).to.have.been.calledWithExactly(state.evt, { pointers: [fooPointer, barPointer, bazPointer] });
+      expect(gesture.end).to.have.been.calledWithExactly({ evt, data: { pointers: [fooPointer, barPointer, bazPointer] }, target });
     });
 
   });
@@ -432,7 +438,7 @@ describe('Engine', () => {
   describe('Cancel strategy', () => {
 
     it('should call cancel', () => {
-      const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element); ;
+      const gesture = new Gesture(new DefaultListener({} as Options), {} as Data, {} as Element);
       sandbox.spy(gesture, 'cancel');
       const state = { gesture } as ExecStrategyState;
       instance['cancelStrategy'](state);
