@@ -39,6 +39,7 @@ export class Doubletap extends Gesture<Data, Listener<DoubletapOptions, Data>> {
     }
     return RETURN_FLAG.IDLE;
   }
+  public end(_: DefaultListenerArgs): number { return RETURN_FLAG.IDLE; }
 }
 
 export function registerDoubletap(oribella: OribellaApi) {
