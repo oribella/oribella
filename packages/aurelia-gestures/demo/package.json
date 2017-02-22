@@ -23,7 +23,7 @@
   "dependencies": {
     "aurelia-bootstrapper": "^2.0.1",
     "aurelia-loader-webpack": "^2.0.0",
-    "oribella": "^0.7.0",
+    "oribella": "^0.7.2",
     "oribella-framework": "^0.9.0"
   },
   "scripts": {
