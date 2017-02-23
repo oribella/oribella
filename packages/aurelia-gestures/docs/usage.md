@@ -27,11 +27,11 @@ export function configure(aurelia) {
 
 ## Tap
 ### Primary - `end`
-```
+```html
 <div oa-tap.call="onTap()"></div>
 ```
 ### Advanced
-```
+```html
 <div oa-tap="
   start.call: onStart();
   end.call: onEnd();
@@ -39,7 +39,7 @@ export function configure(aurelia) {
   stop.call: onStop()"></div>
 ```
 ## Doubletap
-```
+```html
 <div oa-doubletap.call="onDoubletap()"></div>
 ```
 
@@ -49,7 +49,7 @@ export function configure(aurelia) {
 <div oa-longtap.call="onLongtap()"></div>
 ```
 ### Advanced
-```
+```html
 <div oa-longtap="
   start.call: onStart();
   update.call: onUpdate();
@@ -60,11 +60,11 @@ export function configure(aurelia) {
 
 ## Swipe
 ### Primary - `update`
-```
+```html
 <div oa-swipe.call="onSwipe()"></div>
 ```
 ### Advanced
-```
+```html
 <div oa-swipe="
   down.call: onDown();
   start.call: onStart();
@@ -76,11 +76,11 @@ export function configure(aurelia) {
 
 ## LongtapSwipe
 ### Primary - `update`
-```
+```html
 <div oa-longtap-swipe.call="onLongtapSwipe()"></div>
 ```
 ### Advanced
-```
+```html
 <div oa-longtap-swipe="
   down.call: onDown();
   start.call: onStart();
@@ -92,11 +92,11 @@ export function configure(aurelia) {
 
 ## Pinch
 ### Primary - `update`
-```
+```html
 <div oa-pinch.call="onPinch()"></div>
 ```
 ### Advanced
-```
+```html
 <div oa-pinch-swipe="
   down.call: onDown();
   start.call: onStart();
@@ -108,11 +108,11 @@ export function configure(aurelia) {
 
 ## Rotate
 ### Primary - `update`
-```
+```html
 <div oa-rotate.call="onRotate()"></div>
 ```
 ### Advanced
-```
+```html
 <div oa-rotate="
   down.call: onDown();
   start.call: onStart();
