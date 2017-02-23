@@ -6,7 +6,7 @@ Have you felt frustrated over DOM events? Have you realised after getting some i
 
 Well, this is the core library of ***Oribella*** cross browser, cross device, cross input gesture framework.
 
-***Oribella*** has a set of normalised gestures *Tap*, *Doubletap*, *Longtap*, *Swipe*, *LongtapSwipe*, *Pinch* and *Rotate*
+***[Oribella](https://github.com/oribella/oribella)*** has a set of normalised gestures *Tap*, *Doubletap*, *Longtap*, *Swipe*, *LongtapSwipe*, *Pinch* and *Rotate*
 
 Just because the gesture is named *Tap* it doesn't mean that it only works on *touch*. They are normalised and works cross input meaning it could be for example  *mouse*, *touch*, *pen*.
 
@@ -48,4 +48,4 @@ What? Why mouseup? Since there are browser quirks there are some use cases where
 
 So now we have covered the event flow which is the foundation for understanding how to build gestures.
 
-To use the ***Oribella*** framework you need to instantiate the `Oribella` class and configure it. For convenience this is done for you by [Default gestures](https://github.com/oribella/default-gestures) repository.
+To use the ***Oribella*** framework you need to instantiate the `Oribella` class and configure it. For convenience this is done for you by [oribella](https://github.com/oribella/oribella) repository.
