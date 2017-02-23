@@ -74,6 +74,7 @@ describe('Doubletap', () => {
     dispatchMouseEvent(document, target, 'mouseup');
     dispatchMouseEvent(document, target);
     const evt = dispatchMouseEvent(document, target, 'mouseup');
+    expect(listener.end).to.have.been.calledOnce;
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },

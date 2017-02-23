@@ -121,6 +121,7 @@ describe('LongtapSwipe', () => {
     dispatchMouseEvent(document, target, 'mousemove', 250, 250, 250, 250);
     dispatchMouseEvent(document, target, 'mousemove', 300, 300, 300, 300);
     const evt = dispatchMouseEvent(document, target, 'mouseup', 350, 350, 350, 350);
+    expect(listener.end).to.have.been.calledOnce;
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },

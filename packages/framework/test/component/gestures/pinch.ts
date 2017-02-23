@@ -64,6 +64,9 @@ export class Pinch extends Gesture<PinchData, Listener<PinchOptions, PinchData>>
       this.listener.start(args) :
       this.listener.update(args);
   }
+  public end(args: ListenerArgs<PinchData>) {
+    return this.listener.end(args);
+  }
 }
 
 export function registerPinch(oribella: OribellaApi) {

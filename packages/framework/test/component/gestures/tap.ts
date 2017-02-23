@@ -21,6 +21,9 @@ export class Tap extends Gesture<Data, Listener<TapOptions, Data>> {
       RETURN_FLAG.REMOVE :
       RETURN_FLAG.IDLE;
   }
+  public end(args: DefaultListenerArgs) {
+    return this.listener.end(args);
+  }
 }
 
 export function registerTap(oribella: OribellaApi) {

@@ -1,4 +1,4 @@
-import { Data, PointerData } from './utils';
+import { Data, PointerData, RETURN_FLAG } from './utils';
 import { DefaultListener, ListenerArgs } from './listener';
 
 export class Gesture<D extends Data, L extends DefaultListener> {
@@ -13,16 +13,13 @@ export class Gesture<D extends Data, L extends DefaultListener> {
 
   public bind(target: Element, registerListener: <T extends typeof Gesture>(Type: T, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void, evt: Event): void;
   public bind() { }
-  public unbind(): number { return 0; }
-  public start(args: ListenerArgs<D>): number {
-    return this.listener.start(args);
-  }
-  public update(args: ListenerArgs<D>): number {
-    return this.listener.update(args);
-  }
-  public end(args: ListenerArgs<D>): number {
-    return this.listener.end(args);
-  }
+  public unbind(): number { return RETURN_FLAG.IDLE; }
+  public start(args: ListenerArgs<D>): number;
+  public start() { return RETURN_FLAG.IDLE; }
+  public update(args: ListenerArgs<D>): number;
+  public update() { return RETURN_FLAG.IDLE; }
+  public end(args: ListenerArgs<D>): number;
+  public end() { return RETURN_FLAG.IDLE; };
   public cancel(): number { return this.listener.cancel(); }
   public stop(): void { this.listener.stop(); }
 }
