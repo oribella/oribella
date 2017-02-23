@@ -75,8 +75,8 @@
     "aurelia-pal": "^1.2.0",
     "aurelia-templating": "^1.2.0",
     "aurelia-templating-resources": "^1.2.0",
-    "oribella": "^0.7.2",
-    "oribella-framework": "^0.9.0"
+    "oribella": "^0.8.0",
+    "oribella-framework": "^0.10.0"
   },
   "nyc": {
     "include": [
