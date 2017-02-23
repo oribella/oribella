@@ -42,6 +42,9 @@ export class Rotate extends Gesture<RotateData, Listener<RotateOptions, RotateDa
       this.listener.start(args) :
       this.listener.update(args);
   }
+  public end(args: ListenerArgs<RotateData>) {
+    return this.listener.end(args);
+  }
 }
 
 export function registerRotate(oribella: OribellaApi) {

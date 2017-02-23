@@ -38,10 +38,10 @@
       "dist": "dist/amd"
     },
     "peerDependencies": {
-      "oribella-framework": "^0.7.0"
+      "oribella-framework": "^0.10.0"
     },
     "dependencies": {
-      "oribella-framework": "^0.7.0"
+      "oribella-framework": "^0.10.0"
     }
   },
   "devDependencies": {
@@ -65,7 +65,7 @@
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "oribella-framework": "^0.9.0"
+    "oribella-framework": "^0.10.0"
   },
   "nyc": {
     "include": [
