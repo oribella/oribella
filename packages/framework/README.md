@@ -48,4 +48,4 @@ What? Why mouseup? Since there are browser quirks there are some use cases where
 
 So now we have covered the event flow which is the foundation for understanding how to build gestures.
 
-To use the ***Oribella*** framework you need to instantiate the `Oribella` class and configure it. For convenience this is done for you by [oribella](https://github.com/oribella/oribella) repository.
+To use the ***Oribella*** framework you need to instantiate the `Oribella` class and configure it. For convenience this is done for you by [Oribella](https://github.com/oribella/oribella) repository.
