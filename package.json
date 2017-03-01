@@ -38,10 +38,12 @@
       "dist": "dist/amd"
     },
     "peerDependencies": {
-      "oribella-framework": "^0.10.0"
+      "oribella-framework": "^0.10.0",
+      "tslib": "^1.5.0"
     },
     "dependencies": {
-      "oribella-framework": "^0.10.0"
+      "oribella-framework": "^0.10.0",
+      "tslib": "^1.5.0"
     }
   },
   "devDependencies": {
@@ -58,14 +60,14 @@
     "sinon-chai": "^2.8.0",
     "source-map-loader": "^0.1.6",
     "ts-node": "^2.1",
-    "tslib": "^1.5.0",
     "tslint": "^4.4.2",
     "typescript": "^2.2.1",
     "typings": "^2.1.0",
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "oribella-framework": "^0.10.1"
+    "oribella-framework": "^0.10.1",
+    "tslib": "^1.5.0"
   },
   "nyc": {
     "include": [
