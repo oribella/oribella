@@ -60,12 +60,12 @@
     "ts-node": "^2.1",
     "tslib": "^1.5.0",
     "tslint": "^4.4.2",
-    "typescript": "^2.2.0",
+    "typescript": "^2.2.1",
     "typings": "^2.1.0",
     "webpack": "^2.2.1"
   },
   "dependencies": {
-    "oribella-framework": "^0.10.0"
+    "oribella-framework": "^0.10.1"
   },
   "nyc": {
     "include": [
