@@ -21,7 +21,9 @@ export class PointerFlow extends Flow {
 
     switch (evt.type) {
       case 'pointerdown':
+      case 'MSPointerDown':
       case 'pointermove':
+      case 'MSPointerMove':
         this.allPointers.set(pointerId, pointers);
         break;
       default:
