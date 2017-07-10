@@ -21,9 +21,7 @@ jobs:
           name: Linting
           command: npm run -s lint
       - run:
-          name: Unit & component testing
+          name: Coverage
           command: npm run -s coverage
           name: Build library
           command: npm run -s build
-      - store_artifacts:
-          path: coverage
