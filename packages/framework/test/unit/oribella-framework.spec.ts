@@ -1,5 +1,5 @@
-import {expect} from 'chai';
-import {Point, GESTURE_STRATEGY_FLAG, RETURN_FLAG, matchesSelector} from '../../src/oribella-framework';
+import { expect } from 'chai';
+import { Point, GESTURE_STRATEGY_FLAG, RETURN_FLAG, matchesSelector } from '../../src/oribella-framework';
 
 describe('Index', () => {
 

@@ -1,5 +1,5 @@
-import {EventConfig} from '../flow';
-import {PointerFlow} from './pointer';
+import { EventConfig } from '../flow';
+import { PointerFlow } from './pointer';
 
 export const MSPointerConfig = {
   start: new EventConfig('MSPointerDown'),

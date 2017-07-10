@@ -8,7 +8,7 @@ import { ListenerHandle } from './listener-handle';
 export interface PointersDelta {
   all: number;
   changed: number;
-};
+}
 export interface ExecStrategyState {
   evt: Event;
   gestures: DefaultGesture[];

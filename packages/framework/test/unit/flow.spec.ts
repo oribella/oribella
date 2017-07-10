@@ -1,11 +1,11 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 import * as sinon from 'sinon';
-import {EventEmitter, Flow, EventConfig} from '../../src/flow';
-import {PointerData} from '../../src/utils';
+import { EventEmitter, Flow, EventConfig } from '../../src/flow';
+import { PointerData } from '../../src/utils';
 
 describe('Flow', () => {
   let instance: Flow;
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   const element = {} as Element;
   const config = {
     start: new EventConfig(),
@@ -32,7 +32,7 @@ describe('Flow', () => {
     const getEvents = sandbox.spy(config.start, 'getEvents');
     const bind = sandbox.spy(instance.addDOMEventListener, 'bind');
     instance.bind(config);
-    expect(getEvents).to.have.been.calledOnce;
+    expect(getEvents.callCount).to.equal(1);
     expect(bind).to.have.been.calledWithExactly(instance, element, 'mousedown', sinon.match.func);
   });
 
@@ -97,7 +97,7 @@ describe('Flow', () => {
     const getEvents = sandbox.spy(config.update, 'getEvents');
     const bind = sandbox.spy(instance.addDOMEventListener, 'bind');
     instance.bind(config);
-    expect(getEvents).to.have.been.calledOnce;
+    expect(getEvents.callCount).to.equal(1);
     expect(bind).to.have.been.calledWithExactly(instance, element, 'mousemove', sinon.match.func);
   });
 
@@ -106,7 +106,7 @@ describe('Flow', () => {
     const getEvents = sandbox.spy(config.end, 'getEvents');
     const bind = sandbox.spy(instance.addDOMEventListener, 'bind');
     instance.bind(config);
-    expect(getEvents).to.have.been.calledOnce;
+    expect(getEvents.callCount).to.equal(1);
     expect(bind).to.have.been.calledWithExactly(instance, element, 'mouseup', sinon.match.func);
   });
 
@@ -115,7 +115,7 @@ describe('Flow', () => {
     const getEvents = sandbox.spy(config.cancel, 'getEvents');
     const bind = sandbox.spy(instance.addDOMEventListener, 'bind');
     instance.bind(config);
-    expect(getEvents).to.have.been.calledOnce;
+    expect(getEvents.callCount).to.equal(1);
     expect(bind).to.have.been.calledWithExactly(instance, element, 'cancel', sinon.match.func);
   });
 
@@ -172,7 +172,7 @@ describe('Flow', () => {
       all: new Map<string, PointerData>(),
       changed: new Map<string, PointerData>()
     });
-    expect(stopSpy).to.have.been.calledOnce;
+    expect(stopSpy.callCount).to.equal(1);
   });
 
   it('should emit cancel and call stop', () => {
@@ -184,7 +184,7 @@ describe('Flow', () => {
       all: new Map<string, PointerData>(),
       changed: new Map<string, PointerData>()
     });
-    expect(stopSpy).to.have.been.calledOnce;
+    expect(stopSpy.callCount).to.equal(1);
   });
 
   it('should continue', () => {
@@ -192,8 +192,8 @@ describe('Flow', () => {
     const spy2 = sandbox.stub().returns(() => {});
     instance.continueListen = [spy1, spy2];
     instance.continue();
-    expect(spy1).to.have.been.calledOnce;
-    expect(spy2).to.have.been.calledOnce;
+    expect(spy1.callCount).to.equal(1);
+    expect(spy2.callCount).to.equal(1);
     expect(instance.removeListeners).to.have.length(2);
   });
 
@@ -204,8 +204,8 @@ describe('Flow', () => {
     instance.removeListeners = [spy1, spy2];
     instance.stop();
     expect(emitSpy).to.have.been.calledWithExactly('stop');
-    expect(spy1).to.have.been.calledOnce;
-    expect(spy2).to.have.been.calledOnce;
+    expect(spy1.callCount).to.equal(1);
+    expect(spy2.callCount).to.equal(1);
     expect(instance.removeListeners).to.have.length(0);
   });
 });

@@ -1,6 +1,6 @@
-import {expect} from 'chai';
-import {MSPointerFlow, MSPointerConfig} from '../../../src/flows/ms-pointer';
-import {Point} from '../../../src/point';
+import { expect } from 'chai';
+import { MSPointerFlow, MSPointerConfig } from '../../../src/flows/ms-pointer';
+import { Point } from '../../../src/point';
 
 describe('MSPointerFlow', () => {
   let instance: MSPointerFlow;

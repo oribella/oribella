@@ -1,5 +1,5 @@
-import {Flow, FlowConfig, EventConfig} from '../flow';
-import {Point} from '../point';
+import { Flow, FlowConfig, EventConfig } from '../flow';
+import { Point } from '../point';
 
 export const PointerConfig = {
   start: new EventConfig('pointerdown'),

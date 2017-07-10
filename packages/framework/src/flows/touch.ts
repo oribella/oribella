@@ -1,6 +1,6 @@
-import {Flow, EventConfig} from '../flow';
-import {Point} from '../point';
-import {PointerData} from '../utils';
+import { Flow, EventConfig } from '../flow';
+import { Point } from '../point';
+import { PointerData } from '../utils';
 
 export const TouchConfig = {
   start: new EventConfig('touchstart'),

@@ -20,7 +20,8 @@
     "amd-bundled": "npm run compile -- --module amd --outFile dist/oribella-framework.js",
     "system": "npm run compile -- --module system --outDir dist/system",
     "es2015": "npm run compile -- --module es2015 --outDir dist/es2015 --target es2015",
-    "build": "npm-run-all -n clean --parallel commonjs amd amd-bundled system es2015"
+    "build": "npm-run-all -n clean --parallel commonjs amd amd-bundled system es2015",
+    "typings": "typings install"
   },
   "author": "Christoffer Åström",
   "license": "MIT",
@@ -47,18 +48,24 @@
     "tslib": "^1.5.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
+    "@types/chai": "^4.0.1",
+    "@types/jsdom": "^11.0.1",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.10",
+    "@types/sinon": "^2.3.2",
+    "@types/sinon-chai": "^2.7.28",
+    "chai": "^4.0.2",
     "coveralls": "^2.11.16",
-    "jsdom": "^9.11.0",
+    "jsdom": "^11.1.0",
     "mocha": "^3.2.0",
     "npm-run-all": "^4.0.1",
-    "nyc": "^10.1.2",
+    "nyc": "^11.0.3",
     "rimraf": "^2.5.4",
-    "sinon": "^1.17.7",
+    "sinon": "^2.3.6",
     "sinon-chai": "^2.8.0",
-    "ts-node": "^2.1.0",
-    "tslint": "^4.4.2",
-    "typescript": "^2.2.1",
+    "ts-node": "^3.2.0",
+    "tslint": "^5.5.0",
+    "typescript": "2.4.0",
     "typings": "^2.1.0"
   },
   "nyc": {

@@ -11,7 +11,7 @@ import { PointerFlow } from '../../src/flows/pointer';
 import { MSPointerFlow } from '../../src/flows/ms-pointer';
 import { Options, Data, RETURN_FLAG, Pointers, GESTURE_STRATEGY_FLAG } from '../../src/utils';
 import { Point } from '../../src/point';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 
 describe('Engine', () => {
   let instance: Engine;
@@ -23,7 +23,7 @@ describe('Engine', () => {
   const registry = new Registry();
   const element = {} as Element;
 
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -41,6 +41,7 @@ describe('Engine', () => {
   });
 
   it('should be a class', () => {
+    // tslint:disable-next-line:no-unused-expression
     expect(Engine).to.throw;
   });
 
@@ -52,21 +53,21 @@ describe('Engine', () => {
 
   it('should register a gesture with custom options', () => {
     registry.register = sandbox.spy();
-    class MyOptions extends Options { };
+    class MyOptions extends Options { }
     instance.registerGesture(Gesture, MyOptions);
     expect(registry.register).to.have.been.calledWithExactly(Gesture, MyOptions, Listener, Data);
   });
 
   it('should register a gesture with custom listener', () => {
     registry.register = sandbox.spy();
-    class MyListener extends DefaultListener { };
+    class MyListener extends DefaultListener { }
     instance.registerGesture(Gesture, undefined, MyListener);
     expect(registry.register).to.have.been.calledWithExactly(Gesture, Options, MyListener, Data);
   });
 
   it('should register a gesture with custom data', () => {
     registry.register = sandbox.spy();
-    class MyData extends Data { };
+    class MyData extends Data { }
     instance.registerGesture(Gesture, undefined, undefined, MyData);
     expect(registry.register).to.have.been.calledWithExactly(Gesture, Options, Listener, MyData);
   });
@@ -131,12 +132,12 @@ describe('Engine', () => {
   });
 
   it('should activate flow', () => {
-    expect(instance['canActivateFlow'](mouseFlow)).to.be.true;
+    expect(instance['canActivateFlow'](mouseFlow)).to.equal(true);
   });
 
   it('should not activate flow', () => {
     instance['activeFlow'] = touchFlow;
-    expect(instance['canActivateFlow'](mouseFlow)).to.be.false;
+    expect(instance['canActivateFlow'](mouseFlow)).to.equal(false);
   });
 
   describe('Pointers delta calculation', () => {
@@ -162,17 +163,19 @@ describe('Engine', () => {
 
     it('should cancel gesture', () => {
       const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
-      gesture.cancel = sandbox.spy();
+      const cancel = sandbox.spy();
+      gesture.cancel = cancel;
       gesture.startEmitted = true;
       instance['removeGesture'](gesture);
-      expect(gesture.cancel).to.have.been.calledOnce;
+      expect(cancel.callCount).to.equal(1);
     });
 
     it('should unbind gesture', () => {
       const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
-      gesture.unbind = sandbox.spy();
+      const unbind = sandbox.spy();
+      gesture.unbind = unbind;
       instance['removeGesture'](gesture);
-      expect(gesture.unbind).to.have.been.calledOnce;
+      expect(unbind.callCount).to.equal(1);
     });
 
     it('should remove gesture', () => {
@@ -194,9 +197,9 @@ describe('Engine', () => {
 
     it('should set startEmitted', () => {
       const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
-      expect(gesture.startEmitted).to.be.false;
+      expect(gesture.startEmitted).to.equal(false);
       instance['evaluateStrategyReturnFlag'](gesture, RETURN_FLAG.START_EMITTED);
-      expect(gesture.startEmitted).to.be.true;
+      expect(gesture.startEmitted).to.equal(true);
     });
 
     it('should remove gesture', () => {
@@ -234,7 +237,7 @@ describe('Engine', () => {
       const removeGesture = sandbox.stub(instance, 'removeGesture');
       instance['whileGestures'](evt, gestures, pointers, execStrategy);
       expect(removeGesture).to.have.been.calledWithExactly(gesture, instance['gestures'], instance['composedGestures']);
-      expect(execStrategy).to.not.have.been.called;
+      expect((execStrategy as sinon.SinonSpy).callCount).to.equal(0);
     });
 
     it('should execute the strategy', () => {
@@ -247,7 +250,7 @@ describe('Engine', () => {
       const execStrategy = sandbox.spy() as ExecStrategy;
       const removeGesture = sandbox.stub(instance, 'removeGesture');
       instance['whileGestures'](evt, gestures, pointers, execStrategy);
-      expect(removeGesture).to.not.have.been.called;
+      expect(removeGesture.callCount).to.equal(0);
       expect(execStrategy).to.have.been.calledWithExactly({ evt, gestures, gesture, pointers, pointersDelta });
     });
 
@@ -299,7 +302,7 @@ describe('Engine', () => {
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
       [3, { page: new Point(9, 10), client: new Point(11, 12) }]
     ]);
-    expect(instance['isLockedPointers'](gesture, map)).to.be.true;
+    expect(instance['isLockedPointers'](gesture, map)).to.equal(true);
   });
 
   it('should return false if gesture has pointer', () => {
@@ -310,7 +313,7 @@ describe('Engine', () => {
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
       [3, { page: new Point(9, 10), client: new Point(11, 12) }]
     ]);
-    expect(instance['isLockedPointers'](gesture, map)).to.be.false;
+    expect(instance['isLockedPointers'](gesture, map)).to.equal(false);
   });
 
   describe('Start strategy', () => {
@@ -454,7 +457,7 @@ describe('Engine', () => {
       const flow = {} as MouseFlow;
       const evt = {} as Event;
       const pointers = {} as Pointers;
-      expect(instance['onStart'](flow, evt, pointers)).to.be.false;
+      expect(instance['onStart'](flow, evt, pointers)).to.equal(false);
     });
 
     it('should return false if no gestures are matched', () => {
@@ -462,7 +465,7 @@ describe('Engine', () => {
       sandbox.stub(instance, 'match').returns([]);
       const evt = {} as Event;
       const pointers = {} as Pointers;
-      expect(instance['onStart'](mouseFlow, evt, pointers)).to.be.false;
+      expect(instance['onStart'](mouseFlow, evt, pointers)).to.equal(false);
     });
 
     it('should call whileGestures', () => {
@@ -475,7 +478,7 @@ describe('Engine', () => {
       const whileGestures = sandbox.stub(instance, 'whileGestures');
       const evt = {} as Event;
       const pointers = {} as Pointers;
-      expect(instance['onStart'](mouseFlow, evt, pointers)).to.be.true;
+      expect(instance['onStart'](mouseFlow, evt, pointers)).to.equal(true);
       expect(whileGestures).to.have.been.calledWithExactly(evt, gestures, pointers, sinon.match.func);
     });
 
@@ -489,7 +492,7 @@ describe('Engine', () => {
       const evt = {} as Event;
       const pointers = {} as Pointers;
       instance['onUpdate'](flow, evt, pointers);
-      expect(whileGestures).to.not.have.been.called;
+      expect(whileGestures.callCount).to.equal(0);
     });
 
     it('should call whileGestures', () => {
@@ -512,7 +515,7 @@ describe('Engine', () => {
       const evt = {} as Event;
       const pointers = {} as Pointers;
       instance['onEnd'](flow, evt, pointers);
-      expect(whileGestures).to.not.have.been.called;
+      expect(whileGestures.callCount).to.equal(0);
     });
 
     it('should call whileGestures', () => {
@@ -535,7 +538,7 @@ describe('Engine', () => {
       const evt = {} as Event;
       const pointers = {} as Pointers;
       instance['onCancel'](flow, evt, pointers);
-      expect(whileGestures).to.not.have.been.called;
+      expect(whileGestures.callCount).to.equal(0);
     });
 
     it('should call whileGestures', () => {
@@ -557,7 +560,7 @@ describe('Engine', () => {
       instance['activeFlow'] = mouseFlow;
       instance['onStop']();
       expect(instance['gestures']).to.have.length(0);
-      expect(instance['activeFlow']).to.be.null;
+      expect(instance['activeFlow']).to.equal(null);
     });
 
     it('should compose gestures', () => {
@@ -650,7 +653,7 @@ describe('Engine', () => {
           </body>
         </html>
       `;
-      const doc = jsdom(html);
+      const doc = (new JSDOM(html)).window.document;
       const target = doc.querySelector('.target');
       if (!target) {
         throw new Error(`target not found ${html}`);
@@ -691,7 +694,7 @@ describe('Engine', () => {
       const handle = {} as ListenerHandle<typeof Gesture>;
       const evt = {} as Event;
       sandbox.stub(instance, 'matchesHandle').returns(false);
-      expect(instance['matchHandle'](Gesture, element, handle, evt)).be.undefined;
+      expect(instance['matchHandle'](Gesture, element, handle, evt)).to.equal(undefined);
     });
 
     it('should call composeGesture', () => {
@@ -712,7 +715,7 @@ describe('Engine', () => {
         element.webkitMatchesSelector = sandbox.stub().returns(false);
         refElement.contains = sandbox.stub().returns(true);
         const handle = { element: refElement, listener: { selector: 'foo' } } as ListenerHandle<typeof Gesture>;
-        expect(instance['matchesHandle'](element, handle)).to.be.false;
+        expect(instance['matchesHandle'](element, handle)).to.equal(false);
       });
 
       it('should return false if no selector and the current element does not match', () => {
@@ -721,7 +724,7 @@ describe('Engine', () => {
         element.webkitMatchesSelector = sandbox.stub().returns(true);
         refElement.contains = sandbox.stub().returns(true);
         const handle = { element: refElement, listener: {} } as ListenerHandle<typeof Gesture>;
-        expect(instance['matchesHandle'](element, handle)).to.be.false;
+        expect(instance['matchesHandle'](element, handle)).to.equal(false);
       });
 
       it('should return false if the handle element does not contain the current element', () => {
@@ -729,14 +732,14 @@ describe('Engine', () => {
         const refElement = {} as Element;
         refElement.contains = sandbox.stub().returns(false);
         const handle = { element: refElement, listener: {} } as ListenerHandle<typeof Gesture>;
-        expect(instance['matchesHandle'](element, handle)).to.be.false;
+        expect(instance['matchesHandle'](element, handle)).to.equal(false);
       });
 
       it('should return false if a selector is defined and the handle element is the current element', () => {
         const refElement = {} as Element;
         refElement.contains = sandbox.stub().returns(true);
         const handle = { element: refElement, listener: { selector: 'foo' } } as ListenerHandle<typeof Gesture>;
-        expect(instance['matchesHandle'](refElement, handle)).to.be.false;
+        expect(instance['matchesHandle'](refElement, handle)).to.equal(false);
       });
 
       it('should return true if matches', () => {
@@ -744,7 +747,7 @@ describe('Engine', () => {
         refElement.webkitMatchesSelector = sandbox.stub().returns(true);
         refElement.contains = sandbox.stub().returns(true);
         const handle = { element: refElement, listener: {} } as ListenerHandle<typeof Gesture>;
-        expect(instance['matchesHandle'](refElement, handle)).to.be.true;
+        expect(instance['matchesHandle'](refElement, handle)).to.equal(true);
       });
 
     });

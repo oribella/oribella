@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { registerTap } from './gestures/tap';
 import { Doubletap, registerDoubletap } from './gestures/doubletap';
 import { dispatchMouseEvent } from './utils';
 
 describe('Doubletap', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -26,12 +26,12 @@ describe('Doubletap', () => {
   let document: Document;
   let target: Element;
   let listener: any;
-  let setTimeout: Sinon.SinonStub;
-  let clearTimeout: Sinon.SinonSpy;
+  let setTimeout: sinon.SinonStub;
+  let clearTimeout: sinon.SinonSpy;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    document = jsdom(html);
+    document = (new JSDOM(html)).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
@@ -74,7 +74,7 @@ describe('Doubletap', () => {
     dispatchMouseEvent(document, target, 'mouseup');
     dispatchMouseEvent(document, target);
     const evt = dispatchMouseEvent(document, target, 'mouseup');
-    expect(listener.end).to.have.been.calledOnce;
+    expect(listener.end.callCount).to.equal(1);
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },

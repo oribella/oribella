@@ -10,7 +10,7 @@ import { Options, Data, Supports, SUPPORTS } from './utils';
 export interface ListenerType {
   type: string;
   listener: Partial<DefaultListener>;
-};
+}
 
 export class OribellaApi {
   private engine: Engine;

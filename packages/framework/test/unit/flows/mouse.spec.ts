@@ -1,12 +1,12 @@
-import {expect} from 'chai';
+import { expect } from 'chai';
 import * as sinon from 'sinon';
-import {MouseFlow} from '../../../src/flows/mouse';
-import {Point} from '../../../src/point';
+import { MouseFlow } from '../../../src/flows/mouse';
+import { Point } from '../../../src/point';
 
 describe('MouseFlow', () => {
   let instance: MouseFlow;
   const element = {} as Element;
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
     instance = new MouseFlow(element);

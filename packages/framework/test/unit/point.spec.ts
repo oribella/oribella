@@ -1,5 +1,5 @@
-import {expect} from 'chai';
-import {Point} from '../../src/point';
+import { expect } from 'chai';
+import { Point } from '../../src/point';
 
 describe('Point', () => {
 

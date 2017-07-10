@@ -10,7 +10,7 @@ import { Options, Data } from '../../src/utils';
 
 describe('OribellaApi', () => {
   let instance: OribellaApi;
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let document: Document;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -85,7 +85,7 @@ describe('OribellaApi', () => {
   it('should register gesture with custom options', () => {
     const registerGesture = sandbox.stub(instance['engine'], 'registerGesture');
     const gesture = {} as typeof Gesture;
-    class MyOptions extends Options {};
+    class MyOptions extends Options {}
     const listener = {} as typeof Listener;
     instance.registerGesture(gesture, MyOptions, listener);
     expect(registerGesture).to.have.been.calledWithExactly(gesture, MyOptions, listener, Data);
@@ -131,7 +131,7 @@ describe('OribellaApi', () => {
   it('should deactivate', () => {
     const activate = sandbox.stub(instance['engine'], 'activate');
     instance.deactivate();
-    expect(activate).to.not.have.been.called;
+    expect(activate.callCount).to.equal(0);
   });
 
   it('should register listeners', () => {

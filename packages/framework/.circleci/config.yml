@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/framework
+    docker:
+      - image: circleci/node:8.1.2
+    environment:
+      - NPM_CONFIG_LOGLEVEL=warn
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run:
+          name: Install typings
+          command: npm run -s typings
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Linting
+          command: npm run -s lint
+      - run:
+          name: Unit & component testing
+          command: npm run -s test
+          name: Build library
+          command: npm run -s build
+      - store_artifacts:
+          path: coverage

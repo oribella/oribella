@@ -1,14 +1,14 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { registerLongtap } from './gestures/longtap';
 import { registerSwipe } from './gestures/swipe';
 import { LongtapSwipe, registerLongtapSwipe } from './gestures/longtap-swipe';
 import { dispatchMouseEvent } from './utils';
 
 describe('LongtapSwipe', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -27,12 +27,12 @@ describe('LongtapSwipe', () => {
   let document: Document;
   let target: Element;
   let listener: any;
-  let setTimeout: Sinon.SinonStub;
-  let clearTimeout: Sinon.SinonSpy;
+  let setTimeout: sinon.SinonStub;
+  let clearTimeout: sinon.SinonSpy;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    document = jsdom(html);
+    document = (new JSDOM(html)).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
@@ -121,7 +121,7 @@ describe('LongtapSwipe', () => {
     dispatchMouseEvent(document, target, 'mousemove', 250, 250, 250, 250);
     dispatchMouseEvent(document, target, 'mousemove', 300, 300, 300, 300);
     const evt = dispatchMouseEvent(document, target, 'mouseup', 350, 350, 350, 350);
-    expect(listener.end).to.have.been.calledOnce;
+    expect(listener.end.callCount).to.equal(1);
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },

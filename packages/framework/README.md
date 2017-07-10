@@ -1,5 +1,7 @@
 # oribella-framework
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/oribella/framework.svg)](https://greenkeeper.io/)
+
 [![npm version](https://badge.fury.io/js/oribella-framework.svg)](https://badge.fury.io/js/oribella-framework)
 [![CircleCI](https://circleci.com/gh/oribella/framework.svg?style=shield)](https://circleci.com/gh/oribella/framework)
 [![Coverage Status](https://coveralls.io/repos/github/oribella/framework/badge.svg)](https://coveralls.io/github/oribella/framework)

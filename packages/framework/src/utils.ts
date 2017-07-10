@@ -82,12 +82,12 @@ export function matchesSelector(element: any, selector: string) {
 export interface PointerData {
   page: Point;
   client: Point;
-};
-export class PointerDataMap extends Map<number, PointerData> { };
+}
+export class PointerDataMap extends Map<number, PointerData> { }
 export interface Pointers {
   all: PointerDataMap;
   changed: PointerDataMap;
-};
+}
 
 export class Options {
   public pointers: number = 1;

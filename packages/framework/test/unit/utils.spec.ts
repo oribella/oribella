@@ -1,9 +1,9 @@
-import {expect} from 'chai';
-import {RETURN_FLAG, isMouse, isValidMouseButton, matchesSelector} from '../../src/utils';
+import { expect } from 'chai';
+import { RETURN_FLAG, isMouse, isValidMouseButton, matchesSelector } from '../../src/utils';
 import * as sinon from 'sinon';
 
 describe('Utils', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();

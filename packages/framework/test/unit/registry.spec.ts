@@ -8,7 +8,7 @@ import { Options, Data } from '../../src/utils';
 
 describe('Registry', () => {
   let instance: Registry;
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -43,7 +43,7 @@ describe('Registry', () => {
   it('should register gesture with custom options', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
-    class MyOptions extends Options { };
+    class MyOptions extends Options { }
     instance.register(MyGesture, MyOptions);
     expect(set).to.have.been.calledWithExactly(MyGesture, { Gesture: MyGesture, GestureOptions: MyOptions, GestureListener: Listener, GestureData: Data });
   });
@@ -51,7 +51,7 @@ describe('Registry', () => {
   it('should register gesture with custom listener', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
-    class MyListener extends DefaultListener { };
+    class MyListener extends DefaultListener { }
     instance.register(MyGesture, undefined, MyListener);
     expect(set).to.have.been.calledWithExactly(MyGesture, { Gesture: MyGesture, GestureOptions: Options, GestureListener: MyListener, GestureData: Data });
   });
@@ -59,7 +59,7 @@ describe('Registry', () => {
   it('should register gesture with custom data', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
-    class MyData extends Data { };
+    class MyData extends Data { }
     instance.register(MyGesture, undefined, undefined, MyData);
     expect(set).to.have.been.calledWithExactly(MyGesture, { Gesture: MyGesture, GestureOptions: Options, GestureListener: Listener, GestureData: MyData });
   });

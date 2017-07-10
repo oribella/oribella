@@ -1,13 +1,13 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { Rotate, registerRotate } from './gestures/rotate';
 import { dispatchTouchEvent } from './utils';
 import { Point } from '../../src/point';
 
 describe('Rotate', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -29,7 +29,7 @@ describe('Rotate', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    document = jsdom(html);
+    document = (new JSDOM(html)).window.document;
     const g = global as any;
     g.window = {
       ontouchstart: '',
@@ -83,7 +83,7 @@ describe('Rotate', () => {
   it('should call listener down when fulfilled configured pointers', () => {
     instance.on(Rotate, target, listener);
     dispatchTouchEvent(document, target, 'touchstart');
-    expect(listener.down).not.to.have.been.called;
+    expect(listener.down.callCount).to.equal(0);
     const evt = dispatchTouchEvent(document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
       { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }

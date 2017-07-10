@@ -5,7 +5,7 @@ import { Options, Data, GESTURE_STRATEGY_FLAG, RETURN_FLAG } from '../../src/uti
 
 describe('Default listener', () => {
   let instance: DefaultListener;
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();

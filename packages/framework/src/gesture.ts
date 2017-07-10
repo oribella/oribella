@@ -19,7 +19,7 @@ export class Gesture<D extends Data, L extends DefaultListener> {
   public update(args: ListenerArgs<D>): number;
   public update() { return RETURN_FLAG.IDLE; }
   public end(args: ListenerArgs<D>): number;
-  public end() { return RETURN_FLAG.IDLE; };
+  public end() { return RETURN_FLAG.IDLE; }
   public cancel(): number { return this.listener.cancel(); }
   public stop(): void { this.listener.stop(); }
 }
