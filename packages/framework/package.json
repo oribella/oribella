@@ -12,7 +12,7 @@
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pretest": "npm run lint",
     "test": "nyc mocha --recursive --compilers ts:ts-node/register --require test/setup.ts",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "npm run -s test && nyc report --reporter=text-lcov | coveralls",
     "clean": "rimraf dist",
     "compile": "tsc -p tsconfig.build.json",
     "commonjs": "npm run compile -- --module commonjs --outDir dist/commonjs",
