@@ -28,7 +28,10 @@
       false
     ],
     "member-ordering": [
-      "fields-first"
+      true,
+      {
+        "order": "fields-first"
+      }
     ],
     "no-bitwise": false,
     "no-conditional-assignment": false,

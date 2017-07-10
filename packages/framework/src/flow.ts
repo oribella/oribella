@@ -1,8 +1,10 @@
 import { PointerData, Pointers } from './utils';
 
 export class EventEmitter {
+  // tslint:disable-next-line:ban-types
   private listenerMap: Map<string, Function[]> = new Map();
 
+  // tslint:disable-next-line:ban-types
   public on(event: string, listener: Function): this {
     const listeners = this.listenerMap.get(event) || [];
     listeners.push(listener);
@@ -45,10 +47,6 @@ export class Flow extends EventEmitter {
     this.config = config;
   }
 
-  private proxy(fn: (evt: Event) => void, evt: Event) {
-    this.setPointers(evt);
-    fn(evt);
-  }
   public addDOMEventListener(element: Element, evt: string, fn: (evt: Event) => void): () => void {
     const proxy = this.proxy.bind(this, fn);
     element.addEventListener(evt, proxy, false);
@@ -109,4 +107,9 @@ export class Flow extends EventEmitter {
     this.removeListeners = [];
     this.emit('stop');
   }
+  private proxy(fn: (evt: Event) => void, evt: Event) {
+    this.setPointers(evt);
+    fn(evt);
+  }
+
 }
