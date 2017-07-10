@@ -13,9 +13,6 @@ jobs:
       - run:
           name: Install dependencies
           command: npm install
-      - run:
-          name: Install typings
-          command: npm run -s typings
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
@@ -28,7 +25,6 @@ jobs:
           command: npm run -s test
           name: Build library
           command: npm run -s build
-      - run:
           name: Coverage
           command: npm run -s coverage
       - store_artifacts:
