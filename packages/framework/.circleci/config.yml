@@ -23,5 +23,6 @@ jobs:
       - run:
           name: Coverage
           command: npm run -s coverage
+      - run:
           name: Build library
           command: npm run -s build
