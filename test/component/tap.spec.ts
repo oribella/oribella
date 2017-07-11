@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from 'oribella-framework';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { Tap, registerTap } from '../../src/tap';
 import { dispatchMouseEvent } from './utils';
 
 describe('Tap', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -28,7 +28,7 @@ describe('Tap', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    document = jsdom(html);
+    document = (new JSDOM(html)).window.document;
     const g = global as any;
     g.window = {
       ontouchstart: '',

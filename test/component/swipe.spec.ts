@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from 'oribella-framework';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { Swipe, registerSwipe } from '../../src/swipe';
 import { dispatchMouseEvent } from './utils';
 
 describe('Swipe', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -28,7 +28,7 @@ describe('Swipe', () => {
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    document = jsdom(html);
+    document = (new JSDOM(html)).window.document;
     const g = global as any;
     g.window = {
       ontouchstart: '',
