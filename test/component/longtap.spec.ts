@@ -1,12 +1,12 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from 'oribella-framework';
-import { jsdom } from 'jsdom';
+import { JSDOM } from 'jsdom';
 import { Longtap, registerLongtap } from '../../src/longtap';
 import { dispatchMouseEvent } from './utils';
 
 describe('Longtap', () => {
-  let sandbox: Sinon.SinonSandbox;
+  let sandbox: sinon.SinonSandbox;
   let instance: OribellaApi;
   const msPointerEnabled = false;
   const pointerEnabled = false;
@@ -25,12 +25,12 @@ describe('Longtap', () => {
   let document: Document;
   let target: Element;
   let listener: any;
-  let setTimeout: Sinon.SinonStub;
-  let clearTimeout: Sinon.SinonSpy;
+  let setTimeout: sinon.SinonStub;
+  let clearTimeout: sinon.SinonSpy;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
-    document = jsdom(html);
+    document = (new JSDOM(html)).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();

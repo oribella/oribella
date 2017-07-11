@@ -13,6 +13,7 @@ export class LongtapSwipe extends Gesture<Data, Listener<LongtapSwipeOptions, Da
   private allowSwipe: boolean = false;
 
   public bind(target: Element, registerListener: <T extends typeof Gesture>(Type: T, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void) {
+    // tslint:disable-next-line:no-object-literal-type-assertion
     this.unregisterLongtap = registerListener(Longtap, target, {
       selector: this.listener.selector,
       options: this.listener.options as LongtapOptions,
