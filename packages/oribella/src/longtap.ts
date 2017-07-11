@@ -9,6 +9,7 @@ export class LongtapListener extends Listener<LongtapOptions, Data> {
   public listener: LongtapListener;
   constructor(public options: LongtapOptions, listener: LongtapListener) {
     super(options, listener);
+    // tslint:disable-next-line:no-object-literal-type-assertion
     this.listener = ensureProperties(listener, {
       timeEnd() { }
     } as LongtapListener);
