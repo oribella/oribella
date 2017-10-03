@@ -55,7 +55,7 @@
     "@types/sinon": "^2.3.2",
     "@types/sinon-chai": "^2.7.28",
     "chai": "^4.0.2",
-    "coveralls": "^2.11.16",
+    "coveralls": "^3.0.0",
     "jsdom": "^11.1.0",
     "mocha": "^4.0.0",
     "npm-run-all": "^4.0.1",
