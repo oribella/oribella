@@ -41,16 +41,22 @@
     },
     "peerDependencies": {
       "oribella": "^0.8.2",
-      "oribella-framework": "^0.10.2",
+      "oribella-framework": "^0.10.3",
       "tslib": "^1.5.0"
     },
     "dependencies": {
       "oribella": "^0.8.2",
-      "oribella-framework": "^0.10.2",
+      "oribella-framework": "^0.10.3",
       "tslib": "^1.5.0"
     }
   },
   "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/jsdom": "^11.0.1",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.10",
+    "@types/sinon": "^2.3.2",
+    "@types/sinon-chai": "^2.7.28",
     "aurelia-bootstrapper": "^2.0.1",
     "aurelia-loader-nodejs": "^1.0.0",
     "aurelia-pal-nodejs": "^1.0.0-beta.1.0.0",
@@ -67,7 +73,7 @@
     "sinon-chai": "^2.8.0",
     "ts-node": "^2.1.0",
     "tslint": "^4.0.2",
-    "typescript": "^2.2.0",
+    "typescript": "^2.4.0",
     "typings": "^2.0.0"
   },
   "dependencies": {
@@ -76,8 +82,8 @@
     "aurelia-pal": "^1.2.0",
     "aurelia-templating": "^1.2.0",
     "aurelia-templating-resources": "^1.2.0",
-    "oribella": "^0.8.0",
-    "oribella-framework": "^0.10.0",
+    "oribella": "^0.8.2",
+    "oribella-framework": "^0.10.3",
     "tslib": "^1.5.0"
   },
   "nyc": {
