@@ -63,7 +63,7 @@
     "rimraf": "^2.5.4",
     "sinon": "^4.0.0",
     "sinon-chai": "^2.8.0",
-    "ts-node": "^4.0.0",
+    "ts-node": "^5.0.0",
     "tslint": "^5.5.0",
     "typescript": "2.6.2",
     "typings": "^2.1.0"
