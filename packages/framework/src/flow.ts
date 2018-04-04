@@ -1,4 +1,4 @@
-import { PointerData, Pointers } from './utils';
+import { PointerData, Pointers, addListener, removeListener } from './utils';
 
 export class EventEmitter {
   // tslint:disable-next-line:ban-types
@@ -13,7 +13,7 @@ export class EventEmitter {
   }
   public emit(event: string, ...args: any[]): boolean {
     const listeners = this.listenerMap.get(event) || [];
-    listeners.forEach((listener) => listener.apply(null, args));
+    listeners.forEach(listener => listener.apply(null, args));
     return true;
   }
 }
@@ -35,9 +35,9 @@ export interface FlowConfig {
 
 export class Flow extends EventEmitter {
   public config: FlowConfig;
-  public startListen: Array<() => () => void> = [];
-  public continueListen: Array<() => () => void> = [];
-  public removeListeners: Array<() => void> = [];
+  public startListen: addListener[] = [];
+  public continueListen: addListener[] = [];
+  public removeListeners: removeListener[] = [];
   public allPointers: Map<number, PointerData> = new Map<number, PointerData>();
   public changedPointers: Map<number, PointerData> = new Map<number, PointerData>();
   public pointers: Pointers = { all: this.allPointers, changed: this.changedPointers };
@@ -57,29 +57,25 @@ export class Flow extends EventEmitter {
     element.removeEventListener(evt, fn, false);
   }
 
-  public bind(config: FlowConfig): { startListen: Array<() => () => void>, continueListen: Array<() => () => void> } {
-    this.startListen = config.start.getEvents().map((e) => {
-      return this.addDOMEventListener.bind(this, this.element, e, this.start.bind(this));
-    });
-    this.continueListen = config.update.getEvents().map((e) => {
-      return this.addDOMEventListener.bind(this, this.element, e, this.update.bind(this));
-    });
+  public bind(config: FlowConfig): { startListen: addListener[], continueListen: addListener[] } {
+    this.startListen = config.start.getEvents().map(e => this.addDOMEventListener.bind(this, this.element, e, this.start.bind(this)));
+    this.continueListen = config.update.getEvents().map(e => this.addDOMEventListener.bind(this, this.element, e, this.update.bind(this)));
     this.continueListen.push.apply(
       this.continueListen,
       config.end.getEvents().map((e) => {
         return this.addDOMEventListener.bind(this, this.element, e, this.end.bind(this));
-      })
+      }),
     );
     this.continueListen.push.apply(
       this.continueListen,
       config.cancel.getEvents().map((e) => {
         return this.addDOMEventListener.bind(this, this.element, e, this.cancel.bind(this));
-      })
+      }),
     );
     return { startListen: this.startListen, continueListen: this.continueListen };
   }
-  public activate(): Array<() => void> {
-    return this.bind(this.config).startListen.map((f) => f());
+  public activate(): removeListener[] {
+    return this.bind(this.config).startListen.map(f => f());
   }
   public setPointers(_EVT: Event) {
   }
@@ -100,10 +96,10 @@ export class Flow extends EventEmitter {
     this.stop();
   }
   public continue() {
-    this.removeListeners = this.continueListen.map((f) => f());
+    this.removeListeners = this.continueListen.map(f => f());
   }
   public stop() {
-    this.removeListeners.forEach((remove) => remove());
+    this.removeListeners.forEach(remove => remove());
     this.removeListeners = [];
     this.emit('stop');
   }

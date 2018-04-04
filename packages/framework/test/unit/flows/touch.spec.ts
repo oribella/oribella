@@ -11,7 +11,7 @@ describe('TouchFlow', () => {
 
   beforeEach(() => {
     instance = new TouchFlow(element);
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {

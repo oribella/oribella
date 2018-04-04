@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { MSPointerFlow, MSPointerConfig } from '../../../src/flows/ms-pointer';
+import { MSPointerFlow, MS_POINTER_CONFIG } from '../../../src/flows/ms-pointer';
 import { Point } from '../../../src/point';
 
 describe('MSPointerFlow', () => {
@@ -11,7 +11,7 @@ describe('MSPointerFlow', () => {
   });
 
   it('should set MSPointerConfig', () => {
-    expect(instance.config).to.equal(MSPointerConfig);
+    expect(instance.config).to.equal(MS_POINTER_CONFIG);
   });
 
   it('should set pointers on MSPointerDown', () => {

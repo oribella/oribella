@@ -2,16 +2,18 @@ import { Point } from './point';
 
 export const GESTURE_STRATEGY_FLAG = {
   KEEP: 0,
-  REMOVE_IF_POINTERS_GT: 1
+  REMOVE_IF_POINTERS_GT: 1,
 };
 
 export const RETURN_FLAG = {
   map(result: number | boolean): number {
     switch (result) {
       case true:
+        // tslint:disable-next-line:no-parameter-reassignment
         result = this.REMOVE_OTHERS;
         break;
       case false:
+        // tslint:disable-next-line:no-parameter-reassignment
         result = this.REMOVE;
         break;
       case 1:
@@ -19,6 +21,7 @@ export const RETURN_FLAG = {
       case 4:
         break;
       default:
+        // tslint:disable-next-line:no-parameter-reassignment
         result = 0;
     }
 
@@ -29,7 +32,7 @@ export const RETURN_FLAG = {
   REMOVE: 2,
   REMOVE_OTHERS: 4,
   REMOVE_AND_CONTINUE: 8,
-  COMPOSE: 16
+  COMPOSE: 16,
 };
 
 export interface Supports {
@@ -47,7 +50,7 @@ export const SUPPORTS: Supports = {
   },
   get msPointerEnabled() {
     return (window && window.navigator.msPointerEnabled);
-  }
+  },
 };
 
 export function isMouse(evt: any, supports: Supports = SUPPORTS) {
@@ -82,6 +85,7 @@ export function matchesSelector(element: any, selector: string) {
 export interface PointerData {
   page: Point;
   client: Point;
+  identifier: number;
 }
 export class PointerDataMap extends Map<number, PointerData> { }
 export interface Pointers {
@@ -89,11 +93,19 @@ export interface Pointers {
   changed: PointerDataMap;
 }
 
+export interface OptionsFactory {
+  new(): Options;
+}
+
 export class Options {
   public pointers: number = 1;
   public which: number = 1;
   public prio: number = 100;
   public strategy: number = GESTURE_STRATEGY_FLAG.KEEP;
+}
+
+export interface DataFactory {
+  new(): Data;
 }
 
 export class Data {
@@ -108,3 +120,6 @@ export function ensureProperties<T1, T2 extends T1>(target: T2, source: T2): T1 
   }
   return target;
 }
+
+export type addListener = () => () => void;
+export type removeListener = () => void;

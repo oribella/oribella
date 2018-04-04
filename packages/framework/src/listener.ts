@@ -8,9 +8,9 @@ export class ListenerArgs<D> {
 
 export class DefaultListenerArgs extends ListenerArgs<Data> { }
 
-export class Listener<O extends Options, D extends Data> {
+export class Listener<O extends Options = Options, D extends Data = Data> {
   public selector: string = '';
-  public listener: Listener<O, D>;
+  public listener: Listener;
   constructor(public options: O, listener: Listener<O, D> = {} as Listener<O, D>) {
     this.listener = ensureProperties(listener, {
       selector: '',
@@ -19,8 +19,8 @@ export class Listener<O extends Options, D extends Data> {
       update(_) { },
       end(_) { },
       cancel() { },
-      stop() { }
-    } as Listener<O, D>);
+      stop() { },
+    } as Listener);
   }
   public down(args: ListenerArgs<D>): number { return RETURN_FLAG.map(this.listener.down(args)); }
   public start(args: ListenerArgs<D>): number {
@@ -37,3 +37,7 @@ export class Listener<O extends Options, D extends Data> {
 }
 
 export class DefaultListener extends Listener<Options, Data> { }
+
+export interface ListenerFactory<O extends Options = Options, D extends Data = Data> {
+  new(options: O, listener: Listener<O, D>): Listener<O, D>;
+}

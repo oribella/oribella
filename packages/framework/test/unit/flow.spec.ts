@@ -11,12 +11,12 @@ describe('Flow', () => {
     start: new EventConfig(),
     update: new EventConfig(),
     end: new EventConfig(),
-    cancel: new EventConfig()
+    cancel: new EventConfig(),
   };
 
   beforeEach(() => {
     instance = new Flow(element, config);
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
@@ -55,7 +55,7 @@ describe('Flow', () => {
     const listenerSpy = sandbox.spy();
     element.addEventListener = listenerSpy;
     const startListen = instance.bind(config).startListen;
-    startListen.forEach((f) => f());
+    startListen.forEach(f => f());
     expect(listenerSpy).to.have.been.calledWithExactly('mousedown', sinon.match.func, false);
   });
 
@@ -73,7 +73,7 @@ describe('Flow', () => {
     const setPointersSpy = sandbox.spy(instance, 'setPointers');
     element.addEventListener = listenerSpy;
     const startListen = instance.bind(config).startListen;
-    startListen.forEach((f) => f());
+    startListen.forEach(f => f());
     listenerSpy.callArgWith(1, evt);
     expect(setPointersSpy).to.have.been.calledWithExactly(evt);
   });
@@ -85,7 +85,7 @@ describe('Flow', () => {
     const listenerSpy = sandbox.spy();
     element.addEventListener = listenerSpy;
     const continueListen = instance.bind(config).continueListen;
-    continueListen.forEach((f) => f());
+    continueListen.forEach(f => f());
 
     expect(listenerSpy.firstCall).to.have.been.calledWithExactly('mousemove', sinon.match.func, false);
     expect(listenerSpy.secondCall).to.have.been.calledWithExactly('mouseup', sinon.match.func, false);
@@ -127,7 +127,7 @@ describe('Flow', () => {
     element.removeEventListener = removeListenerSpy;
     const remove = instance.activate();
     expect(remove).to.have.length(1);
-    remove.forEach((f) => f());
+    remove.forEach(f => f());
     expect(removeListenerSpy).to.have.been.calledWithExactly('mousedown', sinon.match.func, false);
   });
 
@@ -137,7 +137,7 @@ describe('Flow', () => {
     instance.start(e);
     expect(emitSpy).to.have.been.calledWithExactly('start', e, {
       all: new Map<string, PointerData>(),
-      changed: new Map<string, PointerData>()
+      changed: new Map<string, PointerData>(),
     });
   });
 
@@ -147,7 +147,7 @@ describe('Flow', () => {
     instance.update(e);
     expect(emitSpy).to.have.been.calledWithExactly('update', e, {
       all: new Map<string, PointerData>(),
-      changed: new Map<string, PointerData>()
+      changed: new Map<string, PointerData>(),
     });
   });
 
@@ -158,7 +158,7 @@ describe('Flow', () => {
     instance.end(e);
     expect(emitSpy).to.have.been.calledWithExactly('end', e, {
       all: new Map<number, PointerData>(),
-      changed: new Map<number, PointerData>()
+      changed: new Map<number, PointerData>(),
     });
   });
 
@@ -170,7 +170,7 @@ describe('Flow', () => {
     instance.end(e);
     expect(emitSpy).to.have.been.calledWithExactly('end', e, {
       all: new Map<string, PointerData>(),
-      changed: new Map<string, PointerData>()
+      changed: new Map<string, PointerData>(),
     });
     expect(stopSpy.callCount).to.equal(1);
   });
@@ -182,7 +182,7 @@ describe('Flow', () => {
     instance.cancel(e);
     expect(emitSpy).to.have.been.calledWithExactly('cancel', e, {
       all: new Map<string, PointerData>(),
-      changed: new Map<string, PointerData>()
+      changed: new Map<string, PointerData>(),
     });
     expect(stopSpy.callCount).to.equal(1);
   });

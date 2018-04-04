@@ -1,8 +1,7 @@
 import { OribellaApi } from '../../../src/oribella-api';
-import { Options, Data } from '../../../src/utils';
-import { RETURN_FLAG } from '../../../src/utils';
+import { Options, Data, RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
-import { Listener, ListenerArgs } from '../../../src/listener';
+import { ListenerArgs } from '../../../src/listener';
 import { Point } from '../../../src/point';
 
 export class Observation {
@@ -26,7 +25,7 @@ export class SwipeOptions extends Options {
   public radiusThreshold: number = 2;
 }
 
-export class Swipe extends Gesture<SwipeData, Listener<SwipeOptions, SwipeData>> {
+export class Swipe extends Gesture<SwipeOptions, SwipeData> {
   public startPoint: Point;
   public start({ data, evt }: ListenerArgs<SwipeData>): number {
     const { pointers: [{ page }] } = data;

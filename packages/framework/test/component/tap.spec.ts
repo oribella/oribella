@@ -29,16 +29,16 @@ describe('Tap', () => {
   class MyListener { }
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     document = (new JSDOM(html)).window.document;
     const g = global as any;
     g.window = {
-      ontouchstart: '',
       document,
+      ontouchstart: '',
       navigator: {
         msPointerEnabled,
-        pointerEnabled
-      }
+        pointerEnabled,
+      },
     };
     instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
@@ -47,7 +47,7 @@ describe('Tap', () => {
     listener = {
       start: sandbox.spy(),
       end: sandbox.spy(),
-      cancel: sandbox.spy()
+      cancel: sandbox.spy(),
     };
     myListener = new MyListener();
     myListener.start = sandbox.spy();
@@ -67,8 +67,8 @@ describe('Tap', () => {
     const evt = dispatchMouseEvent(document, target);
     expect(myListener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
-      target
     }));
   });
 
@@ -85,8 +85,8 @@ describe('Tap', () => {
     const evt = dispatchMouseEvent(document, target, 'mouseup');
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
-      target
     }));
   });
 

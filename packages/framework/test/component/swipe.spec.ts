@@ -27,16 +27,16 @@ describe('Swipe', () => {
   let listener: any;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     document = (new JSDOM(html)).window.document;
     const g = global as any;
     g.window = {
-      ontouchstart: '',
       document,
+      ontouchstart: '',
       navigator: {
         msPointerEnabled,
-        pointerEnabled
-      }
+        pointerEnabled,
+      },
     };
     instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
@@ -47,7 +47,7 @@ describe('Swipe', () => {
       start: sandbox.spy(),
       update: sandbox.spy(),
       end: sandbox.spy(),
-      cancel: sandbox.spy()
+      cancel: sandbox.spy(),
     };
 
     target = document.querySelector('.target') as Element;
@@ -66,8 +66,8 @@ describe('Swipe', () => {
     const evt = dispatchMouseEvent(document, target);
     expect(listener.down).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
-      target
     }));
   });
 
@@ -77,8 +77,8 @@ describe('Swipe', () => {
     const evt = dispatchMouseEvent(document, target, 'mousemove', 200, 200, 200, 200);
     expect(listener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 200, y: 200 }, page: { x: 200, y: 200 } }] },
-      target
     }));
   });
 
@@ -89,8 +89,8 @@ describe('Swipe', () => {
     const evt = dispatchMouseEvent(document, target, 'mousemove', 300, 300, 300, 300);
     expect(listener.update).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 300, y: 300 }, page: { x: 300, y: 300 } }] },
-      target
     }));
   });
 
@@ -102,8 +102,8 @@ describe('Swipe', () => {
     const evt = dispatchMouseEvent(document, target, 'mouseup', 350, 350, 350, 350);
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },
-      target
     }));
   });
 

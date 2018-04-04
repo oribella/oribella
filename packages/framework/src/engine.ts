@@ -1,9 +1,9 @@
 import { Registry } from './registry';
-import { Gesture, DefaultGesture } from './gesture';
-import { Listener, DefaultListener } from './listener';
+import { Gesture, GestureFactory } from './gesture';
+import { ListenerFactory, Listener } from './listener';
 import { Flow } from './flow';
-import { Options, Data, Pointers, PointerDataMap, PointerData, isMouse, isValidMouseButton, RETURN_FLAG, GESTURE_STRATEGY_FLAG, matchesSelector } from './utils';
-import { ListenerHandle } from './listener-handle';
+import { Options, OptionsFactory, Data, DataFactory, Pointers, PointerDataMap, PointerData, isMouse, isValidMouseButton, RETURN_FLAG, GESTURE_STRATEGY_FLAG, matchesSelector } from './utils';
+import { ListenerHandle, DefaultListenerHandle } from './listener-handle';
 
 export interface PointersDelta {
   all: number;
@@ -11,27 +11,32 @@ export interface PointersDelta {
 }
 export interface ExecStrategyState {
   evt: Event;
-  gestures: DefaultGesture[];
-  gesture: DefaultGesture;
+  gestures: Gesture[];
+  gesture: Gesture;
   pointers: Pointers;
   pointersDelta: PointersDelta;
 }
 export type ExecStrategy = (state: ExecStrategyState) => number;
 
 export class Engine {
-  private flows: Flow[] = [];
-  private activeFlow: Flow | null = null;
-  private handles: Array<ListenerHandle<& typeof Gesture>> = [];
-  private gestures: DefaultGesture[] = [];
-  private composedGestures: DefaultGesture[] = [];
+  public flows: Flow[] = [];
+  public activeFlow: Flow | null = null;
+  public handles: DefaultListenerHandle[] = [];
+  public gestures: Gesture[] = [];
+  public composedGestures: Gesture[] = [];
 
   constructor(
-    private element: Element | Document,
-    private registry: Registry = new Registry(),
+    public element: Element | Document,
+    public registry: Registry = new Registry(),
   ) { }
 
-  public registerGesture<G extends typeof Gesture, O extends typeof Options, L extends typeof Listener, D extends typeof Data>(Gesture: G, GestureOptions: O = Options as O, GestureListener: L = Listener as L, GestureData: D = Data as D) {
-    this.registry.register(Gesture, GestureOptions, GestureListener, GestureData);
+  public registerGesture<
+    G extends Gesture<O, D, L>,
+    O extends Options,
+    D extends Data,
+    // tslint:disable-next-line:variable-name
+    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, GestureOptions: OptionsFactory = Options, GestureListener: ListenerFactory<O, D> = Listener, GestureData: DataFactory = Data) {
+    this.registry.register(GestureClass, GestureOptions, GestureListener, GestureData);
   }
   public registerFlow(flow: Flow) {
     this.flows.push(flow);
@@ -41,8 +46,13 @@ export class Engine {
     flow.on('cancel', (e: Event, p: Pointers) => this.onCancel(flow, e, p));
     flow.on('stop', () => this.onStop());
   }
-  public registerListener<T extends typeof Gesture>(Type: T, element: Element, listener: DefaultListener): () => void {
-    const handle = new ListenerHandle(Type, element, listener);
+  public registerListener<
+    G extends Gesture<O, D, L>,
+    O extends Options,
+    D extends Data,
+    // tslint:disable-next-line:variable-name
+    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: L): () => void {
+    const handle = new ListenerHandle(GestureClass, element, listener);
 
     this.handles.push(handle);
 
@@ -54,12 +64,12 @@ export class Engine {
     };
   }
   public activate() {
-    return this.flows.map((f) => f.activate());
+    return this.flows.map(f => f.activate());
   }
-  private canActivateFlow(flow: Flow) {
+  public canActivateFlow(flow: Flow) {
     return (this.activeFlow === null || this.activeFlow === flow);
   }
-  private getPointersDelta(evt: Event, pointers: Pointers, configuredPointers: number, configuredWhich: number[] | number): PointersDelta {
+  public getPointersDelta(evt: Event, pointers: Pointers, configuredPointers: number, configuredWhich: number[] | number): PointersDelta {
     if (isMouse(evt) &&
       !isValidMouseButton(evt as MouseEvent, configuredWhich)) {
       return { all: -1, changed: -1 };
@@ -68,7 +78,7 @@ export class Engine {
     const changed = pointers.changed.size - configuredPointers;
     return { all, changed };
   }
-  private removeGesture(gesture: DefaultGesture, ...arr: DefaultGesture[][]) {
+  public removeGesture(gesture: Gesture, ...arr: Gesture[][]) {
     if (gesture.startEmitted) {
       gesture.cancel();
     }
@@ -81,7 +91,7 @@ export class Engine {
       }
     }
   }
-  private evaluateStrategyReturnFlag(gesture: DefaultGesture, flag: number) {
+  public evaluateStrategyReturnFlag(gesture: Gesture, flag: number) {
     if (flag & RETURN_FLAG.START_EMITTED) {
       gesture.startEmitted = true;
     }
@@ -99,7 +109,7 @@ export class Engine {
       }
     }
   }
-  private whileGestures(evt: Event, gestures: DefaultGesture[], pointers: Pointers, execStrategy: ExecStrategy) {
+  public whileGestures(evt: Event, gestures: Gesture[], pointers: Pointers, execStrategy: ExecStrategy) {
     let gesture;
     while (gesture = gestures.shift()) {
       const { pointers: configuredPointers, which, strategy } = gesture.listener.options;
@@ -112,10 +122,10 @@ export class Engine {
       this.evaluateStrategyReturnFlag(gesture, flag);
     }
   }
-  private addPointerId(gesture: DefaultGesture, pointerId: number) {
+  public addPointerId(gesture: Gesture, pointerId: number) {
     gesture.__POINTERIDS__.push(pointerId);
   }
-  private removePointerIds(map: PointerDataMap, gesture: DefaultGesture, changed: number[]) {
+  public removePointerIds(map: PointerDataMap, gesture: Gesture, changed: number[]) {
     const pointerIds = this.getPointerIds(gesture);
     let pointerId;
     while (pointerId = changed.shift()) {
@@ -127,23 +137,23 @@ export class Engine {
       }
     }
   }
-  private getPointerIds(gesture: DefaultGesture) {
+  public getPointerIds(gesture: Gesture) {
     return gesture.__POINTERIDS__;
   }
-  private getRemovedPointers(gesture: DefaultGesture) {
+  public getRemovedPointers(gesture: Gesture) {
     return gesture.__REMOVED_POINTERS__;
   }
-  private getPointer(map: PointerDataMap, pointerId: number): PointerData {
+  public getPointer(map: PointerDataMap, pointerId: number): PointerData {
     return map.get(pointerId) as PointerData;
   }
-  private getPointers(map: PointerDataMap, pointerIds: number[]): PointerData[] {
-    return pointerIds.map((pointerId) => this.getPointer(map, pointerId));
+  public getPointers(map: PointerDataMap, pointerIds: number[]): PointerData[] {
+    return pointerIds.map(pointerId => this.getPointer(map, pointerId));
   }
-  private isLockedPointers(gesture: DefaultGesture, map: PointerDataMap): boolean {
+  public isLockedPointers(gesture: Gesture, map: PointerDataMap): boolean {
     const pointerIds = this.getPointerIds(gesture);
-    return pointerIds.filter((pointerId) => map.has(pointerId)).length === map.size;
+    return pointerIds.filter(pointerId => map.has(pointerId)).length === map.size;
   }
-  private startStrategy(state: ExecStrategyState): number {
+  public startStrategy(state: ExecStrategyState): number {
     if (state.pointersDelta.all !== 0) {
       return RETURN_FLAG.IDLE;
     }
@@ -153,7 +163,7 @@ export class Engine {
     state.gesture.args.evt = state.evt;
     return state.gesture.start(state.gesture.args);
   }
-  private updateStrategy(state: ExecStrategyState): number {
+  public updateStrategy(state: ExecStrategyState): number {
     if (!this.isLockedPointers(state.gesture, state.pointers.all)) {
       return RETURN_FLAG.IDLE;
     }
@@ -161,7 +171,7 @@ export class Engine {
     state.gesture.args.evt = state.evt;
     return state.gesture.update(state.gesture.args);
   }
-  private endStrategy(state: ExecStrategyState): number {
+  public endStrategy(state: ExecStrategyState): number {
     if (!state.gesture.startEmitted) {
       state.gesture.stop();
       return RETURN_FLAG.REMOVE;
@@ -174,10 +184,10 @@ export class Engine {
     state.gesture.args.evt = state.evt;
     return state.gesture.end(state.gesture.args);
   }
-  private cancelStrategy(state: ExecStrategyState): number {
+  public cancelStrategy(state: ExecStrategyState): number {
     return state.gesture.cancel();
   }
-  private onStart(flow: Flow, evt: Event, pointers: Pointers): boolean {
+  public onStart(flow: Flow, evt: Event, pointers: Pointers): boolean {
     if (!this.canActivateFlow(flow)) {
       return false;
     }
@@ -199,25 +209,25 @@ export class Engine {
 
     return true;
   }
-  private onUpdate(flow: Flow, evt: Event, pointers: Pointers) {
+  public onUpdate(flow: Flow, evt: Event, pointers: Pointers) {
     if (this.activeFlow !== flow) {
       return;
     }
     this.whileGestures(evt, this.gestures.slice(), pointers, this.updateStrategy.bind(this));
   }
-  private onEnd(flow: Flow, evt: Event, pointers: Pointers) {
+  public onEnd(flow: Flow, evt: Event, pointers: Pointers) {
     if (this.activeFlow !== flow) {
       return;
     }
     this.whileGestures(evt, this.gestures.slice(), pointers, this.endStrategy.bind(this));
   }
-  private onCancel(flow: Flow, evt: Event, pointers: Pointers) {
+  public onCancel(flow: Flow, evt: Event, pointers: Pointers) {
     if (this.activeFlow !== flow) {
       return;
     }
     this.whileGestures(evt, this.gestures.slice(), pointers, this.cancelStrategy.bind(this));
   }
-  private onStop() {
+  public onStop() {
     const gestures = this.gestures.slice();
     let gesture;
 
@@ -233,12 +243,22 @@ export class Engine {
     this.gestures.length = 0;
     this.activeFlow = null;
   }
-  private addGesture<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>, evt: Event): DefaultGesture {
-    const gesture = this.registry.create<T>(Type, element, handle.listener);
+  public addGesture<
+    G extends Gesture<O, D, L>,
+    O extends Options,
+    D extends Data,
+    // tslint:disable-next-line:variable-name
+    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, handle: ListenerHandle<G, O, D, L>, evt: Event): Gesture {
+    const gesture = this.registry.create(GestureClass, element, handle.listener);
     gesture.bind(handle.element, this.registerListener.bind(this), this.removeGesture.bind(this, gesture, this.gestures, this.composedGestures), evt);
     return gesture;
   }
-  private composeGesture<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>, evt: Event): DefaultGesture {
+  public composeGesture<
+    G extends Gesture<O, D, L>,
+    O extends Options,
+    D extends Data,
+    // tslint:disable-next-line:variable-name
+    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, handle: ListenerHandle<G, O, D, L>, evt: Event): Gesture {
     let gesture;
     while (gesture = this.composedGestures.shift()) {
       if (gesture.listener === handle.listener) {
@@ -246,11 +266,15 @@ export class Engine {
       }
     }
     if (!gesture) {
-      gesture = this.addGesture(Type, element, handle, evt);
+      gesture = this.addGesture(GestureClass, element, handle, evt);
     }
     return gesture;
   }
-  private matchesHandle<T extends typeof Gesture>(element: Element, handle: ListenerHandle<T>): boolean {
+  public matchesHandle<
+    G extends Gesture<O, D, L>,
+    O extends Options,
+    D extends Data,
+    L extends Listener<O, D>>(element: Element, handle: ListenerHandle<G, O, D, L>): boolean {
     const { element: refElement, listener: { selector } } = handle;
 
     if (!refElement.contains(element)) {
@@ -267,23 +291,28 @@ export class Engine {
     }
     return true;
   }
-  private matchHandle<T extends typeof Gesture>(Type: T, element: Element, handle: ListenerHandle<T>, evt: Event): DefaultGesture | undefined {
+  public matchHandle<
+    G extends Gesture<O, D, L>,
+    O extends Options,
+    D extends Data,
+    // tslint:disable-next-line:variable-name
+    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, handle: ListenerHandle<G, O, D, L>, evt: Event): Gesture | undefined {
     if (!this.matchesHandle(element, handle)) {
       return;
     }
-    return this.composeGesture(Type, element, handle, evt);
+    return this.composeGesture(GestureClass, element, handle, evt);
   }
-  private matchHandles(element: Element, gestures: DefaultGesture[], evt: Event): DefaultGesture[] {
+  public matchHandles(element: Element, gestures: Gesture[], evt: Event): Gesture[] {
     for (const handle of this.handles) { // Always evaluate length since gestures could bind gestures
-      const gesture = this.matchHandle(handle.Type, element, handle, evt);
+      const gesture = this.matchHandle(handle.GestureClass, element, handle, evt);
       if (gesture) {
         gestures.push(gesture);
       }
     }
     return gestures;
   }
-  private match(target: Node, evt: Event): DefaultGesture[] {
-    const gestures: DefaultGesture[] = [];
+  public match(target: Node, evt: Event): Gesture[] {
+    const gestures: Gesture[] = [];
     for (let node: Node | null = target; node && node.nodeType === 1 && node !== this.element; node = node.parentNode) {
       this.matchHandles(node as Element, gestures, evt);
     }

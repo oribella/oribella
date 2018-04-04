@@ -15,7 +15,7 @@ describe('Listener handle', () => {
     // class Foo extends DefaultGesture {};
     const handle = new ListenerHandle(Gesture, element as Element, listener as DefaultListener);
     expect(handle.element).to.equal(element);
-    expect(handle.Type).to.equal(Gesture);
+    expect(handle.GestureClass).to.equal(Gesture);
     expect(handle.listener).to.equal(listener);
   });
 

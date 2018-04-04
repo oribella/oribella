@@ -14,14 +14,12 @@
     "test": "nyc mocha --recursive --compilers ts:ts-node/register --require test/setup.ts",
     "coverage": "npm run -s test && nyc report --reporter=text-lcov | coveralls",
     "clean": "rimraf dist",
-    "compile": "tsc -p tsconfig.build.json",
-    "commonjs": "npm run compile -- --module commonjs --outDir dist/commonjs",
-    "amd": "npm run compile -- --module amd --outDir dist/amd",
-    "amd-bundled": "npm run compile -- --module amd --outFile dist/oribella-framework.js",
-    "system": "npm run compile -- --module system --outDir dist/system",
-    "es2015": "npm run compile -- --module es2015 --outDir dist/es2015 --target es2015",
-    "build": "npm-run-all -n clean --parallel commonjs amd amd-bundled system es2015",
-    "typings": "typings install"
+    "commonjs": "tsc -p tsconfig.build.json --module commonjs --outDir dist/commonjs",
+    "amd": "tsc -p tsconfig.build.json --module amd --outDir dist/amd",
+    "amd-bundled": "tsc -p tsconfig.build.json --module amd --outFile dist/oribella-framework.js",
+    "system": "tsc -p tsconfig.build.json --module system --outDir dist/system",
+    "es2015": "tsc -p tsconfig.build.json --module es2015 --outDir dist/es2015 --target es2015",
+    "build": "npm-run-all -n clean --parallel commonjs amd amd-bundled system es2015"
   },
   "author": "Christoffer Åström",
   "license": "MIT",
@@ -45,28 +43,28 @@
     }
   },
   "dependencies": {
-    "tslib": "^1.5.0"
+    "tslib": "^1.9.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.0.1",
-    "@types/jsdom": "^11.0.1",
+    "@types/chai": "^4.1.2",
+    "@types/jsdom": "^11.0.4",
     "@types/mocha": "^5.0.0",
-    "@types/node": "^9.3.0",
-    "@types/sinon": "^4.0.0",
-    "@types/sinon-chai": "^2.7.28",
-    "chai": "^4.0.2",
+    "@types/node": "^9.6.2",
+    "@types/sinon": "^4.3.0",
+    "@types/sinon-chai": "^2.7.29",
+    "chai": "^4.1.2",
     "coveralls": "^3.0.0",
-    "jsdom": "^11.1.0",
+    "jsdom": "^11.7.0",
     "mocha": "^5.0.0",
-    "npm-run-all": "^4.0.1",
-    "nyc": "^11.0.3",
-    "rimraf": "^2.5.4",
-    "sinon": "^5.0.0",
+    "npm-run-all": "^4.1.2",
+    "nyc": "^11.6.0",
+    "rimraf": "^2.6.2",
+    "sinon": "^4.5.0",
     "sinon-chai": "^3.0.0",
     "ts-node": "^5.0.0",
-    "tslint": "^5.5.0",
-    "typescript": "2.6.2",
-    "typings": "^2.1.0"
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.8.0",
+    "typescript": "^2.8.1"
   },
   "nyc": {
     "include": [

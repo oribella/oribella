@@ -1,8 +1,7 @@
 import { OribellaApi } from '../../../src/oribella-api';
-import { Options, Data } from '../../../src/utils';
-import { RETURN_FLAG } from '../../../src/utils';
+import { Options, Data, RETURN_FLAG } from '../../../src/utils';
 import { Gesture } from '../../../src/gesture';
-import { Listener, ListenerArgs } from '../../../src/listener';
+import { ListenerArgs } from '../../../src/listener';
 import { Point } from '../../../src/point';
 
 export class RotateOptions extends Options {
@@ -14,7 +13,7 @@ export class RotateData extends Data {
   public rotation: number = 0;
 }
 
-export class Rotate extends Gesture<RotateData, Listener<RotateOptions, RotateData>> {
+export class Rotate extends Gesture<RotateOptions, RotateData> {
   public startPoint0: Point;
   public startPoint1: Point;
   public currentPoint0: Point;

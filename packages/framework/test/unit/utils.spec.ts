@@ -6,7 +6,7 @@ describe('Utils', () => {
   let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
@@ -30,7 +30,7 @@ describe('Utils', () => {
 
   it('should detect mouse IE11', () => {
     const supports = { msPointerEnabled: false, pointerEnabled: true, touchEnabled: false };
-    expect(isMouse({ pointerType: 'mouse' }, supports, )).to.equal(true);
+    expect(isMouse({ pointerType: 'mouse' }, supports)).to.equal(true);
   });
 
   it('should detect mouse', () => {

@@ -2,9 +2,9 @@ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { Engine, ExecStrategy, ExecStrategyState } from '../../src/engine';
 import { Registry } from '../../src/registry';
-import { Gesture, DefaultGesture } from '../../src/gesture';
+import { Gesture } from '../../src/gesture';
 import { Listener, DefaultListener } from '../../src/listener';
-import { ListenerHandle } from '../../src/listener-handle';
+import { ListenerHandle, DefaultListenerHandle } from '../../src/listener-handle';
 import { MouseFlow } from '../../src/flows/mouse';
 import { TouchFlow } from '../../src/flows/touch';
 import { PointerFlow } from '../../src/flows/pointer';
@@ -26,7 +26,7 @@ describe('Engine', () => {
   let sandbox: sinon.SinonSandbox;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     element.addEventListener = sandbox.spy();
     element.removeEventListener = sandbox.spy();
     instance = new Engine(element, registry);
@@ -145,14 +145,14 @@ describe('Engine', () => {
     it('should return -1 for non valid mouse', () => {
       const event = { type: 'mouse' } as Event;
       expect(instance['getPointersDelta'](event, mouseFlow['pointers'], -1, -1)).to.deep.equal({
-        all: -1, changed: -1
+        all: -1, changed: -1,
       });
     });
 
     it('should return correct delta', () => {
       const event = { type: 'foo' } as Event;
       expect(instance['getPointersDelta'](event, mouseFlow['pointers'], 3, -1)).to.deep.equal({
-        all: -3, changed: -3
+        all: -3, changed: -3,
       });
 
     });
@@ -228,9 +228,9 @@ describe('Engine', () => {
       sandbox.stub(instance, 'getPointersDelta').returns({ all: 1 });
       const gesture = new Gesture({
         options: {
-          strategy: GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT
-        }
-      } as DefaultListener, {} as Data, {} as Element);
+          strategy: GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT,
+        },
+      } as DefaultListener,       {} as Data, {} as Element);
       const gestures = [gesture];
       const pointers = {} as Pointers;
       const execStrategy = sandbox.spy() as ExecStrategy;
@@ -266,12 +266,12 @@ describe('Engine', () => {
     const map = new Map([
       [1, { page: new Point(1, 2), client: new Point(3, 4) }],
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
-      [3, { page: new Point(9, 10), client: new Point(11, 12) }]
+      [3, { page: new Point(9, 10), client: new Point(11, 12) }],
     ]);
     expect(instance['getPointers'](map, [1, 2, 3])).to.deep.equal([
       { page: new Point(1, 2), client: new Point(3, 4) },
       { page: new Point(5, 6), client: new Point(7, 8) },
-      { page: new Point(9, 10), client: new Point(11, 12) }
+      { page: new Point(9, 10), client: new Point(11, 12) },
     ]);
   });
 
@@ -279,7 +279,7 @@ describe('Engine', () => {
     const map = new Map([
       [1, { page: new Point(1, 2), client: new Point(3, 4) }],
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
-      [3, { page: new Point(9, 10), client: new Point(11, 12) }]
+      [3, { page: new Point(9, 10), client: new Point(11, 12) }],
     ]);
     const gesture = new Gesture({} as DefaultListener, {} as Data, {} as Element);
     instance['addPointerId'](gesture, 1);
@@ -288,7 +288,7 @@ describe('Engine', () => {
     instance['removePointerIds'](map, gesture, [1, 2, 6]);
     expect(instance['getRemovedPointers'](gesture)).to.deep.equal([
       { page: new Point(1, 2), client: new Point(3, 4) },
-      { page: new Point(5, 6), client: new Point(7, 8) }
+      { page: new Point(5, 6), client: new Point(7, 8) },
     ]);
   });
 
@@ -300,7 +300,7 @@ describe('Engine', () => {
     const map = new Map([
       [1, { page: new Point(1, 2), client: new Point(3, 4) }],
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
-      [3, { page: new Point(9, 10), client: new Point(11, 12) }]
+      [3, { page: new Point(9, 10), client: new Point(11, 12) }],
     ]);
     expect(instance['isLockedPointers'](gesture, map)).to.equal(true);
   });
@@ -311,7 +311,7 @@ describe('Engine', () => {
     const map = new Map([
       [1, { page: new Point(1, 2), client: new Point(3, 4) }],
       [2, { page: new Point(5, 6), client: new Point(7, 8) }],
-      [3, { page: new Point(9, 10), client: new Point(11, 12) }]
+      [3, { page: new Point(9, 10), client: new Point(11, 12) }],
     ]);
     expect(instance['isLockedPointers'](gesture, map)).to.equal(false);
   });
@@ -329,8 +329,8 @@ describe('Engine', () => {
         all: new Map([
           [1, { page: new Point(1, 2), client: new Point(3, 4) }],
           [2, { page: new Point(5, 6), client: new Point(7, 8) }],
-          [3, { page: new Point(9, 10), client: new Point(11, 12) }]
-        ])
+          [3, { page: new Point(9, 10), client: new Point(11, 12) }],
+        ]),
       } as Pointers;
       const state = { gesture, pointers, pointersDelta: { all: 0 } } as ExecStrategyState;
       instance['startStrategy'](state);
@@ -348,13 +348,13 @@ describe('Engine', () => {
         all: new Map([
           [1, fooPointer],
           [2, barPointer],
-          [3, bazPointer]
-        ])
+          [3, bazPointer],
+        ]),
       } as Pointers;
       const evt = {} as Event;
       const state = { evt, gesture, pointers, pointersDelta: { all: 0 } } as ExecStrategyState;
       instance['startStrategy'](state);
-      expect(gesture.start).to.have.been.calledWithExactly( { evt, data: { pointers: [fooPointer, barPointer, bazPointer]}, target });
+      expect(gesture.start).to.have.been.calledWithExactly({ evt, target, data: { pointers: [fooPointer, barPointer, bazPointer] } });
     });
 
   });
@@ -378,8 +378,8 @@ describe('Engine', () => {
         all: new Map([
           [1, fooPointer],
           [2, barPointer],
-          [3, bazPointer]
-        ])
+          [3, bazPointer],
+        ]),
       } as Pointers;
       const evt = {} as Event;
       const state = { evt, gesture, pointers } as ExecStrategyState;
@@ -388,7 +388,7 @@ describe('Engine', () => {
       instance['addPointerId'](gesture, 2);
       instance['addPointerId'](gesture, 3);
       instance['updateStrategy'](state);
-      expect(gesture.update).to.have.been.calledWithExactly({ evt, data: { pointers: [fooPointer, barPointer, bazPointer] }, target });
+      expect(gesture.update).to.have.been.calledWithExactly({ evt, target, data: { pointers: [fooPointer, barPointer, bazPointer] } });
     });
 
   });
@@ -424,8 +424,8 @@ describe('Engine', () => {
         changed: new Map([
           [1, fooPointer],
           [2, barPointer],
-          [3, bazPointer]
-        ])
+          [3, bazPointer],
+        ]),
       } as Pointers;
       const evt = {} as Event;
       const state = { evt, gesture, pointers } as ExecStrategyState;
@@ -433,7 +433,7 @@ describe('Engine', () => {
       instance['addPointerId'](gesture, 2);
       instance['addPointerId'](gesture, 3);
       instance['endStrategy'](state);
-      expect(gesture.end).to.have.been.calledWithExactly({ evt, data: { pointers: [fooPointer, barPointer, bazPointer] }, target });
+      expect(gesture.end).to.have.been.calledWithExactly({ evt, target, data: { pointers: [fooPointer, barPointer, bazPointer] } });
     });
 
   });
@@ -564,7 +564,7 @@ describe('Engine', () => {
     });
 
     it('should compose gestures', () => {
-      const g = {} as DefaultGesture;
+      const g = {} as Gesture;
       g.unbind = sandbox.stub().returns(RETURN_FLAG.COMPOSE);
       instance['gestures'] = [g];
       instance['onStop']();
@@ -572,7 +572,7 @@ describe('Engine', () => {
     });
 
     it('should stop gestures', () => {
-      const g = {} as DefaultGesture;
+      const g = {} as Gesture;
       g.unbind = sandbox.stub().returns(RETURN_FLAG.REMOVE);
       g.stop = sandbox.spy();
       instance['gestures'] = [g];
@@ -667,7 +667,7 @@ describe('Engine', () => {
 
     it('should call matchHandle', () => {
       const element = {} as Element;
-      const gestures = [] as DefaultGesture[];
+      const gestures = [] as Gesture[];
       const listener = {} as DefaultListener;
       instance['registerListener'](Gesture, element, listener);
       const matchHandle = sandbox.stub(instance, 'matchHandle');
@@ -678,8 +678,8 @@ describe('Engine', () => {
 
     it('should add gesture', () => {
       const element = {} as Element;
-      const gesture = {} as DefaultGesture;
-      const gestures = [] as DefaultGesture[];
+      const gesture = {} as Gesture;
+      const gestures = [] as Gesture[];
       const listener = {} as DefaultListener;
       const evt = {} as Event;
       instance['registerListener'](Gesture, element, listener);
@@ -691,7 +691,7 @@ describe('Engine', () => {
 
     it('should return undefined if not matches handle', () => {
       const element = {} as Element;
-      const handle = {} as ListenerHandle<typeof Gesture>;
+      const handle = {} as DefaultListenerHandle;
       const evt = {} as Event;
       sandbox.stub(instance, 'matchesHandle').returns(false);
       expect(instance['matchHandle'](Gesture, element, handle, evt)).to.equal(undefined);
@@ -699,7 +699,7 @@ describe('Engine', () => {
 
     it('should call composeGesture', () => {
       const element = {} as Element;
-      const handle = {} as ListenerHandle<typeof Gesture>;
+      const handle = {} as DefaultListenerHandle;
       sandbox.stub(instance, 'matchesHandle').returns(true);
       const composeGesture = sandbox.stub(instance, 'composeGesture');
       const evt = {} as Event;
@@ -714,7 +714,7 @@ describe('Engine', () => {
         const refElement = {} as Element;
         element.webkitMatchesSelector = sandbox.stub().returns(false);
         refElement.contains = sandbox.stub().returns(true);
-        const handle = { element: refElement, listener: { selector: 'foo' } } as ListenerHandle<typeof Gesture>;
+        const handle = { element: refElement, listener: { selector: 'foo' } } as DefaultListenerHandle;
         expect(instance['matchesHandle'](element, handle)).to.equal(false);
       });
 
@@ -723,7 +723,7 @@ describe('Engine', () => {
         const refElement = {} as Element;
         element.webkitMatchesSelector = sandbox.stub().returns(true);
         refElement.contains = sandbox.stub().returns(true);
-        const handle = { element: refElement, listener: {} } as ListenerHandle<typeof Gesture>;
+        const handle = { element: refElement, listener: {} } as DefaultListenerHandle;
         expect(instance['matchesHandle'](element, handle)).to.equal(false);
       });
 
@@ -731,14 +731,14 @@ describe('Engine', () => {
         const element = {} as Element;
         const refElement = {} as Element;
         refElement.contains = sandbox.stub().returns(false);
-        const handle = { element: refElement, listener: {} } as ListenerHandle<typeof Gesture>;
+        const handle = { element: refElement, listener: {} } as DefaultListenerHandle;
         expect(instance['matchesHandle'](element, handle)).to.equal(false);
       });
 
       it('should return false if a selector is defined and the handle element is the current element', () => {
         const refElement = {} as Element;
         refElement.contains = sandbox.stub().returns(true);
-        const handle = { element: refElement, listener: { selector: 'foo' } } as ListenerHandle<typeof Gesture>;
+        const handle = { element: refElement, listener: { selector: 'foo' } } as DefaultListenerHandle;
         expect(instance['matchesHandle'](refElement, handle)).to.equal(false);
       });
 
@@ -746,7 +746,7 @@ describe('Engine', () => {
         const refElement = {} as Element;
         refElement.webkitMatchesSelector = sandbox.stub().returns(true);
         refElement.contains = sandbox.stub().returns(true);
-        const handle = { element: refElement, listener: {} } as ListenerHandle<typeof Gesture>;
+        const handle = { element: refElement, listener: {} } as DefaultListenerHandle;
         expect(instance['matchesHandle'](refElement, handle)).to.equal(true);
       });
 
@@ -757,8 +757,8 @@ describe('Engine', () => {
       it('should use gesture that wants to be composed', () => {
         const element = {} as Element;
         const listener = {} as DefaultListener;
-        const handle = { listener } as ListenerHandle<typeof Gesture>;
-        const gesture = { listener } as DefaultGesture;
+        const handle = { listener } as DefaultListenerHandle;
+        const gesture = { listener } as Gesture;
         const evt = {} as Event;
         instance['composedGestures'].push(gesture);
         expect(instance['composeGesture'](Gesture, element, handle, evt)).to.equal(gesture);
@@ -767,8 +767,8 @@ describe('Engine', () => {
       it('should add gesture if no gesture wants to be composed', () => {
         const element = {} as Element;
         const listener = {} as DefaultListener;
-        const handle = { listener } as ListenerHandle<typeof Gesture>;
-        const gesture = {} as DefaultGesture;
+        const handle = { listener } as DefaultListenerHandle;
+        const gesture = {} as Gesture;
         const evt = {} as Event;
         sandbox.stub(instance, 'addGesture').returns(gesture);
         instance['composedGestures'].push(gesture);
@@ -777,8 +777,8 @@ describe('Engine', () => {
 
       it('should add gesture', () => {
         const element = {} as Element;
-        const handle = {} as ListenerHandle<typeof Gesture>;
-        const gesture = {} as DefaultGesture;
+        const handle = {} as DefaultListenerHandle;
+        const gesture = {} as Gesture;
         const addGesture = sandbox.stub(instance, 'addGesture').returns(gesture);
         const evt = {} as Event;
         expect(instance['composeGesture'](Gesture, element, handle, evt)).to.equal(gesture);

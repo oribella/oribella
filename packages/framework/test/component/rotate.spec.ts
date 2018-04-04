@@ -23,21 +23,25 @@ describe('Rotate', () => {
       </body>
     </html>
   `;
+  let dom: JSDOM;
+  let window: Window;
   let document: Document;
   let target: Element;
   let listener: any;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
-    document = (new JSDOM(html)).window.document;
+    sandbox = sinon.createSandbox();
+    dom = new JSDOM(html);
+    window = dom.window;
+    document = window.document;
     const g = global as any;
     g.window = {
-      ontouchstart: '',
       document,
+      ontouchstart: '',
       navigator: {
         msPointerEnabled,
-        pointerEnabled
-      }
+        pointerEnabled,
+      },
     };
     instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
@@ -48,7 +52,7 @@ describe('Rotate', () => {
       start: sandbox.spy(),
       update: sandbox.spy(),
       end: sandbox.spy(),
-      cancel: sandbox.spy()
+      cancel: sandbox.spy(),
     };
 
     target = document.querySelector('.target') as Element;
@@ -64,149 +68,149 @@ describe('Rotate', () => {
 
   it('should call listener down', () => {
     instance.on(Rotate, target, listener);
-    const evt = dispatchTouchEvent(document, target, 'touchstart', [
+    const evt = dispatchTouchEvent(window, document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
-      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
+      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
     expect(listener.down).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: {
         pointers: [
           { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
-          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } }
-        ]
+          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } },
+        ],
       },
-      target
     }));
   });
 
   it('should call listener down when fulfilled configured pointers', () => {
     instance.on(Rotate, target, listener);
-    dispatchTouchEvent(document, target, 'touchstart');
+    dispatchTouchEvent(window, document, target, 'touchstart');
     expect(listener.down.callCount).to.equal(0);
-    const evt = dispatchTouchEvent(document, target, 'touchstart', [
+    const evt = dispatchTouchEvent(window, document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
-      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
+      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
     expect(listener.down).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: {
         pointers: [
           { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
-          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } }
-        ]
+          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } },
+        ],
       },
-      target
     }));
   });
 
   it('should call listener start', () => {
     instance.on(Rotate, target, listener);
-    dispatchTouchEvent(document, target, 'touchstart', [
+    dispatchTouchEvent(window, document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
-      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
+      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
-    const evt = dispatchTouchEvent(document, target, 'touchmove', [
+    const evt = dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(110, 200), client: new Point(110, 200), identifier: 1 },
-      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 }
+      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 },
     ]);
     expect(listener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: {
         pointers: [
           { page: { x: 110, y: 200 }, client: { x: 110, y: 200 } },
-          { page: { x: 90, y: 210 }, client: { x: 90, y: 210 } }
-        ]
+          { page: { x: 90, y: 210 }, client: { x: 90, y: 210 } },
+        ],
       },
-      target
     }));
   });
 
   it('should call listener update', () => {
     instance.on(Rotate, target, listener);
-    dispatchTouchEvent(document, target, 'touchstart', [
+    dispatchTouchEvent(window, document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
-      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
+      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
-    dispatchTouchEvent(document, target, 'touchmove', [
+    dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(110, 200), client: new Point(110, 200), identifier: 1 },
-      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 }
+      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 },
     ]);
-    const evt = dispatchTouchEvent(document, target, 'touchmove', [
+    const evt = dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
+      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
     expect(listener.update).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: {
         pointers: [
           { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
-        ]
+          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } },
+        ],
       },
-      target
     }));
   });
 
   it('should call listener end', () => {
     instance.on(Rotate, target, listener);
-    dispatchTouchEvent(document, target, 'touchstart', [
+    dispatchTouchEvent(window, document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
-      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
+      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
-    dispatchTouchEvent(document, target, 'touchmove', [
+    dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(110, 200), client: new Point(110, 200), identifier: 1 },
-      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 }
+      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 },
     ]);
-    dispatchTouchEvent(document, target, 'touchmove', [
+    dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
+      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
-    const evt = dispatchTouchEvent(document, target, 'touchend', [], [
+    const evt = dispatchTouchEvent(window, document, target, 'touchend', [], [
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
+      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: {
         pointers: [
           { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
-        ]
+          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } },
+        ],
       },
-      target
     }));
   });
 
   it('should call listener end when all locked pointers are removed', () => {
     instance.on(Rotate, target, listener);
-    dispatchTouchEvent(document, target, 'touchstart', [
+    dispatchTouchEvent(window, document, target, 'touchstart', [
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
-      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 }
+      { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
-    dispatchTouchEvent(document, target, 'touchmove', [
+    dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(110, 200), client: new Point(110, 200), identifier: 1 },
-      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 }
+      { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 },
     ]);
-    dispatchTouchEvent(document, target, 'touchmove', [
+    dispatchTouchEvent(window, document, target, 'touchmove', [
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
+      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
-    dispatchTouchEvent(document, target, 'touchend',
-      [{ page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }],
-      [{ page: new Point(115, 200), client: new Point(115, 200), identifier: 1 }]);
-    const evt = dispatchTouchEvent(document, target, 'touchend', [], [
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }
+    dispatchTouchEvent(window, document, target, 'touchend',
+                       [{ page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }],
+                       [{ page: new Point(115, 200), client: new Point(115, 200), identifier: 1 }]);
+    const evt = dispatchTouchEvent(window, document, target, 'touchend', [], [
+      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: {
         pointers: [
           { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } }
-        ]
+          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } },
+        ],
       },
-      target
     }));
   });
 

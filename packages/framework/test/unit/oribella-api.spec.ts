@@ -6,7 +6,7 @@ import { PointerFlow } from '../../src/flows/pointer';
 import { TouchFlow } from '../../src/flows/touch';
 import { Gesture } from '../../src/gesture';
 import { Listener, DefaultListener } from '../../src/listener';
-import { Options, Data } from '../../src/utils';
+import { Options, Data, removeListener } from '../../src/utils';
 
 describe('OribellaApi', () => {
   let instance: OribellaApi;
@@ -16,16 +16,16 @@ describe('OribellaApi', () => {
   const pointerEnabled = false;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     document = {} as Document;
     const g = global as any;
     g.window = {
-      ontouchstart: '',
       document,
+      ontouchstart: '',
       navigator: {
         msPointerEnabled,
-        pointerEnabled
-      }
+        pointerEnabled,
+      },
     };
     instance = new OribellaApi();
   });
@@ -108,7 +108,7 @@ describe('OribellaApi', () => {
   });
 
   it('should activate', () => {
-    const deactivateFlows: Array<Array<() => void>> = [];
+    const deactivateFlows: removeListener[] = [];
     const activate = sandbox.stub(instance['engine'], 'activate').returns(deactivateFlows);
     instance.activate();
     expect(activate).to.have.been.calledWithExactly();
@@ -119,7 +119,7 @@ describe('OribellaApi', () => {
     const f1 = sandbox.spy();
     const f2 = sandbox.spy();
     const f3 = sandbox.spy();
-    const deactivateFlows: Array<Array<() => void>> = [[f1, f2, f3]];
+    const deactivateFlows: removeListener[][] = [[f1, f2, f3]];
     sandbox.stub(instance['engine'], 'activate').returns(deactivateFlows);
     instance.activate();
     instance.deactivate();

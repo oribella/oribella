@@ -10,7 +10,7 @@ describe('MouseFlow', () => {
 
   beforeEach(() => {
     instance = new MouseFlow(element);
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {

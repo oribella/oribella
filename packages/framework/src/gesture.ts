@@ -1,7 +1,15 @@
-import { Data, PointerData, RETURN_FLAG } from './utils';
-import { DefaultListener, ListenerArgs } from './listener';
+import { Options, Data, PointerData, RETURN_FLAG } from './utils';
+import { Listener, DefaultListener, ListenerArgs } from './listener';
 
-export class Gesture<D extends Data, L extends DefaultListener> {
+export interface GestureFactory<
+  G extends Gesture<O, D, L>,
+  O extends Options = Options,
+  D extends Data = Data,
+  L extends Listener<O, D> = Listener<O, D>> {
+  new(listener: L, data: D, target: Element): G;
+}
+
+export class Gesture<O extends Options = Options, D extends Data = Data, L extends Listener<O, D> = Listener<O, D>> {
   public __POINTERIDS__: number[] = [];
   public __REMOVED_POINTERS__: PointerData[] = [];
   public startEmitted: boolean = false;
@@ -11,7 +19,8 @@ export class Gesture<D extends Data, L extends DefaultListener> {
     this.args.target = target;
   }
 
-  public bind(target: Element, registerListener: <T extends typeof Gesture>(Type: T, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void, evt: Event): void;
+  // tslint:disable-next-line:variable-name
+  public bind(target: Element, registerListener: <G extends Gesture<O, D, L>, O extends Options, D extends Data, L extends Listener<O, D>>(Type: GestureFactory<G, O, D, L>, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void, evt: Event): void;
   public bind() { }
   public unbind(): number { return RETURN_FLAG.IDLE; }
   public start(args: ListenerArgs<D>): number;
@@ -23,5 +32,3 @@ export class Gesture<D extends Data, L extends DefaultListener> {
   public cancel(): number { return this.listener.cancel(); }
   public stop(): void { this.listener.stop(); }
 }
-
-export class DefaultGesture extends Gesture<Data, DefaultListener> { }

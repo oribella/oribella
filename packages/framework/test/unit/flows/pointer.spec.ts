@@ -10,7 +10,7 @@ describe('PointerFlow', () => {
 
   beforeEach(() => {
     instance = new PointerFlow(element);
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
