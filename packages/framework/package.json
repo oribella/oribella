@@ -12,7 +12,7 @@
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pretest": "npm run lint",
     "test": "aw -c test/aw.config.js",
-    "coverage": "nyc report -r text-lcov --temp-directory ./coverage/.nyc_output | coveralls",
+    "coverage": "aw -c test/aw.config.js && nyc report -r text-lcov --temp-directory ./coverage/.nyc_output | coveralls",
     "clean": "rimraf dist",
     "commonjs": "tsc -p tsconfig.build.json --module commonjs --outDir dist/commonjs",
     "amd": "tsc -p tsconfig.build.json --module amd --outDir dist/amd",
