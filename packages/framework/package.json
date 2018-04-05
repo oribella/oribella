@@ -11,8 +11,8 @@
   "scripts": {
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "pretest": "npm run lint",
-    "test": "nyc mocha --recursive --compilers ts:ts-node/register --require test/setup.ts",
-    "coverage": "npm run -s test && nyc report --reporter=text-lcov | coveralls",
+    "test": "aw -c test/aw.config.js",
+    "coverage": "aw -c test/aw.config.js | coveralls",
     "clean": "rimraf dist",
     "commonjs": "tsc -p tsconfig.build.json --module commonjs --outDir dist/commonjs",
     "amd": "tsc -p tsconfig.build.json --module amd --outDir dist/amd",
@@ -52,6 +52,7 @@
     "@types/node": "^9.6.2",
     "@types/sinon": "^4.3.0",
     "@types/sinon-chai": "^2.7.29",
+    "after-work.js": "^4.1.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.0",
     "jsdom": "^11.7.0",
@@ -65,24 +66,5 @@
     "tslint": "^5.9.1",
     "tslint-config-airbnb": "^5.8.0",
     "typescript": "^2.8.1"
-  },
-  "nyc": {
-    "include": [
-      "src/*"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "dist",
-      "typings"
-    ],
-    "reporter": [
-      "text-summary",
-      "html"
-    ],
-    "all": true,
-    "sourceMap": true,
-    "instrument": true
   }
 }
