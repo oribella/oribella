@@ -4,7 +4,9 @@
 
 Gestures plugin for *Aurelia* powered by *Oribella*
 
-## [Usage](./docs/usage.md#installation)
+## Getting started
+
+To get this plugin up and running and how to use it make sure to read [this](./docs/usage.md#installation).
 
 ## Building
 
