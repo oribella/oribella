@@ -1,10 +1,10 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, DefaultListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, RETURN_FLAG, Gesture, DefaultListenerArgs, Point } from 'oribella-framework';
 
 export class TapOptions extends Options {
   public radiusThreshold: number = 2;
 }
 
-export class Tap extends Gesture<Data, Listener<TapOptions, Data>> {
+export class Tap extends Gesture<TapOptions> {
   public startPoint: Point;
   public start(args: DefaultListenerArgs): number {
     const { data: { pointers: [{ page }] } } = args;

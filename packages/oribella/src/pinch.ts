@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, ListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, ListenerArgs, Point } from 'oribella-framework';
 
 export class PinchOptions extends Options {
   public pointers: number = 2;
@@ -12,7 +12,7 @@ export class PinchData extends Data {
   public centerPoint: Point = new Point(0, 0);
 }
 
-export class Pinch extends Gesture<PinchData, Listener<PinchOptions, PinchData>> {
+export class Pinch extends Gesture<PinchOptions, PinchData> {
   public startPoint0: Point;
   public startPoint1: Point;
   public startDistance: number = 0;

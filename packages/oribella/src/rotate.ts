@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Listener, ListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, ListenerArgs, Point } from 'oribella-framework';
 
 export class RotateOptions extends Options {
   public pointers: number = 2;
@@ -9,7 +9,7 @@ export class RotateData extends Data {
   public rotation: number = 0;
 }
 
-export class Rotate extends Gesture<RotateData, Listener<RotateOptions, RotateData>> {
+export class Rotate extends Gesture<RotateOptions, RotateData> {
   public startPoint0: Point;
   public startPoint1: Point;
   public currentPoint0: Point;

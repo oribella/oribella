@@ -29,21 +29,22 @@ describe('Longtap', () => {
   let clearTimeout: sinon.SinonSpy;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     document = (new JSDOM(html)).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
 
     g.window = {
-      ontouchstart: '',
       document,
+      setTimeout,
+      clearTimeout,
+      ontouchstart: '',
+
       navigator: {
         msPointerEnabled,
-        pointerEnabled
+        pointerEnabled,
       },
-      setTimeout,
-      clearTimeout
     };
     instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
@@ -53,7 +54,7 @@ describe('Longtap', () => {
       start: sandbox.spy(),
       end: sandbox.spy(),
       cancel: sandbox.spy(),
-      timeEnd: sandbox.spy()
+      timeEnd: sandbox.spy(),
     };
 
     target = document.querySelector('.target') as Element;
@@ -72,8 +73,8 @@ describe('Longtap', () => {
     const evt = dispatchMouseEvent(document, target);
     expect(listener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
-      target
     }));
   });
 
@@ -92,8 +93,8 @@ describe('Longtap', () => {
     const evt = dispatchMouseEvent(document, target, 'mouseup');
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
-      target
     }));
   });
 

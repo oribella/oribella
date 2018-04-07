@@ -31,21 +31,21 @@ describe('LongtapSwipe', () => {
   let clearTimeout: sinon.SinonSpy;
 
   beforeEach(() => {
-    sandbox = sinon.sandbox.create();
+    sandbox = sinon.createSandbox();
     document = (new JSDOM(html)).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
 
     g.window = {
-      ontouchstart: '',
       document,
+      setTimeout,
+      clearTimeout,
+      ontouchstart: '',
       navigator: {
         msPointerEnabled,
-        pointerEnabled
+        pointerEnabled,
       },
-      setTimeout,
-      clearTimeout
     };
     instance = new OribellaApi();
     instance.registerDefaultFlowStrategy();
@@ -58,7 +58,7 @@ describe('LongtapSwipe', () => {
       start: sandbox.spy(),
       update: sandbox.spy(),
       end: sandbox.spy(),
-      cancel: sandbox.spy()
+      cancel: sandbox.spy(),
     };
 
     target = document.querySelector('.target') as Element;
@@ -77,8 +77,8 @@ describe('LongtapSwipe', () => {
     const evt = dispatchMouseEvent(document, target);
     expect(listener.down).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
-      target
     }));
   });
 
@@ -96,8 +96,8 @@ describe('LongtapSwipe', () => {
     const evt = dispatchMouseEvent(document, target, 'mousemove', 250, 250, 250, 250);
     expect(listener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 250, y: 250 }, page: { x: 250, y: 250 } }] },
-      target
     }));
   });
 
@@ -109,8 +109,8 @@ describe('LongtapSwipe', () => {
     const evt = dispatchMouseEvent(document, target, 'mousemove', 300, 300, 300, 300);
     expect(listener.update).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 300, y: 300 }, page: { x: 300, y: 300 } }] },
-      target
     }));
   });
 
@@ -124,8 +124,8 @@ describe('LongtapSwipe', () => {
     expect(listener.end.callCount).to.equal(1);
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
+      target,
       data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },
-      target
     }));
   });
 
