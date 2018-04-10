@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+ import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi, Point } from 'oribella-framework';
 import { JSDOM } from 'jsdom';

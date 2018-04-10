@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, ListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Point, ListenerArgs } from 'oribella-framework';
 
 export class Observation {
   constructor(public point: Point, public timeStamp: number) { }

@@ -1,4 +1,4 @@
-import { OribellaApi, Options, RETURN_FLAG, Gesture, DefaultListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Point, RETURN_FLAG, DefaultListenerArgs, Gesture } from 'oribella-framework';
 
 export class TapOptions extends Options {
   public radiusThreshold: number = 2;

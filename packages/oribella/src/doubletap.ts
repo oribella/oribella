@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, DefaultListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Listener, DefaultListener, DefaultListenerArgs, Gesture, GestureFactory } from 'oribella-framework';
 import { Tap } from './tap';
 
 export class DoubletapOptions extends Options {

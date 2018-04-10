@@ -10,16 +10,7 @@
   "typings": "dist/commonjs/oribella-framework.d.ts",
   "scripts": {
     "lint": "tslint -c tslint.json --project tsconfig.json",
-    "pretest": "npm run lint",
-    "test": "aw -c test/aw.config.js",
-    "coverage": "aw -c test/aw.config.js && nyc report -r text-lcov --temp-directory ./coverage/.nyc_output | coveralls",
-    "clean": "rimraf dist",
-    "commonjs": "tsc -p tsconfig.build.json --module commonjs --outDir dist/commonjs",
-    "amd": "tsc -p tsconfig.build.json --module amd --outDir dist/amd",
-    "amd-bundled": "tsc -p tsconfig.build.json --module amd --outFile dist/oribella-framework.js",
-    "system": "tsc -p tsconfig.build.json --module system --outDir dist/system",
-    "es2015": "tsc -p tsconfig.build.json --module es2015 --outDir dist/es2015 --target es2015",
-    "build": "npm-run-all -n clean --parallel commonjs amd amd-bundled system es2015"
+    "test": "aw -c ../../aw.config.js -p framework --colors"
   },
   "author": "Christoffer Åström",
   "license": "MIT",

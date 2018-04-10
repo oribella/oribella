@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, ListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, Point, RETURN_FLAG, Gesture, ListenerArgs } from 'oribella-framework';
 
 export class PinchOptions extends Options {
   public pointers: number = 2;

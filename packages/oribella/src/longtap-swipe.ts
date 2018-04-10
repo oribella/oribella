@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, GestureFactory } from 'oribella-framework';
+import { OribellaApi, Options, Data, RETURN_FLAG, Listener, DefaultListener, DefaultListenerArgs, Gesture, GestureFactory } from 'oribella-framework';
 import { Longtap, LongtapListener, LongtapOptions } from './longtap';
 import { Swipe } from './swipe';
 

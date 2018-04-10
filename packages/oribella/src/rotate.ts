@@ -1,4 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, ListenerArgs, Point } from 'oribella-framework';
+import { OribellaApi, Options, Data, Point, ListenerArgs, RETURN_FLAG, Gesture } from 'oribella-framework';
 
 export class RotateOptions extends Options {
   public pointers: number = 2;

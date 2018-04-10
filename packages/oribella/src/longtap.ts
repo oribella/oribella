@@ -1,5 +1,4 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, ensureProperties, Listener, DefaultListenerArgs, Point } from 'oribella-framework';
-
+import { OribellaApi, Options, Data, RETURN_FLAG, Listener, ensureProperties, Point, DefaultListenerArgs, Gesture } from 'oribella-framework';
 export class LongtapOptions extends Options {
   public radiusThreshold: number = 2;
   public timeThreshold: number = 500;
