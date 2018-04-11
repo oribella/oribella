@@ -9,7 +9,7 @@ const globby = require('globby');
 const rimraf = util.promisify(require('rimraf'));
 const modules = ['amd', 'commonjs', 'system', 'esnext'];
 
-// const packages = () => globby(['packages/*', '!packages/framework'], { onlyDirectories: true });
+const packages = (glob) => globby(glob, { onlyDirectories: true });
 const clean = async () => rimraf(`packages/*/dist`);
 const compileModule = async (cwd, mod) => {
   const cmd = path.relative(cwd, 'node_modules/.bin/tsc');
@@ -18,7 +18,7 @@ const compileModule = async (cwd, mod) => {
 const compileModules = async (cwd) => Promise.all(modules.map(mod => compileModule(cwd, mod)));
 const compileFramework = async () => compileModules('packages/framework');
 const compileOribella = async () => compileModules('packages/oribella');
-const compileAureliaSortable = async () => compileModules('packages/aurelia-sortable');
+const compileAureliaPlugins = async () => packages(['packages/aurelia-*']).then(pkgs => Promise.all(pkgs.map(cwd => compileModules(cwd))));
 // const compile = async () => packages().then(pkgs => Promise.all(pkgs.map(cwd => compileModules(cwd))));
 
 (async () => {
@@ -26,7 +26,7 @@ const compileAureliaSortable = async () => compileModules('packages/aurelia-sort
     await clean()
     await compileFramework();
     await compileOribella();
-    await compileAureliaSortable();
+    await compileAureliaPlugins();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
