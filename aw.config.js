@@ -35,6 +35,8 @@ const argv = yargs
         opt.basePath = ''
         opt.package = '';
       }
+    } else {
+      defaultRequire.push('./packages/aurelia-sortable/test/setup.ts');
     }
     return opt;
   })
@@ -49,10 +51,6 @@ module.exports = {
     babel: false,
     extension: ['.ts'],
     include: `${argv.opt.basePath}${argv.opt.package}src`,
-  },
-  mocha: {
-    // reporter: 'min',
-    bail: false,
   },
   coverage: true,
 };
