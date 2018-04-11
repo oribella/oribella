@@ -43,7 +43,7 @@ describe('Rotate', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
     instance.registerDefaultFlowStrategy();
     registerRotate(instance);
     instance.activate();

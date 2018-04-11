@@ -10,7 +10,7 @@ describe('Sortable', () => {
   const groups = [{}];
   const bindings = {
     groups,
-    allowedDragSelectors
+    allowedDragSelectors,
   };
   const template = `
 <ul oa-sortable="items.bind: groups;
@@ -60,15 +60,15 @@ describe('Sortable', () => {
     await component.create(bootstrap);
   });
 
+  afterEach(() => {
+    component.dispose();
+  });
+
   it('should have bindable items', () => {
     expect(component.viewModel.items).to.equal(bindings.groups);
   });
 
   it('should handle allow selector', () => {
     expect(component.viewModel.allowDrag({ evt: { target } })).to.be.true;
-  });
-
-  afterEach(() => {
-    component.dispose();
   });
 });

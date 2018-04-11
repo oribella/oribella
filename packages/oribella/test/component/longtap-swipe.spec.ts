@@ -47,7 +47,7 @@ describe('LongtapSwipe', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
     instance.registerDefaultFlowStrategy();
     registerLongtap(instance);
     registerSwipe(instance);

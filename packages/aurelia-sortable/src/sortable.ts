@@ -43,10 +43,10 @@ export class Sortable {
       return false;
     }
     if (this.allowedDragSelectors.length &&
-      this.allowedDragSelectors.filter((selector) => matchesSelector(target, selector)).length === 0) {
+      this.allowedDragSelectors.filter(selector => matchesSelector(target, selector)).length === 0) {
       return false;
     }
-    if (this.disallowedDragSelectors.filter((selector) => matchesSelector(target, selector)).length !== 0) {
+    if (this.disallowedDragSelectors.filter(selector => matchesSelector(target, selector)).length !== 0) {
       return false;
     }
     if (target.isContentEditable) {
@@ -64,7 +64,7 @@ export class Sortable {
     position: new Point(0, 0),
     width: 0,
     height: 0,
-    display: null
+    display: null,
   };
   public sortableDepth: number = -1;
   public isDisabled: boolean = false;
@@ -74,7 +74,6 @@ export class Sortable {
   private removeListener: () => void;
   private downClientPoint: Point = new Point(0, 0);
   private currentClientPoint: Point = new Point(0, 0);
-  private boundaryRect: Rect;
   private scrollRect: Rect;
   private rootSortable: Sortable;
   private rootSortableRect: Rect;
@@ -154,8 +153,7 @@ export class Sortable {
     this.rootSortable = utils.getRootSortable(this);
     this.rootSortableRect = this.rootSortable.element.getBoundingClientRect();
     this.childSortables = utils.getChildSortables(this.rootSortable);
-    this.childSortables.forEach((s) => s.isDisabled = (this.sortableDepth !== s.sortableDepth || (fromVM.typeFlag & s.typeFlag) === 0));
-    this.boundaryRect = utils.getBoundaryRect(this.rootSortableRect, window);
+    this.childSortables.forEach(s => s.isDisabled = (this.sortableDepth !== s.sortableDepth || (fromVM.typeFlag & s.typeFlag) === 0));
     this.lastElementFromPointRect = element.getBoundingClientRect();
   }
   public down({ evt, data: { pointers: [{ client }] }, target }: DefaultListenerArgs) {
@@ -190,7 +188,7 @@ export class Sortable {
     }
     utils.removeDragClone(this.dragClone);
     this.autoScroll.deactivate();
-    this.childSortables.forEach((s) => s.isDisabled = false);
+    this.childSortables.forEach(s => s.isDisabled = false);
     this.onStop(this.move);
   }
 }

@@ -40,7 +40,7 @@ describe('Tap', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
     instance.registerDefaultFlowStrategy();
     registerTap(instance);
     instance.activate();

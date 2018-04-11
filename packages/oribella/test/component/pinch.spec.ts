@@ -42,7 +42,7 @@ describe('Pinch', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
     instance.registerDefaultFlowStrategy();
     registerPinch(instance);
     instance.activate();

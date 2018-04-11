@@ -27,7 +27,7 @@ describe('OribellaApi', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
   });
 
   afterEach(() => {

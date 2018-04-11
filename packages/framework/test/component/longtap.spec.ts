@@ -46,7 +46,7 @@ describe('Longtap', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
     instance.registerDefaultFlowStrategy();
     registerLongtap(instance);
     instance.activate();

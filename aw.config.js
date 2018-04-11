@@ -3,6 +3,9 @@
 const yargs = require('yargs');
 const path = require('path');
 
+const setup = path.resolve(__dirname, 'setup.ts');
+const defaultRequire = ['ts-node/register', setup];
+
 const argv = yargs
   .options({
     'opt.basePath': {
@@ -15,6 +18,12 @@ const argv = yargs
       type: 'string',
       default: '*',
       alias: 'p',
+    },
+    require: {
+      description: 'Require',
+      type: 'array',
+      default: [],
+      alias: 'r',
     },
   })
   .coerce('opt', (opt) => {
@@ -33,16 +42,16 @@ const argv = yargs
 
 module.exports = {
   glob: [`${argv.opt.basePath}${argv.opt.package}test/**/*.spec.ts`],
-  src: [`${argv.opt.basePath}${argv.opt.package}src/**/!(oribella)*.ts`],
+  src: [`${argv.opt.basePath}${argv.opt.package}src/**/*(!oribella).ts`],
   watchGlob: [`${argv.opt.basePath}${argv.opt.package}src/**/*.ts`, `${argv.opt.basePath}${argv.opt.package}test/**/*.spec.ts`],
   nyc: {
-    require: ['ts-node/register', path.resolve(__dirname, 'setup.ts')],
+    require: [...defaultRequire, ...argv.require],
     babel: false,
     extension: ['.ts'],
     include: `${argv.opt.basePath}${argv.opt.package}src`,
   },
   mocha: {
-    reporter: 'min',
+    // reporter: 'min',
     bail: false,
   },
   coverage: true,

@@ -1,4 +1,4 @@
-import {use} from 'chai';
-import * as sinonChai from 'sinon-chai';
 import 'aurelia-polyfills';
-use(sinonChai);
+import { globalize } from 'aurelia-pal-nodejs';
+
+globalize();

@@ -38,7 +38,7 @@ describe('Swipe', () => {
         pointerEnabled,
       },
     };
-    instance = new OribellaApi();
+    instance = new OribellaApi(document);
     instance.registerDefaultFlowStrategy();
     registerSwipe(instance);
     instance.activate();
