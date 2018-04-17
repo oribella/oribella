@@ -1,0 +1,14 @@
+{
+  "docs": {
+    "Getting Started": [
+      "introduction"
+    ],
+    "Gestures": [
+
+    ],
+    "Plugins": [
+      "aurelia-sortable",
+      "aurelia-gestures"
+    ]
+  }
+}

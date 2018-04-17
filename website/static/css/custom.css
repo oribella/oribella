@@ -1,0 +1,34 @@
+/* your custom css */
+.homeContainer, .fixedHeaderContainer {
+    min-height: 50px;
+    background: linear-gradient(90deg, #ad0aad 0%, #681c91 100%);
+}
+
+.navigationSlider .slidingNav ul li a[href^="http"] {
+    font-family: FontAwesome;
+    font-size: 1.3em;
+    padding: 0 5px;
+    margin-left: 5px;
+}
+
+.projectLogo {
+    display: block;
+}
+
+footer.nav-footer {
+    background: #5d5d5d;
+}
+
+footer .sitemap {
+    max-width: 680px;
+}
+
+.container .wrapper h2 {
+    font-variant: small-caps;
+    font-weight: 200;
+}
+
+.container .gridBlock .blockContent p {
+    text-align: left;
+    color: #666;
+}
