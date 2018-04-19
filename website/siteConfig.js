@@ -31,13 +31,13 @@ const siteConfig = {
     'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
   ],
   repoUrl: 'https://github.com/oribella/oribella',
-  algolia: {
-    apiKey: 'f828f1413be7483525f2eee73193dd5d',
-    indexName: 'oribella',
-    algoliaOptions: {
-      hitsPerPage: 7,
-    },
-  },
+  // algolia: {
+  //   apiKey: 'f828f1413be7483525f2eee73193dd5d',
+  //   indexName: 'oribella',
+  //   algoliaOptions: {
+  //     hitsPerPage: 7,
+  //   },
+  // },
 };
 
 module.exports = siteConfig;
