@@ -1,4 +1,4 @@
-import { Point, matchesSelector } from 'oribella-framework';
+import { Point, matchesSelector } from 'oribella';
 import { Sortable, SortableItem, SORTABLE, SORTABLE_ITEM, SORTABLE_ATTR } from './sortable';
 
 export type SortableItemElement = HTMLElement & { au: { [index: string]: { viewModel: SortableItem } } };
@@ -10,19 +10,19 @@ export interface AxisFlag {
 export const AxisFlag = {
   X: 'x' as 'x',
   Y: 'y' as 'y',
-  XY: '' as ''
+  XY: '' as '',
 };
 
 export enum LockedFlag {
   From = 1,
   To = 2,
-  FromTo = 3
+  FromTo = 3,
 }
 
 export enum MoveFlag {
   Invalid = 0,
   Valid = 1,
-  ValidNewList = 2
+  ValidNewList = 2,
 }
 
 export interface Move {
@@ -333,5 +333,5 @@ export const utils = {
   getChildSortables(rootSortable: Sortable) {
     const elements = rootSortable.element.querySelectorAll(`${SORTABLE_ATTR}`);
     return Array.from(elements).map((e) => (e as SortableElement).au[SORTABLE].viewModel);
-  }
+  },
 };

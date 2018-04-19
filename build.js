@@ -20,12 +20,19 @@ const compileFramework = async () => compileModules('packages/framework');
 const compileOribella = async () => compileModules('packages/oribella');
 const compileAureliaPlugins = async () => packages(['packages/aurelia-*']).then(pkgs => Promise.all(pkgs.map(cwd => compileModules(cwd))));
 // const compile = async () => packages().then(pkgs => Promise.all(pkgs.map(cwd => compileModules(cwd))));
+const bundleOribella = async () => {
+  const cwd = 'packages/oribella';
+  const cmd = path.relative(cwd, 'node_modules/.bin/rollup');
+  const cfg = path.resolve(__dirname, 'rollup.config.js');
+  return exec(`${cmd} -c ${cfg}`, { cwd });
+}
 
 (async () => {
   try {
     await clean()
     await compileFramework();
     await compileOribella();
+    await bundleOribella();
     await compileAureliaPlugins();
   } catch (err) {
     console.error(err);
@@ -34,3 +41,5 @@ const compileAureliaPlugins = async () => packages(['packages/aurelia-*']).then(
   }
   process.exitCode = 0;
 })();
+
+//external: ['oribella', 'oribella-framework', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-templating', 'aurelia-templating-resources', 'tslib'],

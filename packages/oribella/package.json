@@ -6,9 +6,11 @@
     "type": "git",
     "url": "https://github.com/oribella/oribella"
   },
-  "main": "dist/commonjs/oribella.js",
-  "typings": "dist/commonjs/oribella.d.ts",
+  "main": "dist/umd/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/umd/index.d.ts",
   "scripts": {
+    "build": "rollup -c ../../rollup.config.js",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "test": "aw -c ../../aw.config.js  -p framework --colors"
   },

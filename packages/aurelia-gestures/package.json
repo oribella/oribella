@@ -6,9 +6,11 @@
     "type": "git",
     "url": "https://github.com/oribella/aurelia-gestures"
   },
-  "main": "dist/commonjs/oribella-aurelia-gestures.js",
-  "typings": "dist/commonjs/oribella-aurelia-gestures.d.ts",
+  "main": "dist/umd/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/umd/index.d.ts",
   "scripts": {
+    "build": "rollup -c ../../rollup.config.js",
     "lint": "tslint -c tslint.json --project tsconfig.json",
     "test": "aw -c ../../aw.config.js -p aurelia-gestures --colors"
   },
@@ -22,9 +24,9 @@
     "registry": "npm",
     "jspmPackage": true,
     "main": "index",
-    "format": "amd",
+    "format": "umd",
     "directories": {
-      "dist": "dist/amd"
+      "dist": "dist/umd"
     },
     "peerDependencies": {
       "oribella": "^0.8.2",

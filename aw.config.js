@@ -4,7 +4,7 @@ const yargs = require('yargs');
 const path = require('path');
 
 const setup = path.resolve(__dirname, 'setup.ts');
-const defaultRequire = ['ts-node/register', setup];
+const defaultRequire = ['ts-node/register/transpile-only', setup];
 
 const argv = yargs
   .options({
@@ -42,7 +42,7 @@ const argv = yargs
 
 module.exports = {
   glob: [`${argv.opt.basePath}${argv.opt.package}test/**/*.spec.ts`],
-  src: [`${argv.opt.basePath}${argv.opt.package}src/**/*(!oribella).ts`],
+  src: [`${argv.opt.basePath}${argv.opt.package}src/**/*(!index).ts`],
   watchGlob: [`${argv.opt.basePath}${argv.opt.package}src/**/*.ts`, `${argv.opt.basePath}${argv.opt.package}test/**/*.spec.ts`],
   nyc: {
     require: [...defaultRequire, ...argv.require],
