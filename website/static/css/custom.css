@@ -1,7 +1,7 @@
 /* your custom css */
 .homeContainer, .fixedHeaderContainer {
     min-height: 50px;
-    background: linear-gradient(90deg, #ad0aad 0%, #681c91 100%);
+    background: linear-gradient(90deg, #8C088C 0%, #681c91 100%);
 }
 
 .navigationSlider .slidingNav ul li a[href^="http"] {
@@ -31,4 +31,10 @@ footer .sitemap {
 .container .gridBlock .blockContent p {
     text-align: left;
     color: #666;
+}
+
+@media only screen and (min-width: 1200px) {
+  .homeContainer .homeWrapper .projectLogo {
+    padding: 2em 0px 4em;
+  }
 }

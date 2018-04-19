@@ -1,4 +1,7 @@
 {
+	"scripts": {
+		"start": "cd website && npm start"
+	},
 	"devDependencies": {
 		"@types/chai": "^4.1.2",
 		"@types/jsdom": "^11.0.4",
