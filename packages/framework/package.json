@@ -1,6 +1,6 @@
 {
   "name": "oribella-framework",
-  "version": "0.10.2",
+  "version": "0.10.3",
   "description": "Normalizes event flows into an understandable consistent api",
   "repository": {
     "type": "git",

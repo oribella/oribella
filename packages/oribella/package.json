@@ -29,16 +29,16 @@
       "dist": "dist/amd"
     },
     "peerDependencies": {
-      "oribella-framework": "^0.10.0",
+      "oribella-framework": "^0.10.3",
       "tslib": "^1.5.0"
     },
     "dependencies": {
-      "oribella-framework": "^0.10.0",
+      "oribella-framework": "^0.10.3",
       "tslib": "^1.5.0"
     }
   },
   "dependencies": {
-    "oribella-framework": "^0.10.1",
+    "oribella-framework": "^0.10.3",
     "tslib": "^1.5.0"
   }
 }
