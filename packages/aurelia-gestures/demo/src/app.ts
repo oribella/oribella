@@ -6,7 +6,7 @@ export class App {
 
   public configureRouter(config: RouterConfiguration, router: Router) {
     config.map([
-      { route: ['', 'gestures'], name: 'gestures', moduleId: PLATFORM.moduleName('gestures', 'gestures'), nav: true, title: 'Gestures' }
+      { route: ['', 'gestures'], name: 'gestures', moduleId: PLATFORM.moduleName('gestures', 'gestures'), nav: true, title: 'Gestures' },
     ]);
     this.router = router;
   }
