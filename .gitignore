@@ -10,3 +10,4 @@ website/i18n/*
 !website/i18n/en.json
 .DS_Store
 .rpt2_cache
+aurelia-*-demo

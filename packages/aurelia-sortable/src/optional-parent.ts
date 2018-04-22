@@ -1,4 +1,4 @@
-import {resolver, Container} from 'aurelia-dependency-injection';
+import { resolver, Container } from 'aurelia-dependency-injection';
 
 @resolver()
 export class OptionalParent {

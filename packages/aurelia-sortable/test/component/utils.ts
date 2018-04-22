@@ -13,7 +13,7 @@ export function dispatchMouseEvent(
   (evt as any).pageX = pageX;
   (evt as any).pageY = pageY;
   evt.initMouseEvent(type,
-    true, true, document.defaultView, 0, 0, 0, clientX, clientY, false, false, false, false, button, null);
+                     true, true, document.defaultView, 0, 0, 0, clientX, clientY, false, false, false, false, button, null);
   target.dispatchEvent(evt);
   return evt;
 }
@@ -36,7 +36,7 @@ export function dispatchTouchEvent(
       pageY: p.page.y,
       clientX: p.client.x,
       clientY: p.client.y,
-      identifier: p.identifier
+      identifier: p.identifier,
     };
   });
   evt.touches = touches.map((p) => {
@@ -45,7 +45,7 @@ export function dispatchTouchEvent(
       pageY: p.page.y,
       clientX: p.client.x,
       clientY: p.client.y,
-      identifier: p.identifier
+      identifier: p.identifier,
     };
   });
   target.dispatchEvent(evt);

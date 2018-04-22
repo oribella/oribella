@@ -4,7 +4,7 @@ const siteConfig = {
   tagline: 'Gestures, for everyone, everywhere',
   disableTitleTagline: true,
   url: 'https://oribella.github.io/oribella',
-  baseUrl: '/oribella/',
+  baseUrl: './',
   projectName: 'oribella',
   organizationName: 'oribella',
   headerLinks: [

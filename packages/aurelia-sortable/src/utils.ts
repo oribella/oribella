@@ -98,7 +98,7 @@ export interface DragClone {
   width: number;
   height: number;
   display: string | null;
-};
+}
 
 export const utils = {
   hideDragClone(dragClone: DragClone) {
@@ -273,7 +273,7 @@ export const utils = {
       },
       get height() {
         return this.bottom - this.top;
-      }
+      },
     };
   },
   getScrollDirection(axisFlag: string, scrollSensitivity: number, { x, y }: Point, { left, top, right, bottom }: Rect): ScrollDirection {
