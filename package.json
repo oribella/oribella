@@ -3,6 +3,7 @@
 		"start": "cd website && npm start",
 		"bootstrap": "lerna bootstrap --hoist",
 		"build": "lerna run build",
+		"build:website": "cd website && npm run build",
 		"lint": "lerna run lint",
 		"test": "lerna run test"
 	},
