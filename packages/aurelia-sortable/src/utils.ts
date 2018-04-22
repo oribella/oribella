@@ -4,10 +4,8 @@ import { Sortable, SortableItem, SORTABLE, SORTABLE_ITEM, SORTABLE_ATTR } from '
 export type SortableItemElement = HTMLElement & { au: { [index: string]: { viewModel: SortableItem } } };
 export type SortableElement = HTMLElement & { au: { [index: string]: { viewModel: Sortable } } };
 
-// tslint:disable-next-line:no-empty-interface
-export interface AxisFlag {
-}
-export const AxisFlag = {
+export interface AXIS_FLAG {}
+export const AXIS_FLAG = {
   X: 'x' as 'x',
   Y: 'y' as 'y',
   XY: '' as '',
@@ -34,7 +32,7 @@ export interface Move {
   toIndex: number;
 }
 
-export const DefaultInvalidMove = { flag: MoveFlag.Invalid, fromItems: [], fromItem: null, fromIndex: -1, toItems: [], toIndex: -1 };
+export const DEFAULT_INVALID_MOVE = { flag: MoveFlag.Invalid, fromItems: [], fromItem: null, fromIndex: -1, toItems: [], toIndex: -1 };
 
 export interface WindowDimension {
   innerWidth: number;
@@ -115,6 +113,7 @@ export const utils = {
       if (matchesSelector(node, selector)) {
         return node;
       }
+      // tslint:disable-next-line:no-parameter-reassignment
       node = node.parentNode;
     }
     return null;
@@ -126,33 +125,33 @@ export const utils = {
     let changedToSortable = false;
     const fromVM = dragClone.viewModel;
     if (!fromVM) {
-      return DefaultInvalidMove;
+      return DEFAULT_INVALID_MOVE;
     }
     if (typeof toVM.lockedFlag === 'number' && (toVM.lockedFlag & LockedFlag.To) !== 0) {
-      return DefaultInvalidMove;
+      return DEFAULT_INVALID_MOVE;
     }
     const fromSortable = fromVM.parentSortable;
     if (!fromSortable) {
-      return DefaultInvalidMove;
+      return DEFAULT_INVALID_MOVE;
     }
     let toSortable = toVM.parentSortable;
     if (!toSortable) {
-      return DefaultInvalidMove;
+      return DEFAULT_INVALID_MOVE;
     }
     const fromItem = fromVM.item;
     const toItem = toVM.item;
     if (toVM.childSortable && fromSortable.sortableDepth !== toSortable.sortableDepth) {
       if (fromSortable.sortableDepth !== toVM.childSortable.sortableDepth) {
-        return DefaultInvalidMove;
+        return DEFAULT_INVALID_MOVE;
       }
       toSortable = toVM.childSortable;
       changedToSortable = true;
     }
     if (fromVM.parentSortable !== toSortable && (fromVM.typeFlag & toSortable.typeFlag) === 0) {
-      return DefaultInvalidMove;
+      return DEFAULT_INVALID_MOVE;
     }
     if (fromSortable.sortableDepth !== toSortable.sortableDepth) {
-      return DefaultInvalidMove;
+      return DEFAULT_INVALID_MOVE;
     }
     const fromItems = fromSortable.items;
     const fromIndex = fromItems.indexOf(fromItem);
@@ -165,9 +164,9 @@ export const utils = {
     toItems.splice(toIndex, 0, removedFromItem);
     if (changedToSortable) {
       fromVM.parentSortable = toSortable;
-      return { flag: MoveFlag.ValidNewList, fromItems, fromItem, fromIndex, toItems, toIndex };
+      return { fromItems, fromItem, fromIndex, toItems, toIndex, flag: MoveFlag.ValidNewList  };
     }
-    return { flag: MoveFlag.Valid, fromItems, fromItem, fromIndex, toItems, toIndex };
+    return { fromItems, fromItem, fromIndex, toItems, toIndex, flag: MoveFlag.Valid  };
   },
   pointInside({ top, right, bottom, left }: Rect, { x, y }: Point) {
     return x >= left &&
@@ -175,11 +174,13 @@ export const utils = {
       y >= top &&
       y <= bottom;
   },
-  elementFromPoint({ x, y }: Point, selector: string, sortableElement: Element, dragClone: DragClone, axisFlag: AxisFlag) {
-    if (axisFlag === AxisFlag.X) {
+  elementFromPoint({ x, y }: Point, selector: string, sortableElement: Element, dragClone: DragClone, axisFlag: AXIS_FLAG) {
+    if (axisFlag === AXIS_FLAG.X) {
+      // tslint:disable-next-line:no-parameter-reassignment
       y = dragClone.position.y + dragClone.height / 2;
     }
-    if (axisFlag === AxisFlag.Y) {
+    if (axisFlag === AXIS_FLAG.Y) {
+      // tslint:disable-next-line:no-parameter-reassignment
       x = dragClone.position.x + dragClone.width / 2;
     }
     let element = document.elementFromPoint(x, y);
@@ -204,6 +205,7 @@ export const utils = {
         const offsetParentRect = sortableElement.offsetParent.getBoundingClientRect();
         offset.left += offsetParentRect.left;
         offset.top += offsetParentRect.top;
+        // tslint:disable-next-line:no-parameter-reassignment
         sortableElement = sortableElement.offsetParent as HTMLElement;
       }
     }
@@ -230,10 +232,10 @@ export const utils = {
     if (!dragClone.element) {
       return;
     }
-    if (axisFlag === AxisFlag.X || axisFlag === AxisFlag.XY) {
+    if (axisFlag === AXIS_FLAG.X || axisFlag === AXIS_FLAG.XY) {
       dragClone.position.x = currentClientPoint.x + dragClone.offset.x + pageXOffset;
     }
-    if (axisFlag === AxisFlag.Y || axisFlag === AxisFlag.XY) {
+    if (axisFlag === AXIS_FLAG.Y || axisFlag === AXIS_FLAG.XY) {
       dragClone.position.y = currentClientPoint.y + dragClone.offset.y + pageYOffset;
     }
 
@@ -288,10 +290,10 @@ export const utils = {
     } else if (y <= top + scrollSensitivity) {
       direction.y = -1;
     }
-    if (axisFlag === AxisFlag.X) {
+    if (axisFlag === AXIS_FLAG.X) {
       direction.y = 0;
     }
-    if (axisFlag === AxisFlag.Y) {
+    if (axisFlag === AXIS_FLAG.Y) {
       direction.x = 0;
     }
     return direction;
@@ -299,9 +301,8 @@ export const utils = {
   getScrollMaxPos(sortableElement: Element, sortableRect: Rect, scrollElement: Element, { scrollLeft, scrollTop, scrollWidth, scrollHeight }: ScrollRect, scrollRect: Rect, { innerWidth, innerHeight }: WindowDimension): Point {
     if (sortableElement.contains(scrollElement)) {
       return new Point(scrollWidth - scrollRect.width, scrollHeight - scrollRect.height);
-    } else {
-      return new Point(sortableRect.right + scrollLeft - innerWidth, sortableRect.bottom + scrollTop - innerHeight);
     }
+    return new Point(sortableRect.right + scrollLeft - innerWidth, sortableRect.bottom + scrollTop - innerHeight);
   },
   getScrollFrames(direction: ScrollDirection, maxPos: Point, { scrollLeft, scrollTop }: ScrollOffset, scrollSpeed: number): ScrollFrames {
     let x = Math.max(0, Math.ceil(Math.abs(maxPos.x - scrollLeft) / scrollSpeed));
@@ -319,19 +320,22 @@ export const utils = {
   getSortableDepth(sortable: Sortable) {
     let depth = 0;
     while (sortable.parentSortable) {
+      // tslint:disable-next-line:no-increment-decrement
       ++depth;
+      // tslint:disable-next-line:no-parameter-reassignment
       sortable = sortable.parentSortable;
     }
     return depth;
   },
   getRootSortable(sortable: Sortable) {
     while (sortable.parentSortable) {
+      // tslint:disable-next-line:no-parameter-reassignment
       sortable = sortable.parentSortable;
     }
     return sortable;
   },
   getChildSortables(rootSortable: Sortable) {
     const elements = rootSortable.element.querySelectorAll(`${SORTABLE_ATTR}`);
-    return Array.from(elements).map((e) => (e as SortableElement).au[SORTABLE].viewModel);
+    return Array.from(elements).map(e => (e as SortableElement).au[SORTABLE].viewModel);
   },
 };

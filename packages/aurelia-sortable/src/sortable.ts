@@ -4,7 +4,7 @@ import { Repeat } from 'aurelia-templating-resources';
 import { inject } from 'aurelia-dependency-injection';
 import { oribella, Swipe, matchesSelector, RETURN_FLAG, Point, DefaultListenerArgs } from 'oribella';
 import { OptionalParent } from './optional-parent';
-import { utils, SortableItemElement, SortableElement, DragClone, Rect, PageScrollOffset, AxisFlag, LockedFlag, MoveFlag, Move, DefaultInvalidMove } from './utils';
+import { utils, SortableItemElement, SortableElement, DragClone, Rect, PageScrollOffset, AXIS_FLAG, LockedFlag, MoveFlag, Move, DEFAULT_INVALID_MOVE } from './utils';
 import { AutoScroll } from './auto-scroll';
 
 export const SORTABLE = 'oa-sortable';
@@ -28,7 +28,7 @@ export class Sortable {
   @bindable public scroll: string | Element = 'document';
   @bindable public scrollSpeed: number = 10;
   @bindable public scrollSensitivity: number = 10;
-  @bindable public axis: string = AxisFlag.XY;
+  @bindable public axis: string = AXIS_FLAG.XY;
   @bindable public onStop: (move: Move) => void = () => { };
   @bindable public sortingClass: string = 'oa-sorting';
   @bindable public dragClass: string = 'oa-drag';
@@ -80,7 +80,7 @@ export class Sortable {
   private childSortables: Sortable[] = [];
   private lastElementFromPointRect: Rect;
   private target: Element;
-  private move: Move = DefaultInvalidMove;
+  private move: Move = DEFAULT_INVALID_MOVE;
 
   constructor(public element: Element, public parentSortable: Sortable, private autoScroll: AutoScroll) {
     this.sortableDepth = utils.getSortableDepth(this);
@@ -157,7 +157,7 @@ export class Sortable {
     this.lastElementFromPointRect = element.getBoundingClientRect();
   }
   public down({ evt, data: { pointers: [{ client }] }, target }: DefaultListenerArgs) {
-    this.move = DefaultInvalidMove;
+    this.move = DEFAULT_INVALID_MOVE;
     if (!this.isClosestSortable(evt.target as Node)) {
       return RETURN_FLAG.REMOVE;
     }

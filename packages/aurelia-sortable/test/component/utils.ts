@@ -22,8 +22,8 @@ export function dispatchTouchEvent(
   document: Document,
   target: Element,
   type: string = 'touchstart',
-  touches: Array<PointerData & { identifier: number }> = [{ page: new Point(100, 100), client: new Point(100, 100), identifier: 1 }],
-  changedTouches: Array<PointerData & { identifier: number }> = []) {
+  touches: PointerData[] = [{ page: new Point(100, 100), client: new Point(100, 100), identifier: 1 }],
+  changedTouches: PointerData[] = []) {
   const evt = document.createEvent('UIEvent') as any;
   evt.initUIEvent(type, true, true, window, 0);
   evt.altKey = false;

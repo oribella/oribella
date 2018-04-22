@@ -37,7 +37,9 @@ export class AutoScroll {
         scrollElement.scrollTop += scrollDeltaY;
       }
 
+      // tslint:disable-next-line:no-increment-decrement
       --scrollFrames.x;
+      // tslint:disable-next-line:no-increment-decrement
       --scrollFrames.y;
       if (scrollFrames.x <= 0 && scrollFrames.y <= 0) {
         this.active = false;
