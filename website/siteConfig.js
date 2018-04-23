@@ -1,4 +1,3 @@
-
 const siteConfig = {
   title: 'oribella',
   tagline: 'Gestures, for everyone, everywhere',
