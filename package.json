@@ -1,6 +1,7 @@
 {
 	"scripts": {
 		"start": "cd website && npm start",
+		"publish-gh-pages": "cd website && npm run publish-gh-pages",
 		"bootstrap": "lerna bootstrap --hoist",
 		"build": "lerna run build",
 		"build:website": "cd website && npm run build",
