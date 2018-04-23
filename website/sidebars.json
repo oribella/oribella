@@ -4,7 +4,13 @@
       "introduction"
     ],
     "Gestures": [
-
+      "tap",
+      "doubletap",
+      "longtap",
+      "longtap-swipe",
+      "swipe",
+      "pinch",
+      "rotate"
     ],
     "Plugins": [
       "aurelia-sortable",
