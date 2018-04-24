@@ -25,10 +25,14 @@ Go to the [website](https://oribella.github.io/oribella/) for more information.
 
 After cloning the mono repo
 
+### Installation
+
 Install root dependencies. (Most of the tooling)
 ```sh
 npm i
 ```
+
+### Bootstrap
 
 Bootstrap will call `lerna boostrap --hoist`
 
@@ -36,11 +40,15 @@ Bootstrap will call `lerna boostrap --hoist`
 npm run bootstrap
 ```
 
+### Lint
+
 Lint
 
 ```sh
 npm run lint
 ```
+
+### Test
 
 Test
 
@@ -50,9 +58,13 @@ Tests are running in Node with JSDOM
 npm test
 ```
 
+### Debugging
+
 For easy debugging using [vscode](https://code.visualstudio.com/download)
 
 Add a breakpoint and hit F5 and off you go...
+
+### Build
 
 To generate umd and es format:
 
