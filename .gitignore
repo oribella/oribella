@@ -2,7 +2,6 @@ lerna-debug.log
 node_modules
 dist
 coverage
-.vscode
 website/translated_docs
 website/build/
 website/node_modules
