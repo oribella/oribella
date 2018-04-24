@@ -58,7 +58,7 @@ npm test
 
 For easy debugging using [vscode](https://code.visualstudio.com/download)
 
-Add a breakpoint and hit F5 and off you go...
+Add a breakpoint in a `spec.ts` and hit F5 and off you go...
 
 ### Build
 
