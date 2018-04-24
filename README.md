@@ -42,15 +42,11 @@ npm run bootstrap
 
 ### Lint
 
-Lint
-
 ```sh
 npm run lint
 ```
 
 ### Test
-
-Test
 
 Tests are running in Node with JSDOM
 
