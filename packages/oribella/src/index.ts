@@ -7,7 +7,6 @@ import { registerLongtapSwipe } from './longtap-swipe';
 import { registerRotate } from './rotate';
 import { registerPinch } from './pinch';
 
-export * from 'oribella-framework';
 export const oribella = new OribellaApi();
 export * from './tap';
 export * from './doubletap';
@@ -26,3 +25,5 @@ registerSwipe(oribella);
 registerLongtapSwipe(oribella);
 registerRotate(oribella);
 registerPinch(oribella);
+
+export * from 'oribella-framework';

@@ -4,7 +4,7 @@
     "moduleResolution": "node",
     "target": "es5",
     "lib": [
-      "es2017",
+      "esnext",
       "dom"
     ],
     "noImplicitAny": true,
@@ -24,6 +24,7 @@
     "dist",
     "doc",
     "node_modules",
-    "test"
+    "test",
+    "webpack.config.js"
   ]
 }

@@ -4,10 +4,9 @@
     "moduleResolution": "node",
     "target": "es5",
     "lib": [
-      "es2017",
+      "esnext",
       "dom"
     ],
-    "importHelpers": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -17,7 +16,8 @@
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "noEmitHelpers": false,
-    "sourceMap": true
+    "sourceMap": true,
+    "importHelpers": true
   },
   "exclude": [
     ".vscode",
@@ -25,7 +25,6 @@
     "doc",
     "node_modules",
     "test",
-    "demo",
-    "demo/node_modules"
+    "webpack.config.js"
   ]
 }

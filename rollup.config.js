@@ -9,32 +9,31 @@ const dir = main.split('/').shift();
 const external = Object.keys(dependencies);
 rimraf.sync(dir);
 
-export default {
+export default [{
   input: 'src/index.ts',
-  output: [
-    { format: 'umd', file: `${dir}/umd/index.js`, name, sourcemap: true },
-    {
-      format: 'es',
-      file: `${dir}/es/index.js`,
-      plugins: [
-        typescript({
-          tsconfig: 'tsconfig.build.json',
-          tsconfigOverride: {
-            compilerOptions: {
-              target: 'esnext',
-            }
-          }
-        }),
-      ],
-      sourcemap: true,
-    }
-  ],
+  output: {
+    format: 'es',
+    file: `${dir}/es/index.js`,
+    sourcemap: true,
+  },
   plugins: [
     typescript({
-      tsconfig: 'tsconfig.build.json',
+      tsconfig: 'tsconfig.esnext.json',
     }),
-    // uglify(),
-    // filesize(),
   ],
   external,
-};
+}, {
+  input: 'src/index.ts',
+  output: {
+    format: 'umd',
+    file: `${dir}/umd/index.js`,
+    name,
+    sourcemap: true,
+  },
+  plugins: [
+    typescript({
+      tsconfig: 'tsconfig.es5.json',
+    })
+  ],
+  external
+}];
