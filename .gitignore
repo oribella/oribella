@@ -10,3 +10,4 @@ website/i18n/*
 .DS_Store
 .rpt2_cache
 aurelia-*-demo
+packages/.vscode
