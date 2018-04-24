@@ -15,8 +15,8 @@ npm i oribella
 ```js
 import { oribella, Tap, Swipe } from 'oribella';
 
-oribella.on(Tap, document, { end: () => console.log('tap!'); });
-oribella.on(Swipe, document, { update: () => console.log('swiping!'); });
+oribella.on(Tap, document, { end: () => console.log('tap!') });
+oribella.on(Swipe, document, { update: () => console.log('swiping!') });
 ```
 
-Go to the [docs](https://oribella.github.io/oribella/) for more information.
+Go to the [website](https://oribella.github.io/oribella/) for more information.
