@@ -51,7 +51,8 @@ npm test
 ```
 
 For easy debugging using [vscode](https://code.visualstudio.com/download)
-Add a breakpoing and hit F5 and off you go...
+
+Add a breakpoint and hit F5 and off you go...
 
 To generate umd and es format:
 
