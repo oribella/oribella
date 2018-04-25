@@ -1,23 +1,22 @@
 ![oribella](./website/static/img/oa.svg)
 
+> Gestures for everyone, everywhere
+
 A cross platform, cross browser, cross input gesture building platform with preconfigured gestures such as tap, longtap, doubletap, swipe, longtap-swipe, pinch and rotate.
 
-## Getting started
+This is a mono repo containing the following packages
 
-### Installation
+`/packages`
 
-```sh
-npm i oribella
-```
+  📦 `/framework` - Abstracts event flow strategies.
 
-### Usage
+  📦 `/oribella` - Preconfigured gestures.
 
-```js
-import { oribella, Tap, Swipe } from 'oribella';
+  📦 `/aurelia-sortable` - Sortable plugin for `Aurelia`.
 
-oribella.on(Tap, document, { end: () => console.log('tap!') });
-oribella.on(Swipe, document, { update: () => console.log('swiping!') });
-```
+  📦 `/aurelia-gestures` - Gestures plugin for `Aurelia`.
+
+### Getting started
 
 Go to the [website](https://oribella.github.io/oribella/) for more information.
 
