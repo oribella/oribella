@@ -8,6 +8,7 @@ NPM
 ```javascript
 npm i oribella-framework
 ```
+### Usage
 
 ```javascript
 import { OribellaApi } from 'oribella-framework';

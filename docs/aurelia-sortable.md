@@ -151,6 +151,18 @@ where `$event` has `event` and `item` properties.
 <div oa-sortable-item="type-flag.bind: 1">
 </div>
 ```
-You can use an abstract type flag to enable/disable moving between lists.
+You can use an abstract bit type flag to enable/disable moving between lists.
 This is useful for more advanced scenarios i.e multi nested sortables.
-Checkout the advanced demo for more insight.
+Checkout the advanced demo for more insight. It will evaluate
+
+`fromTypeFlag & toTypeFlag`
+
+If you want 4 exclusive types you can use for example
+
+1
+
+2
+
+4
+
+8
