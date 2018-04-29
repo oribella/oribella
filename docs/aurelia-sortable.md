@@ -148,7 +148,8 @@ where `$event` has `event` and `item` properties.
 ## typeFlag
 ```html
 <!-- Other bindings omitted -->
-<div oa-sortable-item="type-flag.bind: 1">
+<div oa-sortable="type-flag.bind: 1">
+  <div oa-sortable-item="type-flag.bind: 1"></div>
 </div>
 ```
 You can use an abstract bit type flag to enable/disable moving between lists.
