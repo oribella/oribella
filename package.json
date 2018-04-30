@@ -1,12 +1,12 @@
 {
 	"scripts": {
-		"start": "cd website && npm start",
-		"publish-gh-pages": "cd website && npm run publish-gh-pages",
 		"bootstrap": "lerna bootstrap --hoist",
 		"build": "lerna run build",
-		"build:website": "cd website && npm run build",
 		"lint": "lerna run lint",
-		"test": "lerna run test"
+    "test": "lerna run test",
+    "website:start": "cd website && npm start",
+    "website:build": "cd website && npm run build",
+		"website:publish": "cd website && npm run publish-gh-pages"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.3",
