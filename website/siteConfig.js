@@ -37,6 +37,7 @@ const siteConfig = {
      hitsPerPage: 7,
     },
   },
+  editUrl: 'https://github.com/oribella/oribella/tree/master/docs/',
 };
 
 module.exports = siteConfig;
