@@ -3,11 +3,11 @@
 		"bootstrap": "lerna bootstrap --hoist",
 		"build": "lerna run build",
 		"lint": "lerna run lint",
-		"test": "lerna run test",
+    "test": "lerna run test",
+    "website:install": "cd website && npm i",
 		"website:start": "cd website && npm start",
 		"website:build": "cd website && npm run build",
-		"website:publish": "cd website && npm run publish-gh-pages",
-		"postinstall": "npm run bootstrap"
+		"website:publish": "cd website && npm run publish-gh-pages"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.3",
