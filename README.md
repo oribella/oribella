@@ -18,7 +18,7 @@ This is a mono repo containing the following packages
 
 ### Getting started
 
-Go to the [website](https://oribella.github.io/oribella/) for more information.
+Go to the [website](https://oribella.netlify.com) for more information.
 
 ### Development
 
