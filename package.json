@@ -16,7 +16,7 @@
 		"@types/node": "^10.0.9",
 		"@types/sinon": "^4.3.3",
 		"@types/sinon-chai": "^2.7.31",
-		"after-work.js": "^4.2.0",
+		"after-work.js": "^4.2.1",
 		"aurelia-bootstrapper": "^2.2.0",
 		"aurelia-loader-nodejs": "^1.0.1",
 		"aurelia-pal-nodejs": "^1.1.0",
