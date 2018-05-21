@@ -34,7 +34,7 @@
 		"rollup-plugin-filesize": "^1.5.0",
 		"rollup-plugin-node-resolve": "^3.3.0",
 		"rollup-plugin-typescript2": "^0.14.0",
-		"rollup-plugin-uglify": "^3.0.0",
+		"rollup-plugin-uglify": "^4.0.0",
 		"sinon": "^5.0.7",
 		"sinon-chai": "^3.0.0",
 		"ts-node": "^6.0.3",
