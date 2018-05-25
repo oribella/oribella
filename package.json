@@ -14,7 +14,7 @@
 		"@types/jsdom": "^11.0.4",
 		"@types/mocha": "^5.2.0",
 		"@types/node": "^10.1.2",
-		"@types/sinon": "^4.3.3",
+		"@types/sinon": "^5.0.0",
 		"@types/sinon-chai": "^2.7.31",
 		"after-work.js": "^4.2.1",
 		"aurelia-bootstrapper": "^2.2.0",
