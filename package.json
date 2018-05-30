@@ -3,8 +3,8 @@
 		"bootstrap": "lerna bootstrap --hoist",
 		"build": "lerna run build",
 		"lint": "lerna run lint",
-    "test": "lerna run test",
-    "website:install": "cd website && npm i",
+		"test": "lerna run test",
+		"website:install": "cd website && npm i",
 		"website:start": "cd website && npm start",
 		"website:build": "cd website && npm run build",
 		"website:publish": "cd website && npm run publish-gh-pages"
