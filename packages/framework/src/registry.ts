@@ -12,9 +12,19 @@ interface Value {
 export class Registry {
   private gestures: Map<typeof Gesture, Value> = new Map<typeof Gesture, Value>();
   // tslint:disable-next-line:variable-name
-  public register<G extends Gesture<O, D, L>, O extends Options, L extends Listener<O, D>, D extends Data>(GestureClass: GestureFactory<G, O, D, L>, GestureOptions: OptionsFactory = Options, GestureListener: ListenerFactory<O, D> = Listener, GestureData: DataFactory = Data) {
+  public register<G extends Gesture<O, D, L>, O extends Options, L extends Listener<O, D>, D extends Data>(
+    GestureClass: GestureFactory<G, O, D, L>,
+    GestureOptions: OptionsFactory = Options,
+    GestureListener: ListenerFactory<O, D> = Listener,
+    GestureData: DataFactory = Data
+  ) {
     // tslint:disable-next-line:object-shorthand-properties-first
-    this.gestures.set(GestureClass as typeof Gesture, { GestureClass: (GestureClass as typeof Gesture), GestureOptions, GestureListener: (GestureListener as typeof Listener), GestureData });
+    this.gestures.set(GestureClass as typeof Gesture, {
+      GestureClass: GestureClass as typeof Gesture,
+      GestureOptions,
+      GestureListener: GestureListener as typeof Listener,
+      GestureData,
+    });
   }
   public getTypes() {
     return Array.from(this.gestures.keys());
@@ -24,7 +34,8 @@ export class Registry {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: DefaultListener) {
+    L extends Listener<O, D>
+  >(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: DefaultListener) {
     const val = this.gestures.get(GestureClass as typeof Gesture);
     if (!val) {
       throw new Error(`The type ${typeof GestureClass} has not been registered`);

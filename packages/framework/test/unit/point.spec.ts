@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import { Point } from '../../src/point';
 
 describe('Point', () => {
-
   it('should get distance between two points', () => {
     const p1 = new Point(4, 0);
     const p2 = new Point(0, 3);
@@ -20,5 +19,4 @@ describe('Point', () => {
     const p2 = p1.clone();
     expect(p2).to.deep.equal(p1);
   });
-
 });

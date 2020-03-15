@@ -4,23 +4,53 @@
     "next": "Next",
     "previous": "Previous",
     "tagline": "Gestures, for everyone, everywhere",
-    "aurelia-gestures": "Aurelia gestures",
-    "aurelia-sortable": "Aurelia sortable",
-    "doubletap": "Doubletap",
-    "framework": "Framework",
-    "introduction": "Introduction",
-    "longtap-swipe": "Longtap swipe",
-    "longtap": "Longtap",
-    "oribella": "Oribella",
-    "pinch": "Pinch",
-    "rotate": "Rotate",
-    "swipe": "Swipe",
-    "tap": "Tap",
-    "Docs": "Docs",
-    "": "",
-    "Getting Started": "Getting Started",
-    "Gestures": "Gestures",
-    "Plugins": "Plugins"
+    "docs": {
+      "aurelia-gestures": {
+        "title": "Aurelia gestures"
+      },
+      "aurelia-sortable": {
+        "title": "Aurelia sortable"
+      },
+      "doubletap": {
+        "title": "Doubletap"
+      },
+      "framework": {
+        "title": "Framework"
+      },
+      "introduction": {
+        "title": "Introduction"
+      },
+      "longtap-swipe": {
+        "title": "Longtap swipe"
+      },
+      "longtap": {
+        "title": "Longtap"
+      },
+      "oribella": {
+        "title": "Oribella"
+      },
+      "pinch": {
+        "title": "Pinch"
+      },
+      "rotate": {
+        "title": "Rotate"
+      },
+      "swipe": {
+        "title": "Swipe"
+      },
+      "tap": {
+        "title": "Tap"
+      }
+    },
+    "links": {
+      "Docs": "Docs",
+      "": ""
+    },
+    "categories": {
+      "Getting Started": "Getting Started",
+      "Gestures": "Gestures",
+      "Plugins": "Plugins"
+    }
   },
   "pages-strings": {
     "Help Translate|recruit community translators for your project": "Help Translate",

@@ -32,7 +32,14 @@ export interface Move {
   toIndex: number;
 }
 
-export const DEFAULT_INVALID_MOVE = { flag: MoveFlag.Invalid, fromItems: [], fromItem: null, fromIndex: -1, toItems: [], toIndex: -1 };
+export const DEFAULT_INVALID_MOVE = {
+  flag: MoveFlag.Invalid,
+  fromItems: [],
+  fromItem: null,
+  fromIndex: -1,
+  toItems: [],
+  toIndex: -1,
+};
 
 export interface WindowDimension {
   innerWidth: number;
@@ -164,17 +171,20 @@ export const utils = {
     toItems.splice(toIndex, 0, removedFromItem);
     if (changedToSortable) {
       fromVM.parentSortable = toSortable;
-      return { fromItems, fromItem, fromIndex, toItems, toIndex, flag: MoveFlag.ValidNewList  };
+      return { fromItems, fromItem, fromIndex, toItems, toIndex, flag: MoveFlag.ValidNewList };
     }
-    return { fromItems, fromItem, fromIndex, toItems, toIndex, flag: MoveFlag.Valid  };
+    return { fromItems, fromItem, fromIndex, toItems, toIndex, flag: MoveFlag.Valid };
   },
   pointInside({ top, right, bottom, left }: Rect, { x, y }: Point) {
-    return x >= left &&
-      x <= right &&
-      y >= top &&
-      y <= bottom;
+    return x >= left && x <= right && y >= top && y <= bottom;
   },
-  elementFromPoint({ x, y }: Point, selector: string, sortableElement: Element, dragClone: DragClone, axisFlag: AXIS_FLAG) {
+  elementFromPoint(
+    { x, y }: Point,
+    selector: string,
+    sortableElement: Element,
+    dragClone: DragClone,
+    axisFlag: AXIS_FLAG
+  ) {
     if (axisFlag === AXIS_FLAG.X) {
       // tslint:disable-next-line:no-parameter-reassignment
       y = dragClone.position.y + dragClone.height / 2;
@@ -194,10 +204,21 @@ export const utils = {
     return element;
   },
   canThrottle(lastElementFromPointRect: Rect, { x, y }: Point, { pageXOffset, pageYOffset }: PageScrollOffset) {
-    return lastElementFromPointRect &&
-      utils.pointInside(lastElementFromPointRect, { x: x + pageXOffset, y: y + pageYOffset } as Point);
+    return (
+      lastElementFromPointRect &&
+      utils.pointInside(lastElementFromPointRect, { x: x + pageXOffset, y: y + pageYOffset } as Point)
+    );
   },
-  addDragClone(dragClone: DragClone, sortableElement: HTMLElement, scrollElement: Element, target: HTMLElement, client: Point, dragZIndex: number, dragClass: string, { pageXOffset, pageYOffset }: PageScrollOffset) {
+  addDragClone(
+    dragClone: DragClone,
+    sortableElement: HTMLElement,
+    scrollElement: Element,
+    target: HTMLElement,
+    client: Point,
+    dragZIndex: number,
+    dragClass: string,
+    { pageXOffset, pageYOffset }: PageScrollOffset
+  ) {
     const targetRect = target.getBoundingClientRect();
     const offset = { left: 0, top: 0 };
     if (sortableElement.contains(scrollElement)) {
@@ -228,7 +249,12 @@ export const utils = {
     dragClone.element.style.top = dragClone.position.y + 'px';
     dragClone.parent.appendChild(dragClone.element);
   },
-  updateDragClone(dragClone: DragClone, currentClientPoint: Point, { pageXOffset, pageYOffset }: PageScrollOffset, axisFlag: string) {
+  updateDragClone(
+    dragClone: DragClone,
+    currentClientPoint: Point,
+    { pageXOffset, pageYOffset }: PageScrollOffset,
+    axisFlag: string
+  ) {
     if (!dragClone.element) {
       return;
     }
@@ -250,7 +276,10 @@ export const utils = {
     dragClone.element = null;
     dragClone.viewModel = null;
   },
-  ensureScroll(scroll: string | Element, sortableElement: Element): { scrollElement: Element, scrollListener: Element | Document } {
+  ensureScroll(
+    scroll: string | Element,
+    sortableElement: Element
+  ): { scrollElement: Element; scrollListener: Element | Document } {
     let scrollElement = sortableElement;
     let scrollListener: Element | Document = sortableElement;
     if (typeof scroll === 'string') {
@@ -278,7 +307,12 @@ export const utils = {
       },
     };
   },
-  getScrollDirection(axisFlag: string, scrollSensitivity: number, { x, y }: Point, { left, top, right, bottom }: Rect): ScrollDirection {
+  getScrollDirection(
+    axisFlag: string,
+    scrollSensitivity: number,
+    { x, y }: Point,
+    { left, top, right, bottom }: Rect
+  ): ScrollDirection {
     const direction: ScrollDirection = { x: 0, y: 0 };
     if (x >= right - scrollSensitivity) {
       direction.x = 1;
@@ -298,21 +332,31 @@ export const utils = {
     }
     return direction;
   },
-  getScrollMaxPos(sortableElement: Element, sortableRect: Rect, scrollElement: Element, { scrollLeft, scrollTop, scrollWidth, scrollHeight }: ScrollRect, scrollRect: Rect, { innerWidth, innerHeight }: WindowDimension): Point {
+  getScrollMaxPos(
+    sortableElement: Element,
+    sortableRect: Rect,
+    scrollElement: Element,
+    { scrollLeft, scrollTop, scrollWidth, scrollHeight }: ScrollRect,
+    scrollRect: Rect,
+    { innerWidth, innerHeight }: WindowDimension
+  ): Point {
     if (sortableElement.contains(scrollElement)) {
       return new Point(scrollWidth - scrollRect.width, scrollHeight - scrollRect.height);
     }
     return new Point(sortableRect.right + scrollLeft - innerWidth, sortableRect.bottom + scrollTop - innerHeight);
   },
-  getScrollFrames(direction: ScrollDirection, maxPos: Point, { scrollLeft, scrollTop }: ScrollOffset, scrollSpeed: number): ScrollFrames {
+  getScrollFrames(
+    direction: ScrollDirection,
+    maxPos: Point,
+    { scrollLeft, scrollTop }: ScrollOffset,
+    scrollSpeed: number
+  ): ScrollFrames {
     let x = Math.max(0, Math.ceil(Math.abs(maxPos.x - scrollLeft) / scrollSpeed));
     let y = Math.max(0, Math.ceil(Math.abs(maxPos.y - scrollTop) / scrollSpeed));
-    if (direction.x === 1 && scrollLeft >= maxPos.x ||
-      direction.x === -1 && scrollLeft === 0) {
+    if ((direction.x === 1 && scrollLeft >= maxPos.x) || (direction.x === -1 && scrollLeft === 0)) {
       x = 0;
     }
-    if (direction.y === 1 && scrollTop >= maxPos.y ||
-      direction.y === -1 && scrollTop === 0) {
+    if ((direction.y === 1 && scrollTop >= maxPos.y) || (direction.y === -1 && scrollTop === 0)) {
       y = 0;
     }
     return new Point(x, y);

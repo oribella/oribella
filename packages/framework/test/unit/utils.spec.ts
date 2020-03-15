@@ -53,11 +53,9 @@ describe('Utils', () => {
 
     const evt1 = { which: 1000 };
     expect(isValidMouseButton(evt1, [1000])).to.equal(true);
-
   });
 
   describe('Matches selector', () => {
-
     it('should call native matchesSelector', () => {
       const element = { matchesSelector: sandbox.spy() };
       matchesSelector(element, 'foo');
@@ -87,7 +85,5 @@ describe('Utils', () => {
       matchesSelector(element, 'foo');
       expect(element.oMatchesSelector).to.have.been.calledWithExactly('foo');
     });
-
   });
-
 });

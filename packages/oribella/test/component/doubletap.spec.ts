@@ -32,7 +32,7 @@ describe('Doubletap', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    document = (new JSDOM(html, { url: 'http://localhost' })).window.document;
+    document = new JSDOM(html, { url: 'http://localhost' }).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
@@ -76,11 +76,13 @@ describe('Doubletap', () => {
     dispatchMouseEvent(document, target);
     const evt = dispatchMouseEvent(document, target, 'mouseup');
     expect(listener.end.callCount).to.equal(1);
-    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
-      evt,
-      target,
-      data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
-    }));
+    expect(listener.end).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
+      })
+    );
   });
 
   it('should reset after time threshold', () => {
@@ -91,5 +93,4 @@ describe('Doubletap', () => {
     setTimeout.callArg(0);
     expect(listener.end).not.to.have.been.calledWithExactly();
   });
-
 });

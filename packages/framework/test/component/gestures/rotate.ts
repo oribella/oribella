@@ -30,7 +30,11 @@ export class Rotate extends Gesture<RotateOptions, RotateData> {
     data.rotation = this.calculateRotation(this.startPoint0, this.startPoint1, this.currentPoint0, this.currentPoint1);
   }
   public start(args: ListenerArgs<RotateData>): number {
-    const { data: { pointers: [{ page: p0 }, { page: p1 }] } } = args;
+    const {
+      data: {
+        pointers: [{ page: p0 }, { page: p1 }],
+      },
+    } = args;
     this.startPoint0 = p0;
     this.startPoint1 = p1;
     return this.listener.down(args);
@@ -42,9 +46,7 @@ export class Rotate extends Gesture<RotateOptions, RotateData> {
     if (Math.abs(data.rotation) < this.listener.options.rotationThreshold) {
       return RETURN_FLAG.IDLE;
     }
-    return !this.startEmitted ?
-      this.listener.start(args) :
-      this.listener.update(args);
+    return !this.startEmitted ? this.listener.start(args) : this.listener.update(args);
   }
   public end(args: ListenerArgs<RotateData>) {
     return this.listener.end(args);

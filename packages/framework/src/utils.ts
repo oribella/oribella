@@ -43,38 +43,43 @@ export interface Supports {
 
 export const SUPPORTS: Supports = {
   get touchEnabled() {
-    return ('ontouchstart' in window);
+    return 'ontouchstart' in window;
   },
   get pointerEnabled() {
-    return (window && window.navigator.pointerEnabled);
+    return window && window.navigator.pointerEnabled;
   },
   get msPointerEnabled() {
-    return (window && window.navigator.msPointerEnabled);
+    return window && window.navigator.msPointerEnabled;
   },
 };
 
 export function isMouse(evt: any, supports: Supports = SUPPORTS) {
-  if (supports.msPointerEnabled && evt.pointerType === evt.MSPOINTER_TYPE_MOUSE) { // IE10
+  if (supports.msPointerEnabled && evt.pointerType === evt.MSPOINTER_TYPE_MOUSE) {
+    // IE10
     return true;
   }
-  if (supports.pointerEnabled && evt.pointerType === 'mouse') { // E11
+  if (supports.pointerEnabled && evt.pointerType === 'mouse') {
+    // E11
     return true;
   }
   return evt.type.indexOf('mouse') !== -1;
 }
 
 export function isValidMouseButton(
-  { button, which }: { button?: number | undefined, which?: number | undefined }, allowedBtn: number[] | number) {
-  const actualBtn = (!which && button !== undefined) ?
-    (button & 1 ? 1 : (button & 2 ? 3 : (button & 4 ? 2 : 0))) :
-    which;
-  return Array.isArray(allowedBtn) ? allowedBtn.some((val) => {
-    return actualBtn === val;
-  }) : actualBtn === allowedBtn;
+  { button, which }: { button?: number | undefined; which?: number | undefined },
+  allowedBtn: number[] | number
+) {
+  const actualBtn = !which && button !== undefined ? (button & 1 ? 1 : button & 2 ? 3 : button & 4 ? 2 : 0) : which;
+  return Array.isArray(allowedBtn)
+    ? allowedBtn.some(val => {
+        return actualBtn === val;
+      })
+    : actualBtn === allowedBtn;
 }
 
 export function matchesSelector(element: any, selector: string) {
-  return (element.matchesSelector ||
+  return (
+    element.matchesSelector ||
     element.webkitMatchesSelector ||
     element.mozMatchesSelector ||
     element.msMatchesSelector ||
@@ -87,14 +92,14 @@ export interface PointerData {
   client: Point;
   identifier: number;
 }
-export class PointerDataMap extends Map<number, PointerData> { }
+export class PointerDataMap extends Map<number, PointerData> {}
 export interface Pointers {
   all: PointerDataMap;
   changed: PointerDataMap;
 }
 
 export interface OptionsFactory {
-  new(): Options;
+  new (): Options;
 }
 
 export class Options {
@@ -105,7 +110,7 @@ export class Options {
 }
 
 export interface DataFactory {
-  new(): Data;
+  new (): Data;
 }
 
 export class Data {

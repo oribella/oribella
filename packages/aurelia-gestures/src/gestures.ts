@@ -8,12 +8,12 @@ import { oribella, Tap, Doubletap, Longtap, Swipe, LongtapSwipe, Pinch, Rotate }
 export class OaTap {
   @bindable public selector: string;
   @bindable public options = {};
-  @bindable public start = () => { };
-  @bindable({ primaryProperty: true }) public end = () => { };
-  @bindable public cancel = () => { };
-  @bindable public stop = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable public start = () => {};
+  @bindable({ primaryProperty: true }) public end = () => {};
+  @bindable public cancel = () => {};
+  @bindable public stop = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(Tap, this.element, this as any);
@@ -28,9 +28,9 @@ export class OaTap {
 export class OaDoubletap {
   @bindable public selector: string;
   @bindable public options: {};
-  @bindable({ primaryProperty: true }) public end = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable({ primaryProperty: true }) public end = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(Doubletap, this.element, this as any);
@@ -45,13 +45,13 @@ export class OaDoubletap {
 export class OaLongtap {
   @bindable public selector: string;
   @bindable public options = {};
-  @bindable public start = () => { };
-  @bindable public end = () => { };
-  @bindable public cancel = () => { };
-  @bindable public stop = () => { };
-  @bindable({ primaryProperty: true }) public timeEnd = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable public start = () => {};
+  @bindable public end = () => {};
+  @bindable public cancel = () => {};
+  @bindable public stop = () => {};
+  @bindable({ primaryProperty: true }) public timeEnd = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(Longtap, this.element, this as any);
@@ -66,14 +66,14 @@ export class OaLongtap {
 export class OaSwipe {
   @bindable public selector: string;
   @bindable public options = {};
-  @bindable public down = () => { };
-  @bindable public start = () => { };
-  @bindable({ primaryProperty: true }) public update = () => { };
-  @bindable public end = () => { };
-  @bindable public cancel = () => { };
-  @bindable public stop = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable public down = () => {};
+  @bindable public start = () => {};
+  @bindable({ primaryProperty: true }) public update = () => {};
+  @bindable public end = () => {};
+  @bindable public cancel = () => {};
+  @bindable public stop = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(Swipe, this.element, this as any);
@@ -88,14 +88,14 @@ export class OaSwipe {
 export class OaLongtapSwipe {
   @bindable public selector: string;
   @bindable public options = {};
-  @bindable public down = () => { };
-  @bindable public start = () => { };
-  @bindable({ primaryProperty: true }) public update = () => { };
-  @bindable public end = () => { };
-  @bindable public cancel = () => { };
-  @bindable public stop = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable public down = () => {};
+  @bindable public start = () => {};
+  @bindable({ primaryProperty: true }) public update = () => {};
+  @bindable public end = () => {};
+  @bindable public cancel = () => {};
+  @bindable public stop = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(LongtapSwipe, this.element, this as any);
@@ -110,14 +110,14 @@ export class OaLongtapSwipe {
 export class OaPinch {
   @bindable public selector: string;
   @bindable public options = {};
-  @bindable public down = () => { };
-  @bindable public start = () => { };
-  @bindable({ primaryProperty: true }) public update = () => { };
-  @bindable public end = () => { };
-  @bindable public cancel = () => { };
-  @bindable public stop = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable public down = () => {};
+  @bindable public start = () => {};
+  @bindable({ primaryProperty: true }) public update = () => {};
+  @bindable public end = () => {};
+  @bindable public cancel = () => {};
+  @bindable public stop = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(Pinch, this.element, this as any);
@@ -132,14 +132,14 @@ export class OaPinch {
 export class OaRotate {
   @bindable public selector: string;
   @bindable public options = {};
-  @bindable public down = () => { };
-  @bindable public start = () => { };
-  @bindable({ primaryProperty: true }) public update = () => { };
-  @bindable public end = () => { };
-  @bindable public cancel = () => { };
-  @bindable public stop = () => { };
-  private remove: () => void = () => { };
-  constructor(public element: Element) { }
+  @bindable public down = () => {};
+  @bindable public start = () => {};
+  @bindable({ primaryProperty: true }) public update = () => {};
+  @bindable public end = () => {};
+  @bindable public cancel = () => {};
+  @bindable public stop = () => {};
+  private remove: () => void = () => {};
+  constructor(public element: Element) {}
 
   public attached() {
     this.remove = oribella.on(Rotate, this.element, this as any);

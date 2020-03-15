@@ -48,12 +48,15 @@ describe('Default listener', () => {
       cancel: sandbox.stub(),
       stop: sandbox.stub(),
     } as DefaultListener;
-    instance = new Listener({
-      prio: 100,
-      pointers: 10,
-      which: 3,
-      strategy: GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT,
-    },                      listener);
+    instance = new Listener(
+      {
+        prio: 100,
+        pointers: 10,
+        which: 3,
+        strategy: GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT,
+      },
+      listener
+    );
     expect(instance.options.pointers).to.equal(10);
     expect(instance.options.which).to.equal(3);
     expect(instance.options.prio).to.equal(100);
@@ -64,5 +67,4 @@ describe('Default listener', () => {
     expect(instance.end(args)).to.equal(0);
     expect(instance.cancel()).to.equal(0);
   });
-
 });

@@ -8,13 +8,9 @@ This is a mono repo containing the following packages
 
 `/packages`
 
-  📦 `/framework` - Abstracts event flow strategies.
+📦 `/framework` - Abstracts event flow strategies.
 
-  📦 `/oribella` - Preconfigured gestures.
-
-  📦 `/aurelia-sortable` - Sortable plugin for `Aurelia`.
-
-  📦 `/aurelia-gestures` - Gestures plugin for `Aurelia`.
+💅 `/oribella` - Pre-configured gestures.
 
 ### Getting started
 
@@ -26,31 +22,24 @@ After cloning the mono repo
 
 ### Installation
 
-Install root dependencies. (Most of the tooling)
-```sh
-npm i
-```
-
-### Bootstrap
-
-Bootstrap will call `lerna boostrap --hoist`
+Install dependencies:
 
 ```sh
-npm run bootstrap
+yarn
 ```
 
 ### Lint
 
 ```sh
-npm run lint
+yarn run lint
 ```
 
 ### Test
 
-Tests are running in Node with JSDOM
+Run the tests:
 
 ```sh
-npm test
+yarn test
 ```
 
 ### Debugging
@@ -64,5 +53,5 @@ Add a breakpoint in a `spec.ts` and hit F5 and off you go...
 To generate umd and es format:
 
 ```sh
-npm run build
+yarn run build
 ```

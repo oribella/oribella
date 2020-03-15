@@ -20,7 +20,9 @@ export class EventEmitter {
 
 export class EventConfig {
   private events: string[];
-  constructor(...events: string[]) { this.events = events; }
+  constructor(...events: string[]) {
+    this.events = events;
+  }
   public getEvents() {
     return this.events;
   }
@@ -57,28 +59,31 @@ export class Flow extends EventEmitter {
     element.removeEventListener(evt, fn, false);
   }
 
-  public bind(config: FlowConfig): { startListen: addListener[], continueListen: addListener[] } {
-    this.startListen = config.start.getEvents().map(e => this.addDOMEventListener.bind(this, this.element, e, this.start.bind(this)));
-    this.continueListen = config.update.getEvents().map(e => this.addDOMEventListener.bind(this, this.element, e, this.update.bind(this)));
+  public bind(config: FlowConfig): { startListen: addListener[]; continueListen: addListener[] } {
+    this.startListen = config.start
+      .getEvents()
+      .map(e => this.addDOMEventListener.bind(this, this.element, e, this.start.bind(this)));
+    this.continueListen = config.update
+      .getEvents()
+      .map(e => this.addDOMEventListener.bind(this, this.element, e, this.update.bind(this)));
     this.continueListen.push.apply(
       this.continueListen,
-      config.end.getEvents().map((e) => {
+      config.end.getEvents().map(e => {
         return this.addDOMEventListener.bind(this, this.element, e, this.end.bind(this));
-      }),
+      })
     );
     this.continueListen.push.apply(
       this.continueListen,
-      config.cancel.getEvents().map((e) => {
+      config.cancel.getEvents().map(e => {
         return this.addDOMEventListener.bind(this, this.element, e, this.cancel.bind(this));
-      }),
+      })
     );
     return { startListen: this.startListen, continueListen: this.continueListen };
   }
   public activate(): removeListener[] {
     return this.bind(this.config).startListen.map(f => f());
   }
-  public setPointers(_EVT: Event) {
-  }
+  public setPointers(_EVT: Event) {}
   public start(evt: Event) {
     this.emit('start', evt, this.pointers);
   }
@@ -107,5 +112,4 @@ export class Flow extends EventEmitter {
     this.setPointers(evt);
     fn(evt);
   }
-
 }

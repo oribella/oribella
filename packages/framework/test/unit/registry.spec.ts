@@ -24,9 +24,9 @@ describe('Registry', () => {
   });
 
   it('should get registered gestures', () => {
-    class Foo extends Gesture { }
-    class Bar extends Gesture { }
-    class Baz extends Gesture { }
+    class Foo extends Gesture {}
+    class Bar extends Gesture {}
+    class Baz extends Gesture {}
     instance.register(Foo, Options);
     instance.register(Bar, Options);
     instance.register(Baz, Options);
@@ -37,31 +37,51 @@ describe('Registry', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
     instance.register(MyGesture);
-    expect(set).to.have.been.calledWithExactly(MyGesture, { GestureClass: MyGesture, GestureOptions: Options, GestureListener: Listener, GestureData: Data });
+    expect(set).to.have.been.calledWithExactly(MyGesture, {
+      GestureClass: MyGesture,
+      GestureOptions: Options,
+      GestureListener: Listener,
+      GestureData: Data,
+    });
   });
 
   it('should register gesture with custom options', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
-    class MyOptions extends Options { }
+    class MyOptions extends Options {}
     instance.register(MyGesture, MyOptions);
-    expect(set).to.have.been.calledWithExactly(MyGesture, { GestureClass: MyGesture, GestureOptions: MyOptions, GestureListener: Listener, GestureData: Data });
+    expect(set).to.have.been.calledWithExactly(MyGesture, {
+      GestureClass: MyGesture,
+      GestureOptions: MyOptions,
+      GestureListener: Listener,
+      GestureData: Data,
+    });
   });
 
   it('should register gesture with custom listener', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
-    class MyListener extends DefaultListener { }
+    class MyListener extends DefaultListener {}
     instance.register(MyGesture, undefined, MyListener);
-    expect(set).to.have.been.calledWithExactly(MyGesture, { GestureClass: MyGesture, GestureOptions: Options, GestureListener: MyListener, GestureData: Data });
+    expect(set).to.have.been.calledWithExactly(MyGesture, {
+      GestureClass: MyGesture,
+      GestureOptions: Options,
+      GestureListener: MyListener,
+      GestureData: Data,
+    });
   });
 
   it('should register gesture with custom data', () => {
     const set = sandbox.stub(instance['gestures'], 'set');
     const MyGesture = {} as typeof Gesture;
-    class MyData extends Data { }
+    class MyData extends Data {}
     instance.register(MyGesture, undefined, undefined, MyData);
-    expect(set).to.have.been.calledWithExactly(MyGesture, { GestureClass: MyGesture, GestureOptions: Options, GestureListener: Listener, GestureData: MyData });
+    expect(set).to.have.been.calledWithExactly(MyGesture, {
+      GestureClass: MyGesture,
+      GestureOptions: Options,
+      GestureListener: Listener,
+      GestureData: MyData,
+    });
   });
 
   it('should create gesture', () => {
@@ -88,7 +108,10 @@ describe('Registry', () => {
     instance.register(Gesture, Options);
     const listener = {
       options: {
-        pointers: 100, which: 3, prio: 2, strategy: GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT,
+        pointers: 100,
+        which: 3,
+        prio: 2,
+        strategy: GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT,
       },
     } as DefaultListener;
     const gesture = instance.create(Gesture, {} as Element, listener);
@@ -97,5 +120,4 @@ describe('Registry', () => {
     expect(gesture.listener.options.prio).to.equal(2);
     expect(gesture.listener.options.strategy).to.equal(GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT);
   });
-
 });

@@ -1,4 +1,4 @@
- import { expect } from 'chai';
+import { expect } from 'chai';
 import * as sinon from 'sinon';
 import { OribellaApi } from '../../src/oribella-api';
 import { JSDOM } from 'jsdom';
@@ -72,16 +72,18 @@ describe('Pinch', () => {
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
       { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
-    expect(listener.down).to.have.been.calledWithExactly(sinon.match({
-      evt,
-      target,
-      data: {
-        pointers: [
-          { page: new Point(100, 100), client: new Point(100, 100) },
-          { page: new Point(200, 200), client: new Point(200, 200) },
-        ],
-      },
-    }));
+    expect(listener.down).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: {
+          pointers: [
+            { page: new Point(100, 100), client: new Point(100, 100) },
+            { page: new Point(200, 200), client: new Point(200, 200) },
+          ],
+        },
+      })
+    );
   });
 
   it('should call listener down when fulfilled configured pointers', () => {
@@ -92,16 +94,18 @@ describe('Pinch', () => {
       { page: new Point(100, 100), client: new Point(100, 100), identifier: 1 },
       { page: new Point(200, 200), client: new Point(200, 200), identifier: 2 },
     ]);
-    expect(listener.down).to.have.been.calledWithExactly(sinon.match({
-      evt,
-      target,
-      data: {
-        pointers: [
-          { page: new Point(100, 100), client: new Point(100, 100) },
-          { page: new Point(200, 200), client: new Point(200, 200) },
-        ],
-      },
-    }));
+    expect(listener.down).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: {
+          pointers: [
+            { page: new Point(100, 100), client: new Point(100, 100) },
+            { page: new Point(200, 200), client: new Point(200, 200) },
+          ],
+        },
+      })
+    );
   });
 
   it('should call listener start', () => {
@@ -114,16 +118,18 @@ describe('Pinch', () => {
       { page: new Point(110, 200), client: new Point(110, 200), identifier: 1 },
       { page: new Point(90, 210), client: new Point(90, 210), identifier: 2 },
     ]);
-    expect(listener.start).to.have.been.calledWithExactly(sinon.match({
-      evt,
-      target,
-      data: {
-        pointers: [
-          { page: new Point(110, 200), client: new Point(110, 200) },
-          { page: new Point(90, 210), client: new Point(90, 210) },
-        ],
-      },
-    }));
+    expect(listener.start).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: {
+          pointers: [
+            { page: new Point(110, 200), client: new Point(110, 200) },
+            { page: new Point(90, 210), client: new Point(90, 210) },
+          ],
+        },
+      })
+    );
   });
 
   it('should call listener update', () => {
@@ -140,16 +146,18 @@ describe('Pinch', () => {
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
       { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
-    expect(listener.update).to.have.been.calledWithExactly(sinon.match({
-      evt,
-      target,
-      data: {
-        pointers: [
-          { page: new Point(115, 200), client: new Point(115, 200) },
-          { page: new Point(85, 210), client: new Point(85, 210) },
-        ],
-      },
-    }));
+    expect(listener.update).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: {
+          pointers: [
+            { page: new Point(115, 200), client: new Point(115, 200) },
+            { page: new Point(85, 210), client: new Point(85, 210) },
+          ],
+        },
+      })
+    );
   });
 
   it('should call listener end', () => {
@@ -166,20 +174,29 @@ describe('Pinch', () => {
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
       { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
-    const evt = dispatchTouchEvent(window, document, target, 'touchend', [], [
-      { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
-    ]);
-    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
-      evt,
+    const evt = dispatchTouchEvent(
+      window,
+      document,
       target,
-      data: {
-        pointers: [
-          { page: new Point(115, 200), client: new Point(115, 200) },
-          { page: new Point(85, 210), client: new Point(85, 210) },
-        ],
-      },
-    }));
+      'touchend',
+      [],
+      [
+        { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
+        { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
+      ]
+    );
+    expect(listener.end).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: {
+          pointers: [
+            { page: new Point(115, 200), client: new Point(115, 200) },
+            { page: new Point(85, 210), client: new Point(85, 210) },
+          ],
+        },
+      })
+    );
   });
 
   it('should call listener end when all locked pointers are removed', () => {
@@ -196,22 +213,33 @@ describe('Pinch', () => {
       { page: new Point(115, 200), client: new Point(115, 200), identifier: 1 },
       { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
     ]);
-    dispatchTouchEvent(window, document, target, 'touchend',
-                       [{ page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }],
-                       [{ page: new Point(115, 200), client: new Point(115, 200), identifier: 1 }]);
-    const evt = dispatchTouchEvent(window, document, target, 'touchend', [], [
-      { page: new Point(85, 210), client: new Point(85, 210), identifier: 2 },
-    ]);
-    expect(listener.end).to.have.been.calledWithExactly(sinon.match({
-      evt,
+    dispatchTouchEvent(
+      window,
+      document,
       target,
-      data: {
-        pointers: [
-          { page: new Point(115, 200), client: new Point(115, 200) },
-          { page: new Point(85, 210), client: new Point(85, 210) },
-        ],
-      },
-    }));
+      'touchend',
+      [{ page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }],
+      [{ page: new Point(115, 200), client: new Point(115, 200), identifier: 1 }]
+    );
+    const evt = dispatchTouchEvent(
+      window,
+      document,
+      target,
+      'touchend',
+      [],
+      [{ page: new Point(85, 210), client: new Point(85, 210), identifier: 2 }]
+    );
+    expect(listener.end).to.have.been.calledWithExactly(
+      sinon.match({
+        evt,
+        target,
+        data: {
+          pointers: [
+            { page: new Point(115, 200), client: new Point(115, 200) },
+            { page: new Point(85, 210), client: new Point(85, 210) },
+          ],
+        },
+      })
+    );
   });
-
 });

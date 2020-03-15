@@ -1,7 +1,7 @@
 import { OribellaApi, Options, Data, RETURN_FLAG, Gesture, Point, ListenerArgs } from 'oribella-framework';
 
 export class Observation {
-  constructor(public point: Point, public timeStamp: number) { }
+  constructor(public point: Point, public timeStamp: number) {}
 }
 
 export class SwipeData extends Data {
@@ -24,14 +24,18 @@ export class SwipeOptions extends Options {
 export class Swipe extends Gesture<SwipeOptions, SwipeData> {
   public startPoint: Point;
   public start({ data, evt }: ListenerArgs<SwipeData>): number {
-    const { pointers: [{ page }] } = data;
+    const {
+      pointers: [{ page }],
+    } = data;
     this.startPoint = page;
     data.add(this.startPoint, evt.timeStamp);
     return this.listener.down(this.args);
   }
   public update(args: ListenerArgs<SwipeData>): number {
     const { data, evt } = args;
-    const { pointers: [{ page }] } = data;
+    const {
+      pointers: [{ page }],
+    } = data;
     if (page.distanceTo(this.startPoint) < this.listener.options.radiusThreshold) {
       return RETURN_FLAG.IDLE;
     }
@@ -43,7 +47,9 @@ export class Swipe extends Gesture<SwipeOptions, SwipeData> {
   }
   public end(args: ListenerArgs<SwipeData>): number {
     const { data, evt } = args;
-    const { pointers: [{ page }] } = data;
+    const {
+      pointers: [{ page }],
+    } = data;
     data.add(page, evt.timeStamp);
     return this.listener.end(args);
   }

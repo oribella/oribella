@@ -7,14 +7,22 @@ export class TapOptions extends Options {
 export class Tap extends Gesture<TapOptions> {
   public startPoint: Point;
   public start(args: DefaultListenerArgs): number {
-    const { data: { pointers: [{ page }] } } = args;
+    const {
+      data: {
+        pointers: [{ page }],
+      },
+    } = args;
     this.startPoint = page;
     return this.listener.start(args);
   }
-  public update({ data: { pointers: [{ page }] } }: DefaultListenerArgs): number {
-    return page.distanceTo(this.startPoint) > this.listener.options.radiusThreshold ?
-      RETURN_FLAG.REMOVE :
-      RETURN_FLAG.IDLE;
+  public update({
+    data: {
+      pointers: [{ page }],
+    },
+  }: DefaultListenerArgs): number {
+    return page.distanceTo(this.startPoint) > this.listener.options.radiusThreshold
+      ? RETURN_FLAG.REMOVE
+      : RETURN_FLAG.IDLE;
   }
   public end(args: DefaultListenerArgs) {
     return this.listener.end(args);

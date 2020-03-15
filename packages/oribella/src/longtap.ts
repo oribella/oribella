@@ -1,4 +1,14 @@
-import { OribellaApi, Options, Data, RETURN_FLAG, Listener, ensureProperties, Point, DefaultListenerArgs, Gesture } from 'oribella-framework';
+import {
+  OribellaApi,
+  Options,
+  Data,
+  RETURN_FLAG,
+  Listener,
+  ensureProperties,
+  Point,
+  DefaultListenerArgs,
+  Gesture,
+} from 'oribella-framework';
 export class LongtapOptions extends Options {
   public radiusThreshold: number = 2;
   public timeThreshold: number = 500;
@@ -9,10 +19,12 @@ export class LongtapListener extends Listener<LongtapOptions, Data> {
   constructor(public options: LongtapOptions, listener: LongtapListener) {
     super(options, listener);
     this.listener = ensureProperties(listener, {
-      timeEnd() { },
+      timeEnd() {},
     } as LongtapListener);
   }
-  public timeEnd(): number { return RETURN_FLAG.map(this.listener.timeEnd()); }
+  public timeEnd(): number {
+    return RETURN_FLAG.map(this.listener.timeEnd());
+  }
 }
 
 export class Longtap extends Gesture<LongtapOptions, Data, LongtapListener> {
@@ -21,15 +33,23 @@ export class Longtap extends Gesture<LongtapOptions, Data, LongtapListener> {
   public timeEndEmitted: boolean = false;
 
   public start(args: DefaultListenerArgs): number {
-    const { data: { pointers: [{ page: p0 }] } } = args;
+    const {
+      data: {
+        pointers: [{ page: p0 }],
+      },
+    } = args;
     this.startPoint = p0;
     this.timeoutId = window.setTimeout(() => {
       this.listener.timeEnd();
       this.timeEndEmitted = true;
-    },                                 this.listener.options.timeThreshold);
+    }, this.listener.options.timeThreshold);
     return this.listener.start(args);
   }
-  public update({ data: { pointers: [{ page }] } }: DefaultListenerArgs): number {
+  public update({
+    data: {
+      pointers: [{ page }],
+    },
+  }: DefaultListenerArgs): number {
     if (page.distanceTo(this.startPoint) > this.listener.options.radiusThreshold) {
       return RETURN_FLAG.REMOVE;
     }

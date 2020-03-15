@@ -12,7 +12,8 @@ describe('Sortable', () => {
     groups,
     allowedDragSelectors,
   };
-  const template = `
+  const template =
+    `
 <ul oa-sortable="items.bind: groups;
   allowed-drag-selectors.bind: allowedDragSelectors">
   <li
@@ -20,13 +21,16 @@ describe('Sortable', () => {
     oa-sortable-item="item.bind: group;"
     draggable="false">
     <div>` +
-    '${group.name}' + `
+    '${group.name}' +
+    `
       <ul oa-sortable="items.bind: group.items;">
         <li
           repeat.for="item of group.items"
           oa-sortable-item="item.bind: item;"
           draggable="false">
-          <div>` + '${item.name}' + `</div>
+          <div>` +
+    '${item.name}' +
+    `</div>
       </ul>
     </div>
   </li>
@@ -48,13 +52,12 @@ describe('Sortable', () => {
   let target: Element;
 
   beforeEach(async () => {
-    document = (new JSDOM(html, { url: 'http://localhost' })).window.document;
+    document = new JSDOM(html, { url: 'http://localhost' }).window.document;
     target = document.querySelector('.target') as Element;
     if (!target) {
       throw new Error(`target not found ${html}`);
     }
-    component = StageComponent
-      .withResources(path.resolve(__dirname, '../../src/sortable'))
+    component = StageComponent.withResources(path.resolve(__dirname, '../../src/sortable'))
       .inView(template)
       .boundTo(bindings);
     await component.create(bootstrap);
