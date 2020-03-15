@@ -31,7 +31,7 @@ describe('Pinch', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    dom = new JSDOM(html);
+    dom = new JSDOM(html, { url: 'http://localhost' });
     window = dom.window;
     document = window.document;
     const g = global as any;
@@ -77,8 +77,8 @@ describe('Pinch', () => {
       target,
       data: {
         pointers: [
-          { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
-          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } },
+          { page: new Point(100, 100), client: new Point(100, 100) },
+          { page: new Point(200, 200), client: new Point(200, 200) },
         ],
       },
     }));
@@ -97,8 +97,8 @@ describe('Pinch', () => {
       target,
       data: {
         pointers: [
-          { page: { x: 100, y: 100 }, client: { x: 100, y: 100 } },
-          { page: { x: 200, y: 200 }, client: { x: 200, y: 200 } },
+          { page: new Point(100, 100), client: new Point(100, 100) },
+          { page: new Point(200, 200), client: new Point(200, 200) },
         ],
       },
     }));
@@ -119,8 +119,8 @@ describe('Pinch', () => {
       target,
       data: {
         pointers: [
-          { page: { x: 110, y: 200 }, client: { x: 110, y: 200 } },
-          { page: { x: 90, y: 210 }, client: { x: 90, y: 210 } },
+          { page: new Point(110, 200), client: new Point(110, 200) },
+          { page: new Point(90, 210), client: new Point(90, 210) },
         ],
       },
     }));
@@ -145,8 +145,8 @@ describe('Pinch', () => {
       target,
       data: {
         pointers: [
-          { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } },
+          { page: new Point(115, 200), client: new Point(115, 200) },
+          { page: new Point(85, 210), client: new Point(85, 210) },
         ],
       },
     }));
@@ -175,8 +175,8 @@ describe('Pinch', () => {
       target,
       data: {
         pointers: [
-          { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } },
+          { page: new Point(115, 200), client: new Point(115, 200) },
+          { page: new Point(85, 210), client: new Point(85, 210) },
         ],
       },
     }));
@@ -207,8 +207,8 @@ describe('Pinch', () => {
       target,
       data: {
         pointers: [
-          { page: { x: 115, y: 200 }, client: { x: 115, y: 200 } },
-          { page: { x: 85, y: 210 }, client: { x: 85, y: 210 } },
+          { page: new Point(115, 200), client: new Point(115, 200) },
+          { page: new Point(85, 210), client: new Point(85, 210) },
         ],
       },
     }));

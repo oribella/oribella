@@ -4,6 +4,7 @@ import { OribellaApi } from 'oribella-framework';
 import { JSDOM } from 'jsdom';
 import { Tap, registerTap } from '../../src/tap';
 import { dispatchMouseEvent } from './utils';
+import { Point } from '../../src';
 
 describe('Tap', () => {
   let sandbox: sinon.SinonSandbox;
@@ -30,7 +31,7 @@ describe('Tap', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    document = (new JSDOM(html)).window.document;
+    document = (new JSDOM(html, { url: 'http://localhost' })).window.document;
     const g = global as any;
     g.window = {
       document,
@@ -68,7 +69,7 @@ describe('Tap', () => {
     expect(myListener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
     }));
   });
 
@@ -86,7 +87,7 @@ describe('Tap', () => {
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
     }));
   });
 

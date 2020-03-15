@@ -156,8 +156,10 @@ describe('Flow', () => {
     const e = {} as Event;
     instance.allPointers.set(1, {} as PointerData);
     instance.end(e);
+    const all = new Map<number, PointerData>();
+    all.set(1, {} as PointerData);
     expect(emitSpy).to.have.been.calledWithExactly('end', e, {
-      all: new Map<number, PointerData>(),
+      all,
       changed: new Map<number, PointerData>(),
     });
   });
