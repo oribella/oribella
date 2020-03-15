@@ -16,7 +16,15 @@ export class LongtapSwipe extends Gesture<LongtapSwipeOptions> {
   private allowSwipe: boolean = false;
 
   // tslint:disable-next-line:variable-name
-  public bind(target: Element, registerListener: <G extends Gesture<O, D, L>, O extends Options, D extends Data, L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: Partial<DefaultListener>) => () => void, remove: () => void) {
+  public bind(
+    target: Element,
+    registerListener: <G extends Gesture<O, D, L>, O extends Options, D extends Data, L extends Listener<O, D>>(
+      GestureClass: GestureFactory<G, O, D, L>,
+      element: Element,
+      listener: Partial<DefaultListener>
+    ) => () => void,
+    remove: () => void
+  ) {
     this.unregisterLongtap = registerListener(Longtap, target, {
       selector: this.listener.selector,
       options: this.listener.options as LongtapOptions,

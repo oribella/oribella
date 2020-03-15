@@ -36,5 +36,4 @@ describe('TouchFlow', () => {
     instance.setPointerMapFromList(evt.touches, pointers);
     expect(pointers.get(1)).deep.equal({ page: new Point(1, 2), client: new Point(3, 4) });
   });
-
 });

@@ -45,7 +45,6 @@ describe('OribellaApi', () => {
   });
 
   describe('Register default flow strategy', () => {
-
     it('should register MSPointerFlow', () => {
       const element = {} as Element;
       const supports = { msPointerEnabled: true, pointerEnabled: false, touchEnabled: false };
@@ -72,7 +71,6 @@ describe('OribellaApi', () => {
       instance.registerDefaultFlowStrategy(supports);
       expect(registerFlow).to.have.been.calledWithExactly(sinon.match.instanceOf(TouchFlow));
     });
-
   });
 
   it('should register gesture', () => {
@@ -141,5 +139,4 @@ describe('OribellaApi', () => {
     instance.on(Gesture, element, listener);
     expect(registerListener).to.have.been.calledWithExactly(Gesture, element, listener);
   });
-
 });

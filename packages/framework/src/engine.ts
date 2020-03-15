@@ -2,7 +2,20 @@ import { Registry } from './registry';
 import { Gesture, GestureFactory } from './gesture';
 import { ListenerFactory, Listener } from './listener';
 import { Flow } from './flow';
-import { Options, OptionsFactory, Data, DataFactory, Pointers, PointerDataMap, PointerData, isMouse, isValidMouseButton, RETURN_FLAG, GESTURE_STRATEGY_FLAG, matchesSelector } from './utils';
+import {
+  Options,
+  OptionsFactory,
+  Data,
+  DataFactory,
+  Pointers,
+  PointerDataMap,
+  PointerData,
+  isMouse,
+  isValidMouseButton,
+  RETURN_FLAG,
+  GESTURE_STRATEGY_FLAG,
+  matchesSelector,
+} from './utils';
 import { ListenerHandle, DefaultListenerHandle } from './listener-handle';
 
 export interface PointersDelta {
@@ -25,17 +38,20 @@ export class Engine {
   public gestures: Gesture[] = [];
   public composedGestures: Gesture[] = [];
 
-  constructor(
-    public element: Element | Document,
-    public registry: Registry = new Registry(),
-  ) { }
+  constructor(public element: Element | Document, public registry: Registry = new Registry()) {}
 
   public registerGesture<
     G extends Gesture<O, D, L>,
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, GestureOptions: OptionsFactory = Options, GestureListener: ListenerFactory<O, D> = Listener, GestureData: DataFactory = Data) {
+    L extends Listener<O, D>
+  >(
+    GestureClass: GestureFactory<G, O, D, L>,
+    GestureOptions: OptionsFactory = Options,
+    GestureListener: ListenerFactory<O, D> = Listener,
+    GestureData: DataFactory = Data
+  ) {
     this.registry.register(GestureClass, GestureOptions, GestureListener, GestureData);
   }
   public registerFlow(flow: Flow) {
@@ -51,7 +67,8 @@ export class Engine {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: L): () => void {
+    L extends Listener<O, D>
+  >(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: L): () => void {
     const handle = new ListenerHandle(GestureClass, element, listener);
 
     this.handles.push(handle);
@@ -67,11 +84,15 @@ export class Engine {
     return this.flows.map(f => f.activate());
   }
   public canActivateFlow(flow: Flow) {
-    return (this.activeFlow === null || this.activeFlow === flow);
+    return this.activeFlow === null || this.activeFlow === flow;
   }
-  public getPointersDelta(evt: Event, pointers: Pointers, configuredPointers: number, configuredWhich: number[] | number): PointersDelta {
-    if (isMouse(evt) &&
-      !isValidMouseButton(evt as MouseEvent, configuredWhich)) {
+  public getPointersDelta(
+    evt: Event,
+    pointers: Pointers,
+    configuredPointers: number,
+    configuredWhich: number[] | number
+  ): PointersDelta {
+    if (isMouse(evt) && !isValidMouseButton(evt as MouseEvent, configuredWhich)) {
       return { all: -1, changed: -1 };
     }
     const all = pointers.all.size - configuredPointers;
@@ -84,7 +105,7 @@ export class Engine {
     }
     gesture.unbind();
     let gestures;
-    while (gestures = arr.shift()) {
+    while ((gestures = arr.shift())) {
       const ix = gestures.indexOf(gesture);
       if (ix !== -1) {
         gestures.splice(ix, 1);
@@ -101,7 +122,7 @@ export class Engine {
     if (flag & RETURN_FLAG.REMOVE_OTHERS) {
       const others = this.gestures.slice();
       let otherGesture;
-      while (otherGesture = others.shift()) {
+      while ((otherGesture = others.shift())) {
         if (gesture === otherGesture) {
           continue;
         }
@@ -111,7 +132,7 @@ export class Engine {
   }
   public whileGestures(evt: Event, gestures: Gesture[], pointers: Pointers, execStrategy: ExecStrategy) {
     let gesture;
-    while (gesture = gestures.shift()) {
+    while ((gesture = gestures.shift())) {
       const { pointers: configuredPointers, which, strategy } = gesture.listener.options;
       const pointersDelta = this.getPointersDelta(evt, pointers, configuredPointers, which);
       if (pointersDelta.all > 0 && strategy === GESTURE_STRATEGY_FLAG.REMOVE_IF_POINTERS_GT) {
@@ -128,7 +149,7 @@ export class Engine {
   public removePointerIds(map: PointerDataMap, gesture: Gesture, changed: number[]) {
     const pointerIds = this.getPointerIds(gesture);
     let pointerId;
-    while (pointerId = changed.shift()) {
+    while ((pointerId = changed.shift())) {
       const ix = pointerIds.indexOf(pointerId);
       if (ix !== -1) {
         const removed = pointerIds.splice(ix, 1)[0];
@@ -194,12 +215,9 @@ export class Engine {
     this.activeFlow = flow;
     this.activeFlow.continue();
 
-    this.gestures = this.gestures
-      .concat(this.match(evt.target as Node, evt))
-      .sort((g1, g2) => {
-        return g1.listener.options.prio -
-          g2.listener.options.prio;
-      });
+    this.gestures = this.gestures.concat(this.match(evt.target as Node, evt)).sort((g1, g2) => {
+      return g1.listener.options.prio - g2.listener.options.prio;
+    });
 
     if (!this.gestures.length) {
       return false; // No match don't continue
@@ -232,7 +250,7 @@ export class Engine {
     let gesture;
 
     // Check for composing gestures for example Doubletap
-    while (gesture = gestures.shift()) {
+    while ((gesture = gestures.shift())) {
       if (RETURN_FLAG.COMPOSE === gesture.unbind()) {
         this.composedGestures.push(gesture);
       } else {
@@ -248,9 +266,20 @@ export class Engine {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, handle: ListenerHandle<G, O, D, L>, evt: Event): Gesture {
+    L extends Listener<O, D>
+  >(
+    GestureClass: GestureFactory<G, O, D, L>,
+    element: Element,
+    handle: ListenerHandle<G, O, D, L>,
+    evt: Event
+  ): Gesture {
     const gesture = this.registry.create(GestureClass, element, handle.listener);
-    gesture.bind(handle.element, this.registerListener.bind(this), this.removeGesture.bind(this, gesture, this.gestures, this.composedGestures), evt);
+    gesture.bind(
+      handle.element,
+      this.registerListener.bind(this),
+      this.removeGesture.bind(this, gesture, this.gestures, this.composedGestures),
+      evt
+    );
     return gesture;
   }
   public composeGesture<
@@ -258,9 +287,15 @@ export class Engine {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, handle: ListenerHandle<G, O, D, L>, evt: Event): Gesture {
+    L extends Listener<O, D>
+  >(
+    GestureClass: GestureFactory<G, O, D, L>,
+    element: Element,
+    handle: ListenerHandle<G, O, D, L>,
+    evt: Event
+  ): Gesture {
     let gesture;
-    while (gesture = this.composedGestures.shift()) {
+    while ((gesture = this.composedGestures.shift())) {
       if (gesture.listener === handle.listener) {
         break;
       }
@@ -270,12 +305,14 @@ export class Engine {
     }
     return gesture;
   }
-  public matchesHandle<
-    G extends Gesture<O, D, L>,
-    O extends Options,
-    D extends Data,
-    L extends Listener<O, D>>(element: Element, handle: ListenerHandle<G, O, D, L>): boolean {
-    const { element: refElement, listener: { selector } } = handle;
+  public matchesHandle<G extends Gesture<O, D, L>, O extends Options, D extends Data, L extends Listener<O, D>>(
+    element: Element,
+    handle: ListenerHandle<G, O, D, L>
+  ): boolean {
+    const {
+      element: refElement,
+      listener: { selector },
+    } = handle;
 
     if (!refElement.contains(element)) {
       return false;
@@ -296,14 +333,21 @@ export class Engine {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, handle: ListenerHandle<G, O, D, L>, evt: Event): Gesture | undefined {
+    L extends Listener<O, D>
+  >(
+    GestureClass: GestureFactory<G, O, D, L>,
+    element: Element,
+    handle: ListenerHandle<G, O, D, L>,
+    evt: Event
+  ): Gesture | undefined {
     if (!this.matchesHandle(element, handle)) {
       return;
     }
     return this.composeGesture(GestureClass, element, handle, evt);
   }
   public matchHandles(element: Element, gestures: Gesture[], evt: Event): Gesture[] {
-    for (const handle of this.handles) { // Always evaluate length since gestures could bind gestures
+    for (const handle of this.handles) {
+      // Always evaluate length since gestures could bind gestures
       const gesture = this.matchHandle(handle.GestureClass, element, handle, evt);
       if (gesture) {
         gestures.push(gesture);

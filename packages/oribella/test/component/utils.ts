@@ -8,12 +8,28 @@ export function dispatchMouseEvent(
   pageY: number = 100,
   clientX: number = 100,
   clientY: number = 100,
-  button: number = 1) {
+  button: number = 1
+) {
   const evt = document.createEvent('MouseEvents');
   (evt as any).pageX = pageX;
   (evt as any).pageY = pageY;
-  evt.initMouseEvent(type,
-                     true, true, document.defaultView, 0, 0, 0, clientX, clientY, false, false, false, false, button, null);
+  evt.initMouseEvent(
+    type,
+    true,
+    true,
+    document.defaultView,
+    0,
+    0,
+    0,
+    clientX,
+    clientY,
+    false,
+    false,
+    false,
+    false,
+    button,
+    null
+  );
   target.dispatchEvent(evt);
   return evt;
 }
@@ -24,14 +40,15 @@ export function dispatchTouchEvent(
   target: Element,
   type: string = 'touchstart',
   touches: PointerData[] = [{ page: new Point(100, 100), client: new Point(100, 100), identifier: 1 }],
-  changedTouches: PointerData[] = []) {
+  changedTouches: PointerData[] = []
+) {
   const evt = document.createEvent('UIEvent') as any;
   evt.initUIEvent(type, true, true, window, 0);
   evt.altKey = false;
   evt.ctrlKey = false;
   evt.shiftKey = false;
   evt.metaKey = false;
-  evt.changedTouches = changedTouches.map((p) => {
+  evt.changedTouches = changedTouches.map(p => {
     return {
       pageX: p.page.x,
       pageY: p.page.y,
@@ -40,7 +57,7 @@ export function dispatchTouchEvent(
       identifier: p.identifier,
     };
   });
-  evt.touches = touches.map((p) => {
+  evt.touches = touches.map(p => {
     return {
       pageX: p.page.x,
       pageY: p.page.y,

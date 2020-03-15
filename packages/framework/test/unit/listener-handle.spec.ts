@@ -4,7 +4,6 @@ import { DefaultListener } from '../../src/listener';
 import { Gesture } from '../../src/gesture';
 
 describe('Listener handle', () => {
-
   it('should be a constructor', () => {
     expect(ListenerHandle).to.throw();
   });
@@ -18,5 +17,4 @@ describe('Listener handle', () => {
     expect(handle.GestureClass).to.equal(Gesture);
     expect(handle.listener).to.equal(listener);
   });
-
 });

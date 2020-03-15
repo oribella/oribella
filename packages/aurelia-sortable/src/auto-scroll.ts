@@ -26,7 +26,6 @@ export class AutoScroll {
     const scrollDeltaY = scrollDirection.y * scrollSpeed;
 
     const autoScroll = () => {
-
       if (!this.active) {
         return;
       }

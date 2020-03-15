@@ -47,5 +47,4 @@ describe('MouseFlow', () => {
     instance.setPointers(evt);
     expect(instance.allPointers.size).to.equal(0);
   });
-
 });

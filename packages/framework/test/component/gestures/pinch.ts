@@ -47,7 +47,11 @@ export class Pinch extends Gesture<PinchOptions, PinchData> {
     data.centerPoint.y = (this.currentPoint0.y + this.currentPoint1.y) / 2;
   }
   public start(args: ListenerArgs<PinchData>): number {
-    const { data: { pointers: [{ page: p0 }, { page: p1 }] } } = args;
+    const {
+      data: {
+        pointers: [{ page: p0 }, { page: p1 }],
+      },
+    } = args;
     this.startPoint0 = p0;
     this.startPoint1 = p1;
     return this.listener.down(args);
@@ -59,9 +63,7 @@ export class Pinch extends Gesture<PinchOptions, PinchData> {
     if (Math.abs(data.distance) < this.listener.options.pinchThreshold) {
       return RETURN_FLAG.IDLE;
     }
-    return !this.startEmitted ?
-      this.listener.start(args) :
-      this.listener.update(args);
+    return !this.startEmitted ? this.listener.start(args) : this.listener.update(args);
   }
   public end(args: ListenerArgs<PinchData>) {
     return this.listener.end(args);

@@ -16,9 +16,7 @@ export class OribellaApi {
   private engine: Engine;
   private deactivateFlows: removeListener[][] | null = null;
 
-  constructor(
-    private element: Element | Document = window && window.document,
-  ) {
+  constructor(private element: Element | Document = window && window.document) {
     this.engine = new Engine(this.element);
   }
   public registerDefaultFlowStrategy(supports: Supports = SUPPORTS) {
@@ -38,7 +36,13 @@ export class OribellaApi {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, GestureOptions: OptionsFactory = Options, GestureListener: ListenerFactory<O, D> = Listener, GestureData: DataFactory = Data) {
+    L extends Listener<O, D>
+  >(
+    GestureClass: GestureFactory<G, O, D, L>,
+    GestureOptions: OptionsFactory = Options,
+    GestureListener: ListenerFactory<O, D> = Listener,
+    GestureData: DataFactory = Data
+  ) {
     this.engine.registerGesture(GestureClass, GestureOptions, GestureListener, GestureData);
   }
   public activate() {
@@ -55,7 +59,8 @@ export class OribellaApi {
     O extends Options,
     D extends Data,
     // tslint:disable-next-line:variable-name
-    L extends Listener<O, D>>(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: L) {
+    L extends Listener<O, D>
+  >(GestureClass: GestureFactory<G, O, D, L>, element: Element, listener: L) {
     return this.engine.registerListener(GestureClass, element, listener);
   }
 }

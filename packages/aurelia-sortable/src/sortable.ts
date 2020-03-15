@@ -4,7 +4,19 @@ import { Repeat } from 'aurelia-templating-resources';
 import { inject } from 'aurelia-dependency-injection';
 import { oribella, Swipe, matchesSelector, RETURN_FLAG, Point, DefaultListenerArgs } from 'oribella';
 import { OptionalParent } from './optional-parent';
-import { utils, SortableItemElement, SortableElement, DragClone, Rect, PageScrollOffset, AXIS_FLAG, LockedFlag, MoveFlag, Move, DEFAULT_INVALID_MOVE } from './utils';
+import {
+  utils,
+  SortableItemElement,
+  SortableElement,
+  DragClone,
+  Rect,
+  PageScrollOffset,
+  AXIS_FLAG,
+  LockedFlag,
+  MoveFlag,
+  Move,
+  DEFAULT_INVALID_MOVE,
+} from './utils';
 import { AutoScroll } from './auto-scroll';
 
 export const SORTABLE = 'oa-sortable';
@@ -29,21 +41,22 @@ export class Sortable {
   @bindable public scrollSpeed: number = 10;
   @bindable public scrollSensitivity: number = 10;
   @bindable public axis: string = AXIS_FLAG.XY;
-  @bindable public onStop: (move: Move) => void = () => { };
+  @bindable public onStop: (move: Move) => void = () => {};
   @bindable public sortingClass: string = 'oa-sorting';
   @bindable public dragClass: string = 'oa-drag';
   @bindable public dragZIndex: number = 1;
   @bindable public disallowedDragSelectors: string[] = ['INPUT', 'SELECT', 'TEXTAREA'];
   @bindable public allowedDragSelector: string = '';
   @bindable public allowedDragSelectors: string[] = [];
-  @bindable public allowDrag = ({ evt }: { evt: Event, item: SortableItem }) => {
-    const target = (evt.target as HTMLElement);
-    if (this.allowedDragSelector &&
-      !matchesSelector(target, this.allowedDragSelector)) {
+  @bindable public allowDrag = ({ evt }: { evt: Event; item: SortableItem }) => {
+    const target = evt.target as HTMLElement;
+    if (this.allowedDragSelector && !matchesSelector(target, this.allowedDragSelector)) {
       return false;
     }
-    if (this.allowedDragSelectors.length &&
-      this.allowedDragSelectors.filter(selector => matchesSelector(target, selector)).length === 0) {
+    if (
+      this.allowedDragSelectors.length &&
+      this.allowedDragSelectors.filter(selector => matchesSelector(target, selector)).length === 0
+    ) {
       return false;
     }
     if (this.disallowedDragSelectors.filter(selector => matchesSelector(target, selector)).length !== 0) {
@@ -53,7 +66,7 @@ export class Sortable {
       return false;
     }
     return true;
-  }
+  };
   @bindable public typeFlag: number = 1;
 
   public dragClone: DragClone = {
@@ -111,7 +124,14 @@ export class Sortable {
     const scrollElement = this.scroll as Element;
     const { scrollLeft, scrollTop, scrollWidth, scrollHeight } = scrollElement;
     const scrollSpeed = this.scrollSpeed;
-    const scrollMaxPos = utils.getScrollMaxPos(this.element, this.rootSortableRect, scrollElement, { scrollLeft, scrollTop, scrollWidth, scrollHeight }, this.scrollRect, window);
+    const scrollMaxPos = utils.getScrollMaxPos(
+      this.element,
+      this.rootSortableRect,
+      scrollElement,
+      { scrollLeft, scrollTop, scrollWidth, scrollHeight },
+      this.scrollRect,
+      window
+    );
     const scrollDirection = utils.getScrollDirection(this.axis, this.scrollSensitivity, client, this.scrollRect);
     scrollMaxPos.x = scrollDirection.x === -1 ? 0 : scrollMaxPos.x;
     scrollMaxPos.y = scrollDirection.y === -1 ? 0 : scrollMaxPos.y;
@@ -153,10 +173,18 @@ export class Sortable {
     this.rootSortable = utils.getRootSortable(this);
     this.rootSortableRect = this.rootSortable.element.getBoundingClientRect();
     this.childSortables = utils.getChildSortables(this.rootSortable);
-    this.childSortables.forEach(s => s.isDisabled = (this.sortableDepth !== s.sortableDepth || (fromVM.typeFlag & s.typeFlag) === 0));
+    this.childSortables.forEach(
+      s => (s.isDisabled = this.sortableDepth !== s.sortableDepth || (fromVM.typeFlag & s.typeFlag) === 0)
+    );
     this.lastElementFromPointRect = element.getBoundingClientRect();
   }
-  public down({ evt, data: { pointers: [{ client }] }, target }: DefaultListenerArgs) {
+  public down({
+    evt,
+    data: {
+      pointers: [{ client }],
+    },
+    target,
+  }: DefaultListenerArgs) {
     this.move = DEFAULT_INVALID_MOVE;
     if (!this.isClosestSortable(evt.target as Node)) {
       return RETURN_FLAG.REMOVE;
@@ -171,12 +199,30 @@ export class Sortable {
     }
     return RETURN_FLAG.REMOVE;
   }
-  public start({ data: { pointers: [{ client }] }, target }: DefaultListenerArgs) {
-    utils.addDragClone(this.dragClone, this.element as HTMLElement, this.scroll as Element, target as HTMLElement, this.downClientPoint, this.dragZIndex, this.dragClass, window);
+  public start({
+    data: {
+      pointers: [{ client }],
+    },
+    target,
+  }: DefaultListenerArgs) {
+    utils.addDragClone(
+      this.dragClone,
+      this.element as HTMLElement,
+      this.scroll as Element,
+      target as HTMLElement,
+      this.downClientPoint,
+      this.dragZIndex,
+      this.dragClass,
+      window
+    );
     this.target.classList.add(this.sortingClass);
     this.tryScroll(client);
   }
-  public update({ data: { pointers: [{ client }] } }: DefaultListenerArgs) {
+  public update({
+    data: {
+      pointers: [{ client }],
+    },
+  }: DefaultListenerArgs) {
     this.currentClientPoint = client;
     utils.updateDragClone(this.dragClone, client, window, this.axis);
     this.trySort(client, window);
@@ -188,7 +234,7 @@ export class Sortable {
     }
     utils.removeDragClone(this.dragClone);
     this.autoScroll.deactivate();
-    this.childSortables.forEach(s => s.isDisabled = false);
+    this.childSortables.forEach(s => (s.isDisabled = false));
     this.onStop(this.move);
   }
 }

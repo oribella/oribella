@@ -10,7 +10,7 @@ export class Point {
     const x = p.x - this.x;
     const y = p.y - this.y;
     const theta = Math.atan2(y, x);
-    const degrees = theta * 180 / Math.PI;
+    const degrees = (theta * 180) / Math.PI;
     return degrees;
   }
   public clone() {
