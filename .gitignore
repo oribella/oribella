@@ -11,3 +11,4 @@ website/i18n/*
 .rpt2_cache
 aurelia-*-demo
 packages/.vscode
+yarn-error.log

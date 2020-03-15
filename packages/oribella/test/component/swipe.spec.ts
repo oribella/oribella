@@ -4,6 +4,7 @@ import { OribellaApi } from 'oribella-framework';
 import { JSDOM } from 'jsdom';
 import { Swipe, registerSwipe } from '../../src/swipe';
 import { dispatchMouseEvent } from './utils';
+import { Point } from '../../src';
 
 describe('Swipe', () => {
   let sandbox: sinon.SinonSandbox;
@@ -28,7 +29,7 @@ describe('Swipe', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    document = (new JSDOM(html)).window.document;
+    document = (new JSDOM(html, { url: 'http://localhost' })).window.document;
     const g = global as any;
     g.window = {
       document,
@@ -67,7 +68,7 @@ describe('Swipe', () => {
     expect(listener.down).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
     }));
   });
 
@@ -78,7 +79,7 @@ describe('Swipe', () => {
     expect(listener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 200, y: 200 }, page: { x: 200, y: 200 } }] },
+      data: { pointers: [{ client: new Point(200, 200), page: new Point(200, 200) }] },
     }));
   });
 
@@ -90,7 +91,7 @@ describe('Swipe', () => {
     expect(listener.update).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 300, y: 300 }, page: { x: 300, y: 300 } }] },
+      data: { pointers: [{ client: new Point(300, 300), page: new Point(300, 300) }] },
     }));
   });
 
@@ -103,7 +104,7 @@ describe('Swipe', () => {
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },
+      data: { pointers: [{ client: new Point(350, 350), page: new Point(350, 350) }] },
     }));
   });
 

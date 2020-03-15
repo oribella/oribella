@@ -5,6 +5,7 @@ import { JSDOM } from 'jsdom';
 import { registerTap } from './gestures/tap';
 import { Doubletap, registerDoubletap } from './gestures/doubletap';
 import { dispatchMouseEvent } from './utils';
+import { Point } from '../../src';
 
 describe('Doubletap', () => {
   let sandbox: sinon.SinonSandbox;
@@ -31,7 +32,7 @@ describe('Doubletap', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    document = (new JSDOM(html)).window.document;
+    document = (new JSDOM(html, { url: 'http://localhost' })).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
@@ -78,7 +79,7 @@ describe('Doubletap', () => {
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
     }));
   });
 

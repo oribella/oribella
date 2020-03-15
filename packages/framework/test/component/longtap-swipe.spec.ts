@@ -6,6 +6,7 @@ import { registerLongtap } from './gestures/longtap';
 import { registerSwipe } from './gestures/swipe';
 import { LongtapSwipe, registerLongtapSwipe } from './gestures/longtap-swipe';
 import { dispatchMouseEvent } from './utils';
+import { Point } from '../../src';
 
 describe('LongtapSwipe', () => {
   let sandbox: sinon.SinonSandbox;
@@ -32,7 +33,7 @@ describe('LongtapSwipe', () => {
 
   beforeEach(() => {
     sandbox = sinon.createSandbox();
-    document = (new JSDOM(html)).window.document;
+    document = (new JSDOM(html, { url: 'http://localhost' })).window.document;
     const g = global as any;
     setTimeout = sandbox.stub().returns(1);
     clearTimeout = sandbox.spy();
@@ -78,7 +79,7 @@ describe('LongtapSwipe', () => {
     expect(listener.down).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 100, y: 100 }, page: { x: 100, y: 100 } }] },
+      data: { pointers: [{ page: new Point(100, 100), client: new Point(100, 100) }] },
     }));
   });
 
@@ -97,7 +98,7 @@ describe('LongtapSwipe', () => {
     expect(listener.start).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 250, y: 250 }, page: { x: 250, y: 250 } }] },
+      data: { pointers: [{ client: new Point(250, 250), page: new Point(250, 250) }] },
     }));
   });
 
@@ -110,7 +111,7 @@ describe('LongtapSwipe', () => {
     expect(listener.update).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 300, y: 300 }, page: { x: 300, y: 300 } }] },
+      data: { pointers: [{ client: new Point(300, 300), page: new Point(300, 300) }] },
     }));
   });
 
@@ -125,7 +126,7 @@ describe('LongtapSwipe', () => {
     expect(listener.end).to.have.been.calledWithExactly(sinon.match({
       evt,
       target,
-      data: { pointers: [{ client: { x: 350, y: 350 }, page: { x: 350, y: 350 } }] },
+      data: { pointers: [{ client: new Point(350, 350), page: new Point(350, 350) }] },
     }));
   });
 

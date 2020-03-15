@@ -653,7 +653,7 @@ describe('Engine', () => {
           </body>
         </html>
       `;
-      const doc = (new JSDOM(html)).window.document;
+      const doc = (new JSDOM(html, { url: 'http://localhost' })).window.document;
       const target = doc.querySelector('.target');
       if (!target) {
         throw new Error(`target not found ${html}`);
