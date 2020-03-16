@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/framework
     docker:
-      - image: circleci/node:8.11.1
+      - image: circleci/node:8.17.0
     environment:
       - NPM_CONFIG_LOGLEVEL=warn
     steps:
