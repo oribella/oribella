@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/oribella
     docker:
-      - image: circleci/node:8.1.2
+      - image: circleci/node:8.17.0
     environment:
       - NPM_CONFIG_LOGLEVEL=warn
     steps:
