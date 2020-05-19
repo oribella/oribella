@@ -38,6 +38,6 @@
   },
   "dependencies": {
     "oribella-framework": "^0.10.3",
-    "tslib": "^1.5.0"
+    "tslib": "^2.0.0"
   }
 }
