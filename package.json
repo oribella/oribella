@@ -30,7 +30,7 @@
     "@types/sinon-chai": "3.2.4",
     "chai": "4.2.0",
     "coveralls": "3.0.11",
-    "globby": "11.0.0",
+    "globby": "13.2.2",
     "husky": "4.2.3",
     "jsdom": "16.2.2",
     "lerna": "3.20.2",
