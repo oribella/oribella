@@ -28,7 +28,7 @@
     "@types/node": "13.11.0",
     "@types/sinon": "7.5.2",
     "@types/sinon-chai": "3.2.4",
-    "chai": "4.2.0",
+    "chai": "5.1.0",
     "coveralls": "3.0.11",
     "globby": "11.0.0",
     "husky": "4.2.3",
