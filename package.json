@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@after-work.js/aw": "6.0.13",
-    "@types/chai": "4.2.11",
+    "@types/chai": "5.2.3",
     "@types/jsdom": "16.2.0",
     "@types/mocha": "7.0.2",
     "@types/node": "13.11.0",
