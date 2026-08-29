@@ -1765,10 +1765,12 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.1.tgz#96f606f8cd67fb018847d9b61e93997dabdefc72"
   integrity sha512-E6M6N0blf/jiZx8Q3nb0vNaswQeEyn0XlupO+xN6DtJ6r6IT4nXrTry7zhIfYvFCl3/8Cu6WIysmUBKiqV0bqQ==
 
-"@types/node@13.11.0":
-  version "13.11.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.11.0.tgz#390ea202539c61c8fa6ba4428b57e05bc36dc47b"
-  integrity sha512-uM4mnmsIIPK/yeO+42F2RQhGUIs39K2RFmugcJANppXe6J1nvH87PvzPZYpza7Xhhs8Yn9yIAVdLZ84z61+0xQ==
+"@types/node@24.13.3":
+  version "24.13.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-24.13.3.tgz#49f18bd3c647866dcda51a0756c145e14590ce16"
+  integrity sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==
+  dependencies:
+    undici-types "~7.18.0"
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -8851,6 +8853,11 @@ umask@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/umask/-/umask-1.1.0.tgz#f29cebf01df517912bb58ff9c4e50fde8e33320d"
   integrity sha1-8pzr8B31F5ErtY/5xOUP3o4zMg0=
+
+undici-types@~7.18.0:
+  version "7.18.2"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.18.2.tgz#29357a89e7b7ca4aef3bf0fd3fd0cd73884229e9"
+  integrity sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==
 
 union-value@^1.0.0:
   version "1.0.1"
